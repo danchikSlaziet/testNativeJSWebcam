@@ -1,0 +1,62 @@
+video::-webkit-media-controls {
+  display: none;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.App {
+  /* overflow: hidden; */
+  width: 100%;
+  min-height: 100vh;
+}
+
+.App__video-container {
+  position: relative;
+  width: 640px;
+  height: 480px;
+  /* top: 0;
+  left: 50%; */
+  /* transform: translateX(-50%); */
+}
+
+.App__video {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+#hatImage {
+  display: none;
+  position: absolute;
+  z-index: -1000;
+  aspect-ratio: 171 / 91;
+}
+
+#downloaded-image {
+  display: block;
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200; */
+}
+
+.cap {
+  display: none;
+  z-index: -1000;
+  position: absolute;
+}
