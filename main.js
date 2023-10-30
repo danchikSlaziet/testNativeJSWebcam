@@ -44,12 +44,10 @@ nextButton.addEventListener('click', () => {
   firstPage.classList.add('first-page_disabled')
 })
 
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    loadingPage.classList.add('loading-page_disabled');
-  }, 2500);
-  clearTimeout();
-})
+setTimeout(() => {
+  loadingPage.classList.add('loading-page_disabled');
+}, 2500);
+clearTimeout();
 
 // Функция для получения доступа к камере
 async function startCamera() {
