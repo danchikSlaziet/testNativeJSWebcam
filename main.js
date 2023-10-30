@@ -1,17 +1,55 @@
 
-
+const loadingPage = document.querySelector('.loading-page');
 const videoElement = document.getElementById('camera-stream');
+const startCameraFirst = document.getElementById('start-camera-first');
 const startCameraButton = document.getElementById('start-camera');
 const stopCameraButton = document.getElementById('stop-camera');
 const downloadButton = document.getElementById('download-button');
-const downloadedImage = document.getElementById('downloaded-image');
+const downloadedImage = document.querySelector('.result-image');
 const canvasElement = document.getElementById('canvas');
 const hatImage = document.getElementById('hatImage');
+const firstPage = document.querySelector('.first-page');
+const nextButton = firstPage.querySelector('.first-page__next-button');
 
 let stream;
 let hatWidth;
 let x;
 let y;
+
+function parseQuery(queryString) {
+  let query = {};
+  let pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+  for (let i = 0; i < pairs.length; i++) {
+      let pair = pairs[i].split('=');
+      query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+  }
+  return query;
+}
+
+let app = window.Telegram.WebApp;
+let query = app.initData;
+let user_data_str = parseQuery(query).user;
+// let user_data = JSON.parse(user_data_str)
+app.expand();
+app.ready();
+setTimeout(() => {console.log(user_data_str)}, 5000)
+
+
+startCameraFirst.addEventListener('click', () => {
+  nextButton.disabled = false;
+  nextButton.classList.remove('button_bg_gray');
+});
+
+nextButton.addEventListener('click', () => {
+  firstPage.classList.add('first-page_disabled')
+})
+
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    loadingPage.classList.add('loading-page_disabled');
+  }, 2500);
+  clearTimeout();
+})
 
 // Функция для получения доступа к камере
 async function startCamera() {
@@ -37,6 +75,7 @@ function stopCamera() {
 
 // Назначение обработчиков событий кнопкам
 startCameraButton.addEventListener('click', startCamera);
+startCameraFirst.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);
 
 // Изначально отключаем кнопку "Выключить камеру"
@@ -53,7 +92,6 @@ downloadButton.addEventListener('click', () => {
   canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
   const hatX = x;
   const hatY = y;
-  console.log(hatX, hatY, hatWidth)
   canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
 
   // const url = canvasElement.toDataURL('image/png');
@@ -62,7 +100,7 @@ downloadButton.addEventListener('click', () => {
   // a.download = 'overlayed_image.png';
   // a.click();
   downloadedImage.src = canvasElement.toDataURL('image/png');
-      downloadedImage.classList.add('displayed');
+  downloadedImage.classList.add('result-image_active');
 });
 
 

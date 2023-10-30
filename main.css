@@ -9,15 +9,124 @@ video::-webkit-media-controls-enclosure {
 body {
   margin: 0;
   overflow-x: hidden;
+  max-height: 100vh;
 }
 
-.App {
-  /* overflow: hidden; */
+.loading-page {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #e40422;
+  display: flex;
+  z-index: 200;
+}
+
+.loading-page_disabled {
+  display: none;
+}
+
+.loading-page__progress {
+  width: 90%;
+  background-color: gray;
+  height: 3px;
+  align-self: flex-end;
+  margin: 0 auto 20px auto;
+}
+
+.loading-page__currentProgress {
+  height: 3px;
+  background-color: #FFF;
+  width: 0;
+  animation: loading 2.5s;
+}
+
+@keyframes loading {
+  from {
+      width: 0;
+  }
+
+  to {
+      width: 100%;
+  }
+}
+
+.first-page {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #e40422;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  padding: 0 10px;
+}
+
+.first-page_disabled {
+  display: none;
+}
+
+.first-page__text {
+  margin: 0 auto;
+  width: 70%;
+  text-align: center;
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  z-index: 300;
+}
+
+.main {
   width: 100%;
-  min-height: 100vh;
+  min-height: 480px;
+  margin-top: 150px;
+  margin-bottom: 20px;
 }
 
-.App__video-container {
+.main-page {
+  overflow-x: hidden;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.buttons .button {
+  opacity: .6;
+}
+
+
+.button {
+  width: 90%;
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  border-radius: 100px;
+  background: #D9D9D9;
+  z-index: 99;
+}
+
+.button_bg_gray {
+  background-color: gray;
+}
+
+.main__video-container {
   position: relative;
   width: 640px;
   height: 480px;
@@ -26,18 +135,18 @@ body {
   /* transform: translateX(-50%); */
 }
 
-.App__video {
+.main__video {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 99;
 }
 
 canvas {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 99;
 }
 
 #hatImage {
@@ -47,12 +156,12 @@ canvas {
   aspect-ratio: 171 / 91;
 }
 
-#downloaded-image {
+.result-image {
+  display: none;
+}
+
+.result-image_active {
   display: block;
-  /* position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 200; */
 }
 
 .cap {

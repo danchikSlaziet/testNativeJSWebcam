@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="./main.css">
   <script defer src="face-api.min.js"></script>
   <script defer src="main.js"></script>
@@ -11,17 +12,32 @@
 </head>
 
 <body>
-  <div class="App">
-    <div class="App__video-container">
-      <video id="camera-stream" playsinline autoplay muted="muted" class="App__video"></video>
-      <canvas id="canvas" style="aspect-ratio: 171 / 91;"></canvas>
-      <img id="hatImage" src="images/overlay-cap.png" class="cap" alt="Hat">
+  <img class="logo" src="./images/logo.png" alt="МТС логотип">
+  <div class="loading-page">
+    <div class="loading-page__progress">
+      <div class="loading-page__currentProgress"></div>
     </div>
   </div>
-  <button id="start-camera">Включить камеру</button>
-  <button id="stop-camera">Выключить камеру</button>
-  <button id="download-button">Показать фото</button>
-  <img id="downloaded-image" class="displayed" src="" alt="Downloaded Image">
+  <div class="first-page">
+    <p class="first-page__text">Для корректной работы приложения следует дать доступ к камере</p>
+    <button class="button" id="start-camera-first">Включить камеру</button>
+    <button class="button button_bg_gray first-page__next-button" disabled>Далее</button>
+  </div>
+  <div class="main-page">
+    <div class="main">
+      <div class="main__video-container">
+        <video id="camera-stream" playsinline autoplay muted="muted" class="main__video"></video>
+        <canvas id="canvas" style="aspect-ratio: 171 / 91;"></canvas>
+        <img id="hatImage" src="images/overlay-cap.png" class="cap" alt="Hat">
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="button" id="start-camera">Включить камеру</button>
+      <button class="button" id="stop-camera">Выключить камеру</button>
+      <button class="button" id="download-button">Показать фото</button>
+    </div>
+    <img id="downloaded-image" class="result-image" src="" alt="Downloaded Image">
+  </div>
 </body>
 
 </html>
