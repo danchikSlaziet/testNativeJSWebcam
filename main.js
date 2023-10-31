@@ -39,7 +39,8 @@ window.addEventListener('DOMContentLoaded', () => {
   app.expand();
   app.ready();
   userChatId = user_data_str.id;
-
+  console.log(user_data_str["id"], user_data["id"])
+  console.log(user_data_str, user_data)
 });
 
 sendButton.addEventListener('click', () => {
