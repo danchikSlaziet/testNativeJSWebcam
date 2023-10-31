@@ -85,10 +85,10 @@ sendButton.addEventListener('click', () => {
 nextButton.addEventListener('click', () => {
   firstPage.classList.add('first-page_disabled');
   loadingNeuro.classList.remove('loading-neuro_disabled');
+  stopCamera();
+  startCamera();
   setTimeout(() => {
     loadingNeuro.classList.add('loading-neuro_disabled');
-    stopCamera();
-    startCamera();
   }, 2500);
   clearTimeout();
 })
