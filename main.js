@@ -17,6 +17,9 @@ let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
+let detect = new MobileDetect(window.navigator.userAgent)
+console.log("OS: " + detect.os());
+
 let stream;
 let hatWidth;
 let x;
