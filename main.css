@@ -169,3 +169,9 @@ canvas {
   z-index: -1000;
   position: absolute;
 }
+
+.send-button {
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+}

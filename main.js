@@ -1,4 +1,4 @@
-
+const sendButton = document.querySelector('.send-button');
 const loadingPage = document.querySelector('.loading-page');
 const videoElement = document.getElementById('camera-stream');
 const startCameraFirst = document.getElementById('start-camera-first');
@@ -10,6 +10,11 @@ const canvasElement = document.getElementById('canvas');
 const hatImage = document.getElementById('hatImage');
 const firstPage = document.querySelector('.first-page');
 const nextButton = firstPage.querySelector('.first-page__next-button');
+
+const botToken = '4525623';
+let userChatId = '';
+const photoPath = './images/logo.png';
+const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
 let stream;
 let hatWidth;
@@ -26,13 +31,47 @@ function parseQuery(queryString) {
   return query;
 }
 
-let app = window.Telegram.WebApp;
-let query = app.initData;
-let user_data_str = parseQuery(query).user;
-// let user_data = JSON.parse(user_data_str)
-app.expand();
-app.ready();
-setTimeout(() => {console.log(user_data_str)}, 5000)
+window.addEventListener('DOMContentLoaded', () => {
+  let app = window.Telegram.WebApp;
+  let query = app.initData;
+  let user_data_str = parseQuery(query).user;
+  let user_data = JSON.parse(user_data_str)
+  app.expand();
+  app.ready();
+  console.log(user_data_str)
+  // userChatId = user_data_str.id;
+
+});
+
+sendButton.addEventListener('click', () => {
+    downloadedImage.toBlob(function (blob) {
+    // Формируем объект FormData для отправки файла
+    const formData = new FormData();
+    formData.append('chat_id', userChatId);
+    formData.append('photo', blob, 'photo.png');
+  
+    // Формируем URL для отправки фотографии
+    const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+  
+    // Отправка фотографии на сервер Telegram
+    fetch(apiUrl, {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data.ok) {
+          console.log('Фотография успешно отправлена в Telegram.');
+        } else {
+          console.error('Произошла ошибка при отправке фотографии.');
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
+  });
+});
 
 
 startCameraFirst.addEventListener('click', () => {
