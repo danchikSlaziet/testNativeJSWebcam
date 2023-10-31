@@ -42,6 +42,46 @@ body {
   animation: loading 2.5s;
 }
 
+.loading-neuro {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #e40422;
+  display: flex;
+  z-index: 200;
+}
+
+.loading-neuro__text {
+  margin: 0;
+  color: #FFF;
+  font-size: 25px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loading-neuro_disabled {
+  display: none;
+}
+
+.loading-neuro__progress {
+  width: 90%;
+  background-color: gray;
+  height: 3px;
+  align-self: flex-end;
+  margin: 0 auto 20px auto;
+}
+
+.loading-neuro__currentProgress {
+  height: 3px;
+  background-color: #FFF;
+  width: 0;
+  animation: loading 2.5s;
+}
+
 @keyframes loading {
   from {
       width: 0;

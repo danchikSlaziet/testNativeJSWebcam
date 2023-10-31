@@ -1,5 +1,6 @@
 const sendButton = document.querySelector('.send-button');
 const loadingPage = document.querySelector('.loading-page');
+const loadingNeuro = document.querySelector('.loading-neuro');
 const videoElement = document.getElementById('camera-stream');
 const startCameraFirst = document.getElementById('start-camera-first');
 const startCameraButton = document.getElementById('start-camera');
@@ -89,7 +90,12 @@ startCameraFirst.addEventListener('click', () => {
 });
 
 nextButton.addEventListener('click', () => {
-  firstPage.classList.add('first-page_disabled')
+  firstPage.classList.add('first-page_disabled');
+  loadingNeuro.classList.remove('loading-neuro_disabled');
+  setTimeout(() => {
+    loadingNeuro.classList.add('loading-neuro_disabled');
+  }, 2500);
+  clearTimeout();
 })
 
 setTimeout(() => {
