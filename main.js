@@ -38,9 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let user_data = JSON.parse(user_data_str)
   app.expand();
   app.ready();
-  userChatId = user_data_str.id;
-  console.log(user_data_str["id"], user_data["id"])
-  console.log(user_data_str, user_data)
+  userChatId = user_data["id"];
 });
 
 sendButton.addEventListener('click', () => {
