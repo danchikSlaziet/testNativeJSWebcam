@@ -83,6 +83,7 @@ sendButton.addEventListener('click', () => {
 
 
 startCameraFirst.addEventListener('click', () => {
+  startCamera();
   nextButton.disabled = false;
   nextButton.classList.remove('button_bg_gray');
 });
@@ -99,7 +100,7 @@ clearTimeout();
 // Функция для получения доступа к камере
 async function startCamera() {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
     stopCameraButton.disabled = false;
     startCameraButton.disabled = true;  
@@ -120,7 +121,6 @@ function stopCamera() {
 
 // Назначение обработчиков событий кнопкам
 startCameraButton.addEventListener('click', startCamera);
-startCameraFirst.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);
 
 // Изначально отключаем кнопку "Выключить камеру"
