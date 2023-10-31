@@ -56,6 +56,7 @@ body {
 .loading-neuro__text {
   margin: 0;
   color: #FFF;
+  text-wrap: nowrap;
   font-size: 25px;
   position: absolute;
   left: 50%;
