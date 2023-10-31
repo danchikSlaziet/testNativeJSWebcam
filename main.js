@@ -87,6 +87,8 @@ nextButton.addEventListener('click', () => {
   loadingNeuro.classList.remove('loading-neuro_disabled');
   setTimeout(() => {
     loadingNeuro.classList.add('loading-neuro_disabled');
+    stopCamera();
+    startCamera();
   }, 2500);
   clearTimeout();
 })
@@ -143,11 +145,6 @@ downloadButton.addEventListener('click', () => {
   const hatY = y;
   canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
 
-  // const url = canvasElement.toDataURL('image/png');
-  // const a = document.createElement('a');
-  // a.href = url;
-  // a.download = 'overlayed_image.png';
-  // a.click();
   downloadedImage.src = canvasElement.toDataURL('image/png');
   downloadedImage.classList.add('result-image_active');
 });
