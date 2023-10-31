@@ -11,7 +11,7 @@ const hatImage = document.getElementById('hatImage');
 const firstPage = document.querySelector('.first-page');
 const nextButton = firstPage.querySelector('.first-page__next-button');
 
-const botToken = '4525623';
+const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
