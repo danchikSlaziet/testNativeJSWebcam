@@ -38,13 +38,22 @@ window.addEventListener('DOMContentLoaded', () => {
   let user_data = JSON.parse(user_data_str)
   app.expand();
   app.ready();
-  console.log(user_data_str)
-  // userChatId = user_data_str.id;
+  userChatId = user_data_str.id;
 
 });
 
 sendButton.addEventListener('click', () => {
-    downloadedImage.toBlob(function (blob) {
+
+    const canvas = document.createElement('canvas');
+    canvas.width = downloadedImage.width; // Ширина вашего изображения
+    canvas.height = downloadedImage.height; // Высота вашего изображения
+    const ctx = canvas.getContext('2d');
+    
+    // Нарисуйте изображение на Canvas
+    ctx.drawImage(downloadedImage, 0, 0, canvas.width, canvas.height);
+
+
+    canvas.toBlob(function (blob) {
     // Формируем объект FormData для отправки файла
     const formData = new FormData();
     formData.append('chat_id', userChatId);
