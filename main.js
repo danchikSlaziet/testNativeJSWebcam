@@ -82,13 +82,6 @@ sendButton.addEventListener('click', () => {
   });
 });
 
-
-startCameraFirst.addEventListener('click', () => {
-  startCamera();
-  nextButton.disabled = false;
-  nextButton.classList.remove('button_bg_gray');
-});
-
 nextButton.addEventListener('click', () => {
   firstPage.classList.add('first-page_disabled');
   loadingNeuro.classList.remove('loading-neuro_disabled');
@@ -126,6 +119,11 @@ function stopCamera() {
 }
 
 // Назначение обработчиков событий кнопкам
+startCameraFirst.addEventListener('click', () => {
+  startCamera();
+  nextButton.disabled = false;
+  nextButton.classList.remove('button_bg_gray');
+});
 startCameraButton.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);
 
