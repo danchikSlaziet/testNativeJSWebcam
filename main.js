@@ -11,14 +11,30 @@ const canvasElement = document.getElementById('canvas');
 const hatImage = document.getElementById('hatImage');
 const firstPage = document.querySelector('.first-page');
 const nextButton = firstPage.querySelector('.first-page__next-button');
+const videoContainer = document.querySelector('.main__video-container');
+const resultImage = document.querySelector('.result-image');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
-let detect = new MobileDetect(window.navigator.userAgent)
-console.log("OS: " + detect.os());
+let detect = new MobileDetect(window.navigator.userAgent);
+
+console.log(detect.os())
+
+if (detect.os() === null) {
+  console.log('pc');
+  videoContainer.style = `
+    left: 50%;
+    transform: translateX(-50%);
+  `;
+  resultImage.style = `
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  `;
+}
 
 let stream;
 let hatWidth;
@@ -88,8 +104,11 @@ sendButton.addEventListener('click', () => {
 nextButton.addEventListener('click', () => {
   firstPage.classList.add('first-page_disabled');
   loadingNeuro.classList.remove('loading-neuro_disabled');
-  stopCamera();
-  startCamera();
+  if (detect.os() === 'iOS') {
+    stopCamera();
+    startCamera();
+    console.log('iOS')
+  }
   setTimeout(() => {
     loadingNeuro.classList.add('loading-neuro_disabled');
   }, 2500);
