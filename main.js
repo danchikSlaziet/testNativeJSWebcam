@@ -17,6 +17,7 @@ const attachmentPhoto = document.querySelector('.attachment-photo');
 const sendAttachButton = document.querySelector('.send-attach-button');
 const inputPhoto = document.querySelector('.attach-photo-button');
 const maskButton = document.querySelector('.mask-button');
+const canvasElement2 = document.getElementById('canvas2');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -205,7 +206,18 @@ maskButton.addEventListener('click', () => {
 });
 
 sendAttachButton.addEventListener('click', () => {
-  debugger
+  // canvasElement2.width = attachmentPhoto.width;
+  // canvasElement2.height = attachmentPhoto.height;
+
+  const hatAspectRatio = hatImage.width / hatImage.height;
+  const hatHeight = hatWidth / hatAspectRatio;
+
+  const canvasContext = canvasElement2.getContext('2d');
+  canvasContext.drawImage(hatImage, 0, 0, canvasElement2.width, canvasElement2.height);
+  const hatX = x;
+  const hatY = y;
+  canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
+
   const canvas = document.createElement('canvas');
   canvas.width = attachmentPhoto.width; // Ширина вашего изображения
   canvas.height = attachmentPhoto.height; // Высота вашего изображения
