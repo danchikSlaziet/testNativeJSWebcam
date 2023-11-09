@@ -259,3 +259,7 @@ canvas {
   display: block;
   margin-top: 15px;
 }
+
+#new-photo {
+  display: none;
+}

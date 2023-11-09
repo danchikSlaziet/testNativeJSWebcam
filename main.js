@@ -18,6 +18,7 @@ const sendAttachButton = document.querySelector('.send-attach-button');
 const inputPhoto = document.querySelector('.attach-photo-button');
 const maskButton = document.querySelector('.mask-button');
 const canvasElement2 = document.getElementById('canvas2');
+const canvasElement3 = document.getElementById('canvas3');
 const newPhoto = document.getElementById('new-photo');
 const screenButton = document.querySelector('.screen-button');
 
@@ -210,30 +211,30 @@ maskButton.addEventListener('click', () => {
   startFacePhotoDetection(attachmentPhoto, canvas2);
 });
 
-screenButton.addEventListener('click', () => {
-  canvasElement2.width = attachmentPhoto.width;
-  canvasElement2.height = attachmentPhoto.height;
+sendAttachButton.addEventListener('click', () => {
+  canvasElement3.width = attachmentPhoto.width;
+  canvasElement3.height = attachmentPhoto.height;
 
   const hatAspectRatio = hatImage.width / hatImage.height;
   const hatHeight = staticHatWidth / hatAspectRatio;
 
-  const canvasContext = canvasElement2.getContext('2d');
-  canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement2.width, canvasElement2.height);
+  const canvasContext = canvasElement3.getContext('2d');
+  canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
   const hatX = staticX;
   const hatY = staticY;
   canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
+  newPhoto.src = canvasElement3.toDataURL('image/png');
+  attachmentPhoto.src = canvasElement3.toDataURL('image/png');
 
-  newPhoto.src = canvasElement2.toDataURL('image/png');
-})
 
-sendAttachButton.addEventListener('click', () => {
+
   const canvas = document.createElement('canvas');
-    canvas.width = newPhoto.width; // Ширина вашего изображения
-    canvas.height = newPhoto.height; // Высота вашего изображения
+    canvas.width = attachmentPhoto.width; // Ширина вашего изображения
+    canvas.height = attachmentPhoto.height; // Высота вашего изображения
     const ctx = canvas.getContext('2d');
     
     // Нарисуйте изображение на Canvas
-    ctx.drawImage(newPhoto, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(attachmentPhoto, 0, 0, canvas.width, canvas.height);
 
 
     canvas.toBlob(function (blob) {
