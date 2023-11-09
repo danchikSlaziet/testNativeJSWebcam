@@ -111,6 +111,7 @@ sendButton.addEventListener('click', () => {
   });
 });
 
+
 setTimeout(() => {
   loadingPage.classList.add('loading-page_disabled');
 }, 2500);
@@ -203,6 +204,11 @@ inputPhoto.onchange = function(event) {
 }
 
 maskButton.addEventListener('click', () => {
+  canvasElement3.width = attachmentPhoto.width;
+  canvasElement3.height = attachmentPhoto.height;
+  const canvasContext = canvasElement3.getContext('2d');
+  canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+  attachmentPhoto.src = canvasElement3.toDataURL('image/png');
   startFacePhotoDetection(attachmentPhoto, canvas2);
 });
 
@@ -282,14 +288,16 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           const rightPoint = rightEyeBrow.splice(-1)[0];
           const width = (rightPoint.x - leftPoint.x) * 2;
 
+          const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
+
           canvasElement.width = width;
           hatWidth = width;
           canvasElement.height = 91;
           canvasElement.style.width = width + 'px';
           x = (leftPoint.x - width * 0.10) - 10;
           y = (leftEyeBrow[0].y - width * 0.55);
-          canvasElement.style.left = (leftPoint.x - width * 0.10) - 10 + 'px';
-          canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55) + 'px';
+          canvasElement.style.left = ((leftPoint.x - width * 0.10) - 10)*scale + 'px';
+          canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55)*scale + 'px';
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
       });
