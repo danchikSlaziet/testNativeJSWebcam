@@ -217,13 +217,6 @@ canvas {
   margin-top: 15px;
 }
 
-.photo-container {
-  position: relative;
-  width: fit-content;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .attach-photo-button {
   margin: 0 auto;
   display: block;
@@ -242,9 +235,17 @@ canvas {
   margin-top: 15px;
 }
 
+
+.photo-container {
+  position: relative;
+  width: fit-content;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .attachment-photo {
   display: none;
-  /* width: 100%; */
+  width: 300px;
   margin-top: 15px;
   object-fit: cover;
   object-position: center center;

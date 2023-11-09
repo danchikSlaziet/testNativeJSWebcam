@@ -10,7 +10,6 @@ const downloadedImage = document.querySelector('.result-image');
 const canvasElement = document.getElementById('canvas');
 const hatImage = document.getElementById('hatImage');
 const firstPage = document.querySelector('.first-page');
-const nextButton = firstPage.querySelector('.first-page__next-button');
 const videoContainer = document.querySelector('.main__video-container');
 const resultImage = document.querySelector('.result-image');
 const attachmentPhoto = document.querySelector('.attachment-photo');
@@ -112,20 +111,6 @@ sendButton.addEventListener('click', () => {
   });
 });
 
-nextButton.addEventListener('click', () => {
-  firstPage.classList.add('first-page_disabled');
-  loadingNeuro.classList.remove('loading-neuro_disabled');
-  if (detect.os() === 'iOS') {
-    stopCamera();
-    startCamera();
-    console.log('iOS')
-  }
-  setTimeout(() => {
-    loadingNeuro.classList.add('loading-neuro_disabled');
-  }, 2500);
-  clearTimeout();
-})
-
 setTimeout(() => {
   loadingPage.classList.add('loading-page_disabled');
 }, 2500);
@@ -139,8 +124,17 @@ async function startCamera() {
     stopCameraButton.disabled = false;
     startCameraButton.disabled = true;
     if (!firstPage.className.includes('disabled')) {
-      nextButton.disabled = false;
-      nextButton.classList.remove('button_bg_gray');
+      firstPage.classList.add('first-page_disabled');
+      loadingNeuro.classList.remove('loading-neuro_disabled');
+      if (detect.os() === 'iOS') {
+        stopCamera();
+        startCamera();
+        console.log('iOS')
+      }
+      setTimeout(() => {
+        loadingNeuro.classList.add('loading-neuro_disabled');
+      }, 2500);
+      clearTimeout();
     }
     console.log('доступ к камере дан')
   } catch (error) {
@@ -311,30 +305,29 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
   const context = canvasElement.getContext('2d');
 
-      const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
-      context.clearRect(0, 0, canvasElement.width, canvasElement.height);
-      detections.forEach((detection) => {
-          const landmarks = detection.landmarks;
-          const leftEyeBrow = landmarks.getLeftEyeBrow();
-          const rightEyeBrow = landmarks.getRightEyeBrow();
+  const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
+    context.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    detections.forEach((detection) => {
+        const landmarks = detection.landmarks;
+        const leftEyeBrow = landmarks.getLeftEyeBrow();
+        const rightEyeBrow = landmarks.getRightEyeBrow();
 
-          const leftPoint = leftEyeBrow[0];
-          const rightPoint = rightEyeBrow.splice(-1)[0];
-          const width = (rightPoint.x - leftPoint.x) * 2;
+        const leftPoint = leftEyeBrow[0];
+        const rightPoint = rightEyeBrow.splice(-1)[0];
+        const width = (rightPoint.x - leftPoint.x) * 2;
 
-          const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
+        canvasElement.width = width;
+        staticHatWidth = width;
+        canvasElement.height = 91;
+        canvasElement.style.width = width + 'px';
+        staticX = (leftPoint.x - width * 0.10);
+        staticY = (leftEyeBrow[0].y - width * 0.55);
+        canvasElement.style.left = (leftPoint.x - width * 0.10) - 4 + 'px';
+        canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55) + 'px';
 
-          canvasElement.width = width;
-          staticHatWidth = width;
-          canvasElement.height = 91;
-          canvasElement.style.width = width + 'px';
-          staticX = (leftPoint.x - width * 0.10);
-          staticY = (leftEyeBrow[0].y - width * 0.55);
-          canvasElement.style.left = (leftPoint.x - width * 0.10)*scale - 4 + 'px';
-          canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55)*scale + 'px';
+        context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
+    });
 
-          context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
-      });
   canvasElement3.width = attachmentPhoto.width;
   canvasElement3.height = attachmentPhoto.height;
 
