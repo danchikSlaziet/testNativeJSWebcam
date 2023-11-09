@@ -18,6 +18,7 @@ const sendAttachButton = document.querySelector('.send-attach-button');
 const inputPhoto = document.querySelector('.attach-photo-button');
 const maskButton = document.querySelector('.mask-button');
 const canvasElement2 = document.getElementById('canvas2');
+const newPhoto = document.getElementById('new-photo');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -45,6 +46,9 @@ let stream;
 let hatWidth;
 let x;
 let y;
+let staticHatWidth;
+let staticX;
+let staticY;
 
 function parseQuery(queryString) {
   let query = {};
@@ -206,30 +210,29 @@ maskButton.addEventListener('click', () => {
 });
 
 sendAttachButton.addEventListener('click', () => {
-  // canvasElement2.width = attachmentPhoto.width;
-  // canvasElement2.height = attachmentPhoto.height;
+  canvasElement2.width = attachmentPhoto.width;
+  canvasElement2.height = attachmentPhoto.height;
 
   const hatAspectRatio = hatImage.width / hatImage.height;
-  const hatHeight = hatWidth / hatAspectRatio;
+  const hatHeight = staticHatWidth / hatAspectRatio;
 
   const canvasContext = canvasElement2.getContext('2d');
-  canvasContext.drawImage(hatImage, 0, 0, canvasElement2.width, canvasElement2.height);
-  const hatX = x;
-  const hatY = y;
-  canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
+  canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement2.width, canvasElement2.height);
+  const hatX = staticX;
+  const hatY = staticY;
+  const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
+  canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
 
-  const canvas = document.createElement('canvas');
-  canvas.width = attachmentPhoto.width; // Ширина вашего изображения
-  canvas.height = attachmentPhoto.height; // Высота вашего изображения
-  const ctx = canvas.getContext('2d');
+  newPhoto.src = canvasElement2.toDataURL('image/png');
   
   // Нарисуйте изображение на Canvas
-  ctx.drawImage(attachmentPhoto, 0, 0, canvas.width, canvas.height);
+  // ctx.drawImage(attachmentPhoto, 0, 0, canvas.width, canvas.height);
 
 
   canvas.toBlob(function (blob) {
   // Формируем объект FormData для отправки файла
   const formData = new FormData();
+  console.log(userChatId);
   formData.append('chat_id', userChatId);
   formData.append('photo', blob, 'photo.png');
 
@@ -315,11 +318,11 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
           const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
 
           canvasElement.width = width;
-          hatWidth = width;
+          staticHatWidth = width;
           canvasElement.height = 91;
           canvasElement.style.width = width + 'px';
-          x = (leftPoint.x - width * 0.10) - 10;
-          y = (leftEyeBrow[0].y - width * 0.55);
+          staticX = (leftPoint.x - width * 0.10);
+          staticY = (leftEyeBrow[0].y - width * 0.55);
           canvasElement.style.left = (leftPoint.x - width * 0.10)*scale - 4 + 'px';
           canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55)*scale + 'px';
 

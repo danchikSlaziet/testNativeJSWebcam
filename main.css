@@ -136,7 +136,7 @@ body {
 }
 
 .main-page {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .buttons {
