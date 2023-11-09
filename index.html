@@ -46,6 +46,14 @@
     </div>
     <img id="downloaded-image" class="result-image" src="" alt="Downloaded Image">
     <button class="button send-button">Получить фото в сообщении</button>
+    <input type="file" class="button attach-photo-button" placeholder="Прикрепить фото">
+    <div class="photo-container">
+      <img class="attachment-photo" src="" alt="photo">
+      <canvas id="canvas2" style="aspect-ratio: 171 / 91;"></canvas>
+      <img id="hatImage2" src="images/overlay-cap.png" class="cap" alt="Hat">
+    </div>
+    <button class="button mask-button">Наложить маску</button>
+    <button class="button send-attach-button">Получить фото в сообщении</button>
   </div>
   <script>
     eruda.init();

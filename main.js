@@ -13,6 +13,10 @@ const firstPage = document.querySelector('.first-page');
 const nextButton = firstPage.querySelector('.first-page__next-button');
 const videoContainer = document.querySelector('.main__video-container');
 const resultImage = document.querySelector('.result-image');
+const attachmentPhoto = document.querySelector('.attachment-photo');
+const sendAttachButton = document.querySelector('.send-attach-button');
+const inputPhoto = document.querySelector('.attach-photo-button');
+const maskButton = document.querySelector('.mask-button');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -126,7 +130,12 @@ async function startCamera() {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
     stopCameraButton.disabled = false;
-    startCameraButton.disabled = true;  
+    startCameraButton.disabled = true;
+    if (!firstPage.className.includes('disabled')) {
+      nextButton.disabled = false;
+      nextButton.classList.remove('button_bg_gray');
+    }
+    console.log('доступ к камере дан')
   } catch (error) {
     console.error('Ошибка при получении доступа к камере:', error);
   }
@@ -145,8 +154,6 @@ function stopCamera() {
 // Назначение обработчиков событий кнопкам
 startCameraFirst.addEventListener('click', () => {
   startCamera();
-  nextButton.disabled = false;
-  nextButton.classList.remove('button_bg_gray');
 });
 startCameraButton.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);
@@ -171,41 +178,141 @@ downloadButton.addEventListener('click', () => {
   downloadedImage.classList.add('result-image_active');
 });
 
+inputPhoto.onchange = function(event) {
+  var target = event.target;
 
-  async function startFaceDetection() {
-    const MODEL_URL = './models';
-    await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
-    await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
-    await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
-    await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
-
-    const context = canvas.getContext('2d');
-
-    setInterval(async () => {
-        const detections = await window.faceapi.detectAllFaces(videoElement).withFaceLandmarks();
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        detections.forEach((detection) => {
-            const landmarks = detection.landmarks;
-            const leftEyeBrow = landmarks.getLeftEyeBrow();
-            const rightEyeBrow = landmarks.getRightEyeBrow();
-
-            const leftPoint = leftEyeBrow[0];
-            const rightPoint = rightEyeBrow.splice(-1)[0];
-            const width = (rightPoint.x - leftPoint.x) * 2;
-
-            canvas.width = width;
-            hatWidth = width;
-            canvas.height = 91;
-            canvas.style.width = width + 'px';
-            x = (leftPoint.x - width * 0.10) - 10;
-            y = (leftEyeBrow[0].y - width * 0.55);
-            canvas.style.left = (leftPoint.x - width * 0.10) - 10 + 'px';
-            canvas.style.top = (leftEyeBrow[0].y - width * 0.55) + 'px';
-
-            context.drawImage(hatImage, 0, 0, canvas.width, 91);
-        });
-    }, 10);
+  if (!FileReader) {
+      alert('FileReader не поддерживается — облом');
+      return;
   }
 
-  startFaceDetection();
+  if (!target.files.length) {
+      alert('Ничего не загружено');
+      return;
+  }
+
+  var fileReader = new FileReader();
+  fileReader.onload = function() {
+    attachmentPhoto.classList.add('attachment-photo_active');
+    attachmentPhoto.src = fileReader.result;
+  }
+
+  fileReader.readAsDataURL(target.files[0]);
+}
+
+maskButton.addEventListener('click', () => {
+  startFacePhotoDetection(attachmentPhoto, canvas2);
+});
+
+sendAttachButton.addEventListener('click', () => {
+  debugger
+  const canvas = document.createElement('canvas');
+  canvas.width = attachmentPhoto.width; // Ширина вашего изображения
+  canvas.height = attachmentPhoto.height; // Высота вашего изображения
+  const ctx = canvas.getContext('2d');
+  
+  // Нарисуйте изображение на Canvas
+  ctx.drawImage(attachmentPhoto, 0, 0, canvas.width, canvas.height);
+
+
+  canvas.toBlob(function (blob) {
+  // Формируем объект FormData для отправки файла
+  const formData = new FormData();
+  formData.append('chat_id', userChatId);
+  formData.append('photo', blob, 'photo.png');
+
+  // Формируем URL для отправки фотографии
+  const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+
+  // Отправка фотографии на сервер Telegram
+  fetch(apiUrl, {
+    method: 'POST',
+    body: formData,
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.ok) {
+        console.log('Фотография успешно отправлена в Telegram.');
+      } else {
+        console.error('Произошла ошибка при отправке фотографии.');
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+    });
+});
+});
+
+async function startFaceVideoDetection(assetElement, canvasElement) {
+  const MODEL_URL = './models';
+  await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
+  await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
+  await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
+  await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
+
+  const context = canvasElement.getContext('2d');
+
+  setInterval(async () => {
+      const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
+      context.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+      detections.forEach((detection) => {
+          const landmarks = detection.landmarks;
+          const leftEyeBrow = landmarks.getLeftEyeBrow();
+          const rightEyeBrow = landmarks.getRightEyeBrow();
+
+          const leftPoint = leftEyeBrow[0];
+          const rightPoint = rightEyeBrow.splice(-1)[0];
+          const width = (rightPoint.x - leftPoint.x) * 2;
+
+          canvasElement.width = width;
+          hatWidth = width;
+          canvasElement.height = 91;
+          canvasElement.style.width = width + 'px';
+          x = (leftPoint.x - width * 0.10) - 10;
+          y = (leftEyeBrow[0].y - width * 0.55);
+          canvasElement.style.left = (leftPoint.x - width * 0.10) - 10 + 'px';
+          canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55) + 'px';
+
+          context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
+      });
+  }, 10);
+}
+
+async function startFacePhotoDetection(assetElement, canvasElement) {
+  const MODEL_URL = './models';
+  await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
+  await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
+  await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
+  await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
+
+  const context = canvasElement.getContext('2d');
+
+      const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
+      context.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      detections.forEach((detection) => {
+          const landmarks = detection.landmarks;
+          const leftEyeBrow = landmarks.getLeftEyeBrow();
+          const rightEyeBrow = landmarks.getRightEyeBrow();
+
+          const leftPoint = leftEyeBrow[0];
+          const rightPoint = rightEyeBrow.splice(-1)[0];
+          const width = (rightPoint.x - leftPoint.x) * 2;
+
+          const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
+
+          canvasElement.width = width;
+          hatWidth = width;
+          canvasElement.height = 91;
+          canvasElement.style.width = width + 'px';
+          x = (leftPoint.x - width * 0.10) - 10;
+          y = (leftEyeBrow[0].y - width * 0.55);
+          canvasElement.style.left = (leftPoint.x - width * 0.10)*scale - 4 + 'px';
+          canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55)*scale + 'px';
+
+          context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
+      });
+}
+
+startFaceVideoDetection(videoElement, canvas);

@@ -216,3 +216,46 @@ canvas {
   display: block;
   margin-top: 15px;
 }
+
+.photo-container {
+  position: relative;
+  width: fit-content;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.attach-photo-button {
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.attach-photo-button::placeholder {
+  color: #000;
+}
+
+.send-attach-button {
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+}
+
+.attachment-photo {
+  display: none;
+  /* width: 100%; */
+  margin-top: 15px;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.attachment-photo_active {
+  display: block;
+}
+
+.mask-button {
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+}
