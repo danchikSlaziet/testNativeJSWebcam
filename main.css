@@ -263,3 +263,7 @@ canvas {
 #new-photo {
   display: none;
 }
+
+#canvas3 {
+  pointer-events: none;
+}

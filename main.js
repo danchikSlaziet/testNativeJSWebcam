@@ -209,7 +209,6 @@ inputPhoto.onchange = function(event) {
 }
 
 maskButton.addEventListener('click', () => {
-  canvasElement3.style.opacity = 1;
   startFacePhotoDetection(attachmentPhoto, canvas2);
 });
 
@@ -336,8 +335,6 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
       });
-
-  canvasElement3.style.opacity = 1;
   canvasElement3.width = attachmentPhoto.width;
   canvasElement3.height = attachmentPhoto.height;
 
@@ -350,6 +347,7 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
   const hatY = staticY;
   canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
   attachmentPhoto.src = canvasElement3.toDataURL('image/png');
+  canvasElement3.style.opacity = 1;
 }
 
 startFaceVideoDetection(videoElement, canvas);
