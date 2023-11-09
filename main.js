@@ -220,43 +220,49 @@ sendAttachButton.addEventListener('click', () => {
   canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement2.width, canvasElement2.height);
   const hatX = staticX;
   const hatY = staticY;
-  const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
-  canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
+  canvasContext.drawImage(hatImage, hatX, hatY, staticHatWidth, hatHeight);
 
   newPhoto.src = canvasElement2.toDataURL('image/png');
+
+
+
+
+  const canvas = document.createElement('canvas');
+    canvas.width = newPhoto.width; // Ширина вашего изображения
+    canvas.height = newPhoto.height; // Высота вашего изображения
+    const ctx = canvas.getContext('2d');
+    
+    // Нарисуйте изображение на Canvas
+    ctx.drawImage(newPhoto, 0, 0, canvas.width, canvas.height);
+
+
+    canvas.toBlob(function (blob) {
+    // Формируем объект FormData для отправки файла
+    const formData = new FormData();
+    formData.append('chat_id', userChatId);
+    formData.append('photo', blob, 'photo.png');
   
-  // Нарисуйте изображение на Canvas
-  // ctx.drawImage(attachmentPhoto, 0, 0, canvas.width, canvas.height);
-
-
-  canvas.toBlob(function (blob) {
-  // Формируем объект FormData для отправки файла
-  const formData = new FormData();
-  console.log(userChatId);
-  formData.append('chat_id', userChatId);
-  formData.append('photo', blob, 'photo.png');
-
-  // Формируем URL для отправки фотографии
-  const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-
-  // Отправка фотографии на сервер Telegram
-  fetch(apiUrl, {
-    method: 'POST',
-    body: formData,
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      if (data.ok) {
-        console.log('Фотография успешно отправлена в Telegram.');
-      } else {
-        console.error('Произошла ошибка при отправке фотографии.');
-      }
+    // Формируем URL для отправки фотографии
+    const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+  
+    // Отправка фотографии на сервер Telegram
+    fetch(apiUrl, {
+      method: 'POST',
+      body: formData,
     })
-    .catch(error => {
-      console.error('Ошибка:', error);
-    });
-});
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data.ok) {
+          console.log('Фотография успешно отправлена в Telegram.');
+        } else {
+          console.error('Произошла ошибка при отправке фотографии.');
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
+  });
 });
 
 async function startFaceVideoDetection(assetElement, canvasElement) {
