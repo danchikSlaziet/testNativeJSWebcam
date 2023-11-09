@@ -186,6 +186,7 @@ downloadButton.addEventListener('click', () => {
 });
 
 inputPhoto.onchange = function(event) {
+  canvasElement3.style.opacity = 0;
   var target = event.target;
 
   if (!FileReader) {
@@ -208,23 +209,23 @@ inputPhoto.onchange = function(event) {
 }
 
 maskButton.addEventListener('click', () => {
+  canvasElement3.style.opacity = 1;
   startFacePhotoDetection(attachmentPhoto, canvas2);
 });
 
 sendAttachButton.addEventListener('click', () => {
-  canvasElement3.width = attachmentPhoto.width;
-  canvasElement3.height = attachmentPhoto.height;
+  // canvasElement3.width = attachmentPhoto.width;
+  // canvasElement3.height = attachmentPhoto.height;
 
-  const hatAspectRatio = hatImage.width / hatImage.height;
-  const hatHeight = staticHatWidth / hatAspectRatio;
+  // const hatAspectRatio = hatImage.width / hatImage.height;
+  // const hatHeight = staticHatWidth / hatAspectRatio;
 
-  const canvasContext = canvasElement3.getContext('2d');
-  canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-  const hatX = staticX;
-  const hatY = staticY;
-  canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
-  newPhoto.src = canvasElement3.toDataURL('image/png');
-  attachmentPhoto.src = canvasElement3.toDataURL('image/png');
+  // const canvasContext = canvasElement3.getContext('2d');
+  // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+  // const hatX = staticX;
+  // const hatY = staticY;
+  // canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
+  // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
 
 
 
@@ -335,6 +336,20 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
       });
+
+  canvasElement3.style.opacity = 1;
+  canvasElement3.width = attachmentPhoto.width;
+  canvasElement3.height = attachmentPhoto.height;
+
+  const hatAspectRatio = hatImage.width / hatImage.height;
+  const hatHeight = staticHatWidth / hatAspectRatio;
+
+  const canvasContext = canvasElement3.getContext('2d');
+  canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+  const hatX = staticX;
+  const hatY = staticY;
+  canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
+  attachmentPhoto.src = canvasElement3.toDataURL('image/png');
 }
 
 startFaceVideoDetection(videoElement, canvas);
