@@ -288,7 +288,7 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           const rightPoint = rightEyeBrow.splice(-1)[0];
           const width = (rightPoint.x - leftPoint.x) * 2;
 
-          const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
+          // const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
 
           canvasElement.width = width;
           hatWidth = width;
@@ -296,8 +296,8 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           canvasElement.style.width = width + 'px';
           x = (leftPoint.x - width * 0.10) - 10;
           y = (leftEyeBrow[0].y - width * 0.55);
-          canvasElement.style.left = ((leftPoint.x - width * 0.10) - 10)*scale + 'px';
-          canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55)*scale + 'px';
+          canvasElement.style.left = (leftPoint.x - width * 0.10) - 10 + 'px';
+          canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55) + 'px';
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
       });
