@@ -19,6 +19,7 @@ const inputPhoto = document.querySelector('.attach-photo-button');
 const maskButton = document.querySelector('.mask-button');
 const canvasElement2 = document.getElementById('canvas2');
 const newPhoto = document.getElementById('new-photo');
+const screenButton = document.querySelector('.screen-button');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -209,7 +210,7 @@ maskButton.addEventListener('click', () => {
   startFacePhotoDetection(attachmentPhoto, canvas2);
 });
 
-sendAttachButton.addEventListener('click', () => {
+screenButton.addEventListener('click', () => {
   canvasElement2.width = attachmentPhoto.width;
   canvasElement2.height = attachmentPhoto.height;
 
@@ -222,15 +223,17 @@ sendAttachButton.addEventListener('click', () => {
   const hatY = staticY;
   canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
 
-  attachmentPhoto.src = canvasElement2.toDataURL('image/png');
+  newPhoto.src = canvasElement2.toDataURL('image/png');
+})
 
+sendAttachButton.addEventListener('click', () => {
   const canvas = document.createElement('canvas');
-    canvas.width = attachmentPhoto.width; // Ширина вашего изображения
-    canvas.height = attachmentPhoto.height; // Высота вашего изображения
+    canvas.width = newPhoto.width; // Ширина вашего изображения
+    canvas.height = newPhoto.height; // Высота вашего изображения
     const ctx = canvas.getContext('2d');
     
     // Нарисуйте изображение на Canvas
-    ctx.drawImage(attachmentPhoto, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(newPhoto, 0, 0, canvas.width, canvas.height);
 
 
     canvas.toBlob(function (blob) {
