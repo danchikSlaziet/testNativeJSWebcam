@@ -127,13 +127,11 @@ async function startCamera() {
     if (!firstPage.className.includes('disabled')) {
       firstPage.classList.add('first-page_disabled');
       loadingNeuro.classList.remove('loading-neuro_disabled');
-      if (detect.os() === 'iOS') {
-        stopCamera();
-        startCamera();
-        stopCamera();
-        startCamera();
-        console.log('iOS')
-      }
+      // if (detect.os() === 'iOS') {
+      //   stopCamera();
+      //   startCamera();
+      //   console.log('iOS')
+      // }
       setTimeout(() => {
         loadingNeuro.classList.add('loading-neuro_disabled');
       }, 2500);
@@ -158,6 +156,11 @@ function stopCamera() {
 // Назначение обработчиков событий кнопкам
 startCameraFirst.addEventListener('click', () => {
   startCamera();
+  if (detect.os() === 'iOS') {
+    stopCamera();
+    startCamera();
+    console.log('iOS');
+  }
 });
 startCameraButton.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);
