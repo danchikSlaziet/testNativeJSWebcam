@@ -149,6 +149,7 @@ startCameraFirst.addEventListener('click', () => {
 nextButton.addEventListener('click', () => {
   firstPage.classList.add('first-page_disabled');
   loadingNeuro.classList.remove('loading-neuro_disabled');
+  startFaceVideoDetection(videoElement, canvas);
   if (detect.os() === 'iOS') {
     stopCamera();
     startCamera();
@@ -353,4 +354,4 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
   canvasElement3.style.opacity = 1;
 }
 
-startFaceVideoDetection(videoElement, canvas);
+// startFaceVideoDetection(videoElement, canvas);
