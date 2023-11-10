@@ -132,6 +132,8 @@ setTimeout(() => {
 }, 2500);
 clearTimeout();
 
+secondPage.classList.remove('second-page_disabled');
+
 // Функция для получения доступа к камере
 async function startCamera() {
   try {
@@ -176,7 +178,6 @@ nextButton.addEventListener('click', () => {
     loadingNeuro.classList.add('loading-neuro_disabled');
   }, 4000);
   clearTimeout();
-  secondPage.classList.remove('second-page_disabled');
 })
 startCameraButton.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);
@@ -234,21 +235,6 @@ maskButton.addEventListener('click', () => {
 });
 
 sendAttachButton.addEventListener('click', () => {
-  // canvasElement3.width = attachmentPhoto.width;
-  // canvasElement3.height = attachmentPhoto.height;
-
-  // const hatAspectRatio = hatImage.width / hatImage.height;
-  // const hatHeight = staticHatWidth / hatAspectRatio;
-
-  // const canvasContext = canvasElement3.getContext('2d');
-  // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-  // const hatX = staticX;
-  // const hatY = staticY;
-  // canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
-  // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
-
-
-
   const canvas = document.createElement('canvas');
     canvas.width = attachmentPhoto.width; // Ширина вашего изображения
     canvas.height = attachmentPhoto.height; // Высота вашего изображения
