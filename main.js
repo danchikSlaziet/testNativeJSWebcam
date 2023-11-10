@@ -20,6 +20,7 @@ const canvasElement2 = document.getElementById('canvas2');
 const canvasElement3 = document.getElementById('canvas3');
 const newPhoto = document.getElementById('new-photo');
 const screenButton = document.querySelector('.screen-button');
+const nextButton = document.getElementById('next-button');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -124,19 +125,7 @@ async function startCamera() {
     videoElement.srcObject = stream;
     stopCameraButton.disabled = false;
     startCameraButton.disabled = true;
-    if (!firstPage.className.includes('disabled')) {
-      firstPage.classList.add('first-page_disabled');
-      loadingNeuro.classList.remove('loading-neuro_disabled');
-      // if (detect.os() === 'iOS') {
-      //   stopCamera();
-      //   startCamera();
-      //   console.log('iOS')
-      // }
-      setTimeout(() => {
-        loadingNeuro.classList.add('loading-neuro_disabled');
-      }, 2500);
-      clearTimeout();
-    }
+    nextButton.disabled = false;
     console.log('доступ к камере дан')
   } catch (error) {
     console.error('Ошибка при получении доступа к камере:', error);
@@ -156,14 +145,20 @@ function stopCamera() {
 // Назначение обработчиков событий кнопкам
 startCameraFirst.addEventListener('click', () => {
   startCamera();
+});
+nextButton.addEventListener('click', () => {
+  firstPage.classList.add('first-page_disabled');
+  loadingNeuro.classList.remove('loading-neuro_disabled');
   if (detect.os() === 'iOS') {
-    stopCamera();
-    startCamera();
     stopCamera();
     startCamera();
     console.log('iOS');
   }
-});
+  setTimeout(() => {
+    loadingNeuro.classList.add('loading-neuro_disabled');
+  }, 2500);
+  clearTimeout();
+})
 startCameraButton.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);
 
