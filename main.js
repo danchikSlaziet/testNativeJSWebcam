@@ -130,6 +130,8 @@ async function startCamera() {
       if (detect.os() === 'iOS') {
         stopCamera();
         startCamera();
+        stopCamera();
+        startCamera();
         console.log('iOS')
       }
       setTimeout(() => {
