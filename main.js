@@ -21,6 +21,10 @@ const canvasElement3 = document.getElementById('canvas3');
 const newPhoto = document.getElementById('new-photo');
 const screenButton = document.querySelector('.screen-button');
 const nextButton = document.getElementById('next-button');
+const loadingText = document.querySelector('.loading-neuro__text');
+const secondPage = document.querySelector('.second-page');
+const secondPageInput = secondPage.querySelector('.second-page__input');
+const secondPageButton = secondPage.querySelector('.second-page__button');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -70,6 +74,16 @@ window.addEventListener('DOMContentLoaded', () => {
   app.expand();
   app.ready();
   userChatId = user_data["id"];
+});
+
+secondPageInput.addEventListener('input', (evt) => {
+  if (evt.target.value.trim().length !== 0) {
+    secondPageButton.disabled = false;
+  }
+});
+
+secondPageButton.addEventListener('click', () => {
+  secondPage.classList.add('second-page_disabled');
 });
 
 sendButton.addEventListener('click', () => {
@@ -156,9 +170,13 @@ nextButton.addEventListener('click', () => {
     console.log('iOS');
   }
   setTimeout(() => {
+    loadingText.textContent = 'готовим фирменную кепочку...';
+  }, 1750);
+  setTimeout(() => {
     loadingNeuro.classList.add('loading-neuro_disabled');
-  }, 2500);
+  }, 3500);
   clearTimeout();
+  secondPage.classList.remove('second-page_disabled');
 })
 startCameraButton.addEventListener('click', startCamera);
 stopCameraButton.addEventListener('click', stopCamera);

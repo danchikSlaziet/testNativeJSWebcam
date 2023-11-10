@@ -12,6 +12,54 @@ body {
   max-height: 100vh;
 }
 
+.second-page {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #e40422;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  padding: 0 10px;
+}
+
+.second-page_disabled {
+  display: none;
+}
+
+.second-page__text {
+  max-width: 80%;
+  text-align: center;
+  margin: 0 0 40px 0;
+}
+
+.second-page__input {
+  border-radius: 100px;
+  background: #F4F4F4;
+  border: none;
+  outline: none;
+  padding: 17px 25px;
+  color: #7C7C7C;
+  font-family: Inter;
+  font-size: 15.437px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  box-sizing: border-box;
+  width: 90%;
+}
+
+.second-page__button {
+
+}
+
+
 .loading-page {
   position: fixed;
   left: 0;
@@ -80,7 +128,7 @@ body {
   height: 3px;
   background-color: #FFF;
   width: 0;
-  animation: loading 2.5s;
+  animation: loading 3.5s;
 }
 
 @keyframes loading {
