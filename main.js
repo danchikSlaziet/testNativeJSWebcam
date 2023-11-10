@@ -159,6 +159,8 @@ startCameraFirst.addEventListener('click', () => {
   if (detect.os() === 'iOS') {
     stopCamera();
     startCamera();
+    stopCamera();
+    startCamera();
     console.log('iOS');
   }
 });
