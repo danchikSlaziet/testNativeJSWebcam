@@ -48,6 +48,16 @@ if (detect.os() === null) {
   `;
 }
 
+async function loadModels() {
+  const MODEL_URL = './models';
+  await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
+  await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
+  await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
+  await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
+}
+
+loadModels();
+
 let stream;
 let hatWidth;
 let x;
@@ -312,11 +322,11 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 }
 
 async function startFacePhotoDetection(assetElement, canvasElement) {
-  const MODEL_URL = './models';
-  await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
-  await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
-  await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
-  await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
+  // const MODEL_URL = './models';
+  // await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
+  // await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
+  // await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
+  // await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
 
   const context = canvasElement.getContext('2d');
 
