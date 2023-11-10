@@ -171,10 +171,10 @@ nextButton.addEventListener('click', () => {
   }
   setTimeout(() => {
     loadingText.textContent = 'готовим фирменную кепочку...';
-  }, 1750);
+  }, 1700);
   setTimeout(() => {
     loadingNeuro.classList.add('loading-neuro_disabled');
-  }, 3500);
+  }, 4000);
   clearTimeout();
   secondPage.classList.remove('second-page_disabled');
 })
@@ -322,7 +322,7 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
       });
-  }, 10);
+  }, 100);
 }
 
 async function startFacePhotoDetection(assetElement, canvasElement) {

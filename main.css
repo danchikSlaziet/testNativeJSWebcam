@@ -128,7 +128,7 @@ body {
   height: 3px;
   background-color: #FFF;
   width: 0;
-  animation: loading 3.5s;
+  animation: loading 4s;
 }
 
 @keyframes loading {
