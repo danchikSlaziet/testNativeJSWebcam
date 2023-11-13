@@ -335,6 +335,10 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
   const context = canvasElement.getContext('2d');
 
+  await new Promise((resolve) => {
+    assetElement.addEventListener('loadedmetadata', resolve);
+  });
+
   setInterval(async () => {
       const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
       context.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -348,18 +352,20 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           const rightPoint = rightEyeBrow.splice(-1)[0];
           const width = (rightPoint.x - leftPoint.x) * 2.7;
 
-          // const scale = attachmentPhoto.width / attachmentPhoto.naturalWidth
+          ;
+
+          const scale = videoElement.videoWidth / document.querySelector('.main__video').offsetWidth;
+          hatWidth = width;
 
           canvasElement.width = width;
-          hatWidth = width;
           canvasElement.height = 295;
-          canvasElement.style.width = width + 'px';
-          x = (leftPoint.x) - 100;
-          y = (leftEyeBrow[0].y + 20);
-          canvasElement.style.left = (leftPoint.x) - 100 + 'px';
+          canvasElement.style.width = hatWidth + 'px';
+          x = leftPoint.x - 100;
+          y = leftEyeBrow[0].y + 20;
+          canvasElement.style.left = (leftPoint.x - 100)*scale + 'px';
           canvasElement.style.top = (leftEyeBrow[0].y + 20) + 'px';
 
-          context.drawImage(hatImage, 0, 0, canvasElement.width, 295);
+          context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
       });
   }, 100);
 }
