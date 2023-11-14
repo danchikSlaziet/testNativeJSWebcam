@@ -38,6 +38,7 @@ const fourthPageVideo = fourthPage.querySelector('.fourth-page__button_video');
 const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
 const photoPage = document.querySelector('.photo-page');
 const photoPageButton = photoPage.querySelector('.photo-page__button');
+const photoCap = photoPage.querySelector('.cap');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -103,9 +104,6 @@ firstPage.classList.remove('first-page_disabled');
 
 loadingNeuro.classList.remove('loading-neuro_disabled');
 setTimeout(() => {
-  loadingText.textContent = 'готовим фирменную кепочку...';
-}, 1700);
-setTimeout(() => {
   loadingNeuro.classList.add('loading-neuro_disabled');
   firstPage.classList.remove('first-page_disabled');
 }, 4000);
@@ -136,9 +134,6 @@ fourthPageVideo.addEventListener('click', () => {
     startCamera();
     console.log('iOS');
   }
-  setTimeout(() => {
-    loadingText.textContent = 'готовим фирменную кепочку...';
-  }, 1700);
   setTimeout(() => {
     loadingNeuro.classList.add('loading-neuro_disabled');
     mainPage.classList.remove('main-page_disabled');
@@ -304,7 +299,7 @@ mainPageButton.addEventListener('click', () => {
 
   canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
 
-  finalIMG.src = canvasElement.toDataURL('image/png');
+  finalIMG.src = canvasElement.toDataURL('image/png', 1);
 
   finalPage.classList.add('final-page_active');
 });
@@ -442,10 +437,13 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           hatWidth = width;
 
           canvasElement.width = width;
-          canvasElement.height = 295;
+          // canvasElement.height = 295;
           canvasElement.style.width = hatWidth*(1/scaleHeight) + 'px';
+          canvasElement.height = hatImage.height * scaleWidth;
+          // x = leftPoint.x - hatWidth/3.5;
+          // y = leftEyeBrow[0].y + 23;
           x = leftPoint.x - hatWidth/3.5;
-          y = leftEyeBrow[0].y + 20;
+          y = leftEyeBrow[0].y + 25*scaleHeight;
           canvasElement.style.left = (leftPoint.x - (hatWidth*(1/scaleHeight))/3.5) - leftSmech + 'px';
           canvasElement.style.top = (leftEyeBrow[0].y + 25*scaleHeight) - heightSmech + 'px';
 
@@ -454,40 +452,75 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
   }, 100);
 }
 
-async function startFacePhotoDetection(assetElement, canvasElement) {
-  // const MODEL_URL = './models';
-  // await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
-  // await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
-  // await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
-  // await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
+// async function startFacePhotoDetection(assetElement, canvasElement) {
 
+//   const context = canvasElement.getContext('2d');
+
+//   const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
+//     context.clearRect(0, 0, canvasElement.width, canvasElement.height);
+//     detections.forEach((detection) => {
+//         const landmarks = detection.landmarks;
+//         const leftEyeBrow = landmarks.getLeftEyeBrow();
+//         const rightEyeBrow = landmarks.getRightEyeBrow();
+
+//         const leftPoint = leftEyeBrow[0];
+//         const rightPoint = rightEyeBrow.splice(-1)[0];
+//         const width = (rightPoint.x - leftPoint.x) * 2.7;
+//         console.log(width)
+//         const scaleWidth = (attachmentPhoto.width / attachmentPhoto.naturalWidth);
+//         const leftSmech = (attachmentPhoto.width - attachmentPhoto.naturalWidth)/2;
+//         const scaleHeight = (attachmentPhoto.height / attachmentPhoto.naturalHeight);
+//         const heightSmech = (attachmentPhoto.height - attachmentPhoto.naturalHeight)/2;
+
+//         const hatAspectRatio = hatImage.width / hatImage.height;
+//         const hatHeight = width / hatAspectRatio;
+
+//         canvasElement.width = width;
+//         canvasElement.height = hatHeight;
+//         canvasElement.style.width = width*scaleWidth + 'px';
+//         canvasElement.style.left = (leftPoint.x*scaleWidth - width*scaleWidth/3) + 'px';
+//         canvasElement.style.top = (leftEyeBrow[0].y*scaleHeight + 15*scaleHeight) + 'px';
+
+//         context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+//       })
+//   }
+
+async function startFacePhotoDetection(assetElement, canvasElement) {
   const context = canvasElement.getContext('2d');
 
   const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
-    context.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    detections.forEach((detection) => {
-        const landmarks = detection.landmarks;
-        const leftEyeBrow = landmarks.getLeftEyeBrow();
-        const rightEyeBrow = landmarks.getRightEyeBrow();
+  
+  context.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
-        const leftPoint = leftEyeBrow[0];
-        const rightPoint = rightEyeBrow.splice(-1)[0];
-        const width = (rightPoint.x - leftPoint.x) * 2.7;
-        console.log(width)
-        const scaleWidth = (attachmentPhoto.width / attachmentPhoto.naturalWidth);
-        const leftSmech = (attachmentPhoto.width - attachmentPhoto.naturalWidth)/2;
-        const scaleHeight = (attachmentPhoto.height / attachmentPhoto.naturalHeight);
-        const heightSmech = (attachmentPhoto.height - attachmentPhoto.naturalHeight)/2;
+  detections.forEach((detection) => {
+    const landmarks = detection.landmarks;
 
-        canvasElement.width = width;
-        canvasElement.height = hatImage.height * scaleWidth;
-        canvasElement.style.width = width*scaleWidth + 'px';
-        canvasElement.style.left = (leftPoint.x*scaleWidth - width*scaleWidth/3) + 'px';
-        // canvasElement.style.top = (leftEyeBrow[0].y*scaleHeight + 25*scaleHeight) + 'px';
-        canvasElement.style.top = (leftEyeBrow[0].y*scaleHeight + 10*scaleHeight) + 'px';
+    const leftEye = landmarks.getLeftEye();
+    const rightEye = landmarks.getRightEye();
 
-        context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
-      })
+    const leftPoint = leftEye[0];
+    const rightPoint = rightEye[rightEye.length - 1];
+    const width = (rightPoint.x - leftPoint.x) * 4.5;
+
+    const scaleWidth = (attachmentPhoto.width / attachmentPhoto.naturalWidth);
+    const scaleHeight = (attachmentPhoto.height / attachmentPhoto.naturalHeight);
+
+    const hatAspectRatio = hatImage.width / hatImage.height;
+    const hatHeight = width / hatAspectRatio;
+
+    canvasElement.width = width;
+    canvasElement.height = hatHeight;
+    canvasElement.style.width = width * scaleWidth + 'px';
+    console.log(canvasElement.height);
+    // canvasElement.style.left = (leftPoint.x * scaleWidth - width * scaleWidth / 3) + 'px';
+    // canvasElement.style.top = (leftEye[0].y * scaleHeight) + 'px';
+    canvasElement.style.left = (leftPoint.x * scaleWidth - width * scaleWidth / 3) + 'px';
+    canvasElement.style.top = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (2.5 / 100)) + 'px';
+
+    context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+  });
+}
+
 
   // canvasElement3.width = attachmentPhoto.width;
   // canvasElement3.height = attachmentPhoto.height;
@@ -501,6 +534,5 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
   // const hatY = staticY;
   // canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
   // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
-    }
 
 // startFaceVideoDetection(videoElement, canvas);

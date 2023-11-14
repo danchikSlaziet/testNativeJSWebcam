@@ -904,10 +904,10 @@
     <div class="background-help">
       
     </div>
-    <p class="loading-neuro__text">ищем ваше личико...</p>
     <div class="loading-neuro__progress">
       <div class="loading-neuro__currentProgress"></div>
     </div>
+    <p class="loading-neuro__text">LOADING</p>
   </div>
   <div id="sec-page" class="second-page second-page_disabled">
     <div class="background-first">
@@ -1808,9 +1808,11 @@
       
     </div>
     <button class="fourth-page__button fourth-page__button_video" type="button">
-      включить камеру
+      сделать фото
     </button>
-    <input type="file" class="fourth-page__button fourth-page__button_photo" placeholder="Загрузить фото">
+    <label for="photo-input" class="custom-file-input">
+      <input type="file" id="photo-input" class="fourth-page__button fourth-page__button_photo" placeholder="Загрузить фото">
+    </label>
   </div>
   <div class="main-page main-page_disabled">
     <div class="background-first">
@@ -1879,9 +1881,9 @@
     <div class="background-help">
       
     </div>
-    <p class="final-page__text">
+    <!-- <p class="final-page__text">
       Поздравляем с созданием аватара от мтс
-    </p>
+    </p> -->
     <img class="final-page__result-image" src="" alt="photo">
     <button class="final-page__button" type="button">
       создать еще
