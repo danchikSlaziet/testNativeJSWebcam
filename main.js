@@ -335,9 +335,11 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
   const context = canvasElement.getContext('2d');
 
-  await new Promise((resolve) => {
-    assetElement.addEventListener('loadedmetadata', resolve);
-  });
+  // await new Promise((resolve) => {
+  //   assetElement.addEventListener('loadedmetadata', resolve);
+  // });
+
+  const scale = videoElement.videoWidth / document.querySelector('.main__video').offsetWidth;
 
   setInterval(async () => {
       const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
@@ -352,18 +354,19 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           const rightPoint = rightEyeBrow.splice(-1)[0];
           const width = (rightPoint.x - leftPoint.x) * 2.7;
 
-          ;
-
-          const scale = videoElement.videoWidth / document.querySelector('.main__video').offsetWidth;
+          const scaleWidth = (videoElement.videoWidth / document.querySelector('.main__video').offsetWidth);
+          const scaleHeight = (videoElement.videoHeight / document.querySelector('.main__video').offsetHeight);
+          const leftSmech = (videoElement.videoWidth - document.querySelector('.main__video').offsetWidth)/2;
+          const heightSmech = (videoElement.videoHeight - document.querySelector('.main__video').offsetHeight)/2;
           hatWidth = width;
 
           canvasElement.width = width;
           canvasElement.height = 295;
           canvasElement.style.width = hatWidth + 'px';
-          x = leftPoint.x - 100;
+          x = leftPoint.x - hatWidth/3.5;
           y = leftEyeBrow[0].y + 20;
-          canvasElement.style.left = (leftPoint.x - 100)*scale + 'px';
-          canvasElement.style.top = (leftEyeBrow[0].y + 20) + 'px';
+          canvasElement.style.left = (leftPoint.x - hatWidth/3.5) - leftSmech + 'px';
+          canvasElement.style.top = (leftEyeBrow[0].y + 25) - heightSmech + 'px';
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
       });

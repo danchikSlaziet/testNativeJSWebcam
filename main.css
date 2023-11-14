@@ -105,6 +105,18 @@ body {
   box-sizing: border-box;
 }
 
+@media screen and (max-height: 670px) {
+  .second-page__text {
+    margin-top: 200px;
+  }
+}
+
+@media screen and (max-height: 590px) {
+  .second-page__text {
+    margin-top: 110px;
+  }
+}
+
 .second-page__input {
   color: #000;
   font-family: "MTS";
@@ -262,6 +274,18 @@ body {
   margin: 256px 0 0 0;
 }
 
+@media screen and (max-height: 670px) {
+  .third-page__text {
+    margin-top: 200px;
+  }
+}
+
+@media screen and (max-height: 570px) {
+  .third-page__text {
+    margin-top: 110px;
+  }
+}
+
 .third-page__button {
   color: #FFF;
   font-family: "MTS";
@@ -288,10 +312,12 @@ body {
   flex-direction: column;
   z-index: 100;
   align-items: center;
+  justify-content: center;
   color: #FFF;
   max-height: 100vh;
   min-height: 100vh;
   padding: 0 24px;
+  gap: 15px;
 }
 
 .first-page_disabled {
@@ -312,6 +338,24 @@ body {
   backdrop-filter: blur(15px);
   margin: 0;
   margin-top: 149px;
+}
+
+@media screen and (max-height: 820px) {
+  .first-page__text {
+    margin-top: 110px;
+  }
+}
+
+@media screen and (max-height: 770px) {
+  .first-page__text {
+    padding: 50px 34px;
+  }
+}
+
+@media screen and (max-height: 670px) {
+  .first-page__text {
+    padding: 25px 34px;
+  }
 }
 
 .first-page__button {
@@ -426,7 +470,7 @@ canvas {
   top: 0;
   left: 0;
   z-index: 99;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   pointer-events: none;
 }
 
@@ -537,6 +581,12 @@ canvas {
   background: rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
   margin: 130px 0 10px 0;
+}
+
+@media screen and (max-height: 650px) {
+  .final-page__text {
+    margin-top: 70px;
+  }
 }
 
 .final-page__result-image {
