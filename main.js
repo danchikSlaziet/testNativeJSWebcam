@@ -33,6 +33,11 @@ const mainPageButton = mainPage.querySelector('.main-page__button');
 const finalPage = document.querySelector('.final-page');
 const finalIMG = finalPage.querySelector('.final-page__result-image');
 const finalButton = finalPage.querySelector('.final-page__button');
+const fourthPage = document.querySelector('.fourth-page');
+const fourthPageVideo = fourthPage.querySelector('.fourth-page__button_video');
+const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
+const photoPage = document.querySelector('.photo-page');
+const photoPageButton = photoPage.querySelector('.photo-page__button');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -94,6 +99,8 @@ window.addEventListener('DOMContentLoaded', () => {
   userChatId = user_data["id"];
 });
 
+firstPage.classList.remove('first-page_disabled');
+
 loadingNeuro.classList.remove('loading-neuro_disabled');
 setTimeout(() => {
   loadingText.textContent = 'готовим фирменную кепочку...';
@@ -120,6 +127,66 @@ secondPageButton.addEventListener('click', () => {
   thirdPage.classList.remove('third-page_disabled');
 });
 
+fourthPageVideo.addEventListener('click', () => {
+  // fourthPage.classList.add('fourth-page_disabled');
+  startCamera();
+  startFaceVideoDetection(videoElement, canvas);
+  if (detect.os() === 'iOS') {
+    stopCamera();
+    startCamera();
+    console.log('iOS');
+  }
+  setTimeout(() => {
+    loadingText.textContent = 'готовим фирменную кепочку...';
+  }, 1700);
+  setTimeout(() => {
+    loadingNeuro.classList.add('loading-neuro_disabled');
+    mainPage.classList.remove('main-page_disabled');
+  }, 4000);
+  clearTimeout();
+});
+
+
+
+fourthPagePhoto.onchange = function(event) {
+  var target = event.target;
+
+  if (!FileReader) {
+      alert('FileReader не поддерживается — облом');
+      return;
+  }
+
+  if (!target.files.length) {
+      alert('Ничего не загружено');
+      return;
+  }
+
+  var fileReader = new FileReader();
+  fileReader.onload = function() {
+    attachmentPhoto.src = fileReader.result;
+    fourthPage.classList.add('fourth-page_disabled');
+    photoPage.classList.remove('photo-page_disabled');
+    
+    // canvasElement3.width = attachmentPhoto.width;
+    // canvasElement3.height = attachmentPhoto.height;
+    // const canvasContext = canvasElement3.getContext('2d');
+    // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+    // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
+    startFacePhotoDetection(attachmentPhoto, canvas2);
+  }
+
+  fileReader.readAsDataURL(target.files[0]);
+
+}
+  
+  // maskButton.addEventListener('click', () => {
+    // canvasElement3.width = attachmentPhoto.width;
+    // canvasElement3.height = attachmentPhoto.height;
+    // const canvasContext = canvasElement3.getContext('2d');
+    // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+    // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
+    // startFacePhotoDetection(attachmentPhoto, canvas2);
+  // });
 // thirdPageButton.addEventListener('click', () => {
 //   thirdPage.classList.add('third-page_disabled');
 // })
@@ -177,7 +244,7 @@ async function startCamera() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
-    thirdPage.classList.add('third-page_disabled');
+    fourthPage.classList.add('fourth-page_disabled');
     loadingNeuro.classList.remove('loading-neuro_disabled');
     console.log('доступ к камере дан')
   } catch (error) {
@@ -200,20 +267,24 @@ function stopCamera() {
 //   startCamera();
 // });
 thirdPageButton.addEventListener('click', () => {
-  startCamera();
-  startFaceVideoDetection(videoElement, canvas);
-  if (detect.os() === 'iOS') {
-    stopCamera();
-    startCamera();
-    console.log('iOS');
-  }
-  setTimeout(() => {
-    loadingText.textContent = 'готовим фирменную кепочку...';
-  }, 1700);
-  setTimeout(() => {
-    loadingNeuro.classList.add('loading-neuro_disabled');
-  }, 4000);
-  clearTimeout();
+  fourthPage.classList.remove('fourth-page_disabled');
+  thirdPage.classList.add('third-page_disabled');
+  // startCamera();
+  // startFaceVideoDetection(videoElement, canvas);
+  // if (detect.os() === 'iOS') {
+  //   stopCamera();
+  //   startCamera();
+  //   console.log('iOS');
+  // }
+  // fourthPage.classList.remove('fourth-page_disabled')
+  // setTimeout(() => {
+  //   loadingText.textContent = 'готовим фирменную кепочку...';
+  // }, 1700);
+  // setTimeout(() => {
+  //   loadingNeuro.classList.add('loading-neuro_disabled');
+  //   fourthPage.classList.remove('fourth-page_disabled')
+  // }, 4000);
+  // clearTimeout();
 });
 
 mainPageButton.addEventListener('click', () => {
@@ -249,20 +320,20 @@ finalButton.addEventListener('click', () => {
 // stopCameraButton.disabled = true;
 
 // downloadButton.addEventListener('click', () => {
-//   canvasElement.width = videoElement.videoWidth;
-//   canvasElement.height = videoElement.videoHeight;
+  // canvasElement.width = videoElement.videoWidth;
+  // canvasElement.height = videoElement.videoHeight;
 
-//   const hatAspectRatio = hatImage.width / hatImage.height;
-//   const hatHeight = hatWidth / hatAspectRatio;
+  // const hatAspectRatio = hatImage.width / hatImage.height;
+  // const hatHeight = hatWidth / hatAspectRatio;
 
-//   const canvasContext = canvasElement.getContext('2d');
-//   canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
-//   const hatX = x;
-//   const hatY = y;
-//   canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
+  // const canvasContext = canvasElement.getContext('2d');
+  // canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+  // const hatX = x;
+  // const hatY = y;
+  // canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
 
-//   downloadedImage.src = canvasElement.toDataURL('image/png');
-//   downloadedImage.classList.add('result-image_active');
+  // downloadedImage.src = canvasElement.toDataURL('image/png');
+  // downloadedImage.classList.add('result-image_active');
 // });
 
 // inputPhoto.onchange = function(event) {
@@ -401,33 +472,35 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
         const leftPoint = leftEyeBrow[0];
         const rightPoint = rightEyeBrow.splice(-1)[0];
-        const width = (rightPoint.x - leftPoint.x) * 2;
+        const width = (rightPoint.x - leftPoint.x) * 2.7;
+        console.log(width)
+        const scaleWidth = (attachmentPhoto.width / attachmentPhoto.naturalWidth);
+        const leftSmech = (attachmentPhoto.width - attachmentPhoto.naturalWidth)/2;
+        const scaleHeight = (attachmentPhoto.height / attachmentPhoto.naturalHeight);
+        const heightSmech = (attachmentPhoto.height - attachmentPhoto.naturalHeight)/2;
 
         canvasElement.width = width;
-        staticHatWidth = width;
-        canvasElement.height = 91;
-        canvasElement.style.width = width + 'px';
-        staticX = (leftPoint.x - width * 0.10);
-        staticY = (leftEyeBrow[0].y - width * 0.55);
-        canvasElement.style.left = (leftPoint.x - width * 0.10) - 4 + 'px';
-        canvasElement.style.top = (leftEyeBrow[0].y - width * 0.55) + 'px';
+        canvasElement.height = hatImage.height * scaleWidth;
+        canvasElement.style.width = width*scaleWidth + 'px';
+        canvasElement.style.left = (leftPoint.x*scaleWidth - width*scaleWidth/3) + 'px';
+        // canvasElement.style.top = (leftEyeBrow[0].y*scaleHeight + 25*scaleHeight) + 'px';
+        canvasElement.style.top = (leftEyeBrow[0].y*scaleHeight + 10*scaleHeight) + 'px';
 
-        context.drawImage(hatImage, 0, 0, canvasElement.width, 91);
-    });
+        context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+      })
 
-  canvasElement3.width = attachmentPhoto.width;
-  canvasElement3.height = attachmentPhoto.height;
+  // canvasElement3.width = attachmentPhoto.width;
+  // canvasElement3.height = attachmentPhoto.height;
 
-  const hatAspectRatio = hatImage.width / hatImage.height;
-  const hatHeight = staticHatWidth / hatAspectRatio;
+  // const hatAspectRatio = hatImage.width / hatImage.height;
+  // const hatHeight = staticHatWidth / hatAspectRatio;
 
-  const canvasContext = canvasElement3.getContext('2d');
-  canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-  const hatX = staticX;
-  const hatY = staticY;
-  canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
-  attachmentPhoto.src = canvasElement3.toDataURL('image/png');
-  canvasElement3.style.opacity = 1;
-}
+  // const canvasContext = canvasElement3.getContext('2d');
+  // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+  // const hatX = staticX;
+  // const hatY = staticY;
+  // canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
+  // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
+    }
 
 // startFaceVideoDetection(videoElement, canvas);

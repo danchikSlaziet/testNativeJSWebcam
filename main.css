@@ -92,7 +92,7 @@ body {
 
 .second-page__text {
   text-align: center;
-  margin: 256px 0 34.58px 0;
+  margin: 170px 0 34.58px 0;
   padding: 25px 25px 39px 25.63px;
   border-radius: 22px 22px 62px 22px;
   border: 1px solid #AAB6FF;
@@ -242,6 +242,42 @@ body {
   }
 }
 
+.fourth-page {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: #AAB6FF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+  z-index: 100;
+  align-items: center;
+  color: #FFF;
+  max-height: 100vh;
+  min-height: 100vh;
+  padding: 0 24px;
+}
+
+.fourth-page_disabled {
+  display: none;
+}
+
+.fourth-page__button {
+  color: #FFF;
+  font-family: "MTS";
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 23px 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+  border-radius: 40px;
+  background: #FF0032;
+  z-index: 10;
+}
+
 .third-page {
   position: fixed;
   left: 0;
@@ -387,6 +423,50 @@ body {
   z-index: 300;
 }
 
+.photo-page {
+  overflow: hidden;
+  position: relative;
+  background-color: #AAB6FF;
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100vh;
+  align-items: center;
+  color: #FFF;
+  max-height: 100vh;
+  min-height: 100vh;
+  padding: 0 24px;
+}
+
+.photo-main {
+  margin-top: 134px;
+  height: 60%;
+}
+
+.photo-page_disabled {
+  display: none;
+}
+
+.photo-page__button {
+  color: #FF0032;
+  font-family: "MTS";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 23px 10px;
+  border-radius: 40px;
+  background: #FFF;
+  margin-top: auto;
+}
+
 .main {
   margin-top: 134px;
   height: 60%;
@@ -522,15 +602,14 @@ canvas {
 
 .photo-container {
   position: relative;
-  width: fit-content;
-  left: 50%;
-  transform: translateX(-50%);
+  height: 100%;
 }
 
 .attachment-photo {
-  display: none;
+  display: block;
   width: 100%;
-  margin-top: 15px;
+  height: 100%;
+  border-radius: 22px 22px 62px 22px;
   object-fit: cover;
   object-position: center center;
 }
