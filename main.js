@@ -94,6 +94,16 @@ window.addEventListener('DOMContentLoaded', () => {
   userChatId = user_data["id"];
 });
 
+loadingNeuro.classList.remove('loading-neuro_disabled');
+setTimeout(() => {
+  loadingText.textContent = 'готовим фирменную кепочку...';
+}, 1700);
+setTimeout(() => {
+  loadingNeuro.classList.add('loading-neuro_disabled');
+  firstPage.classList.remove('first-page_disabled');
+}, 4000);
+clearTimeout();
+
 firstPageButton.addEventListener('click', () => {
   firstPage.classList.add("first-page_disabled");
   secondPage.classList.remove("second-page_disabled");
@@ -362,11 +372,11 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
           canvasElement.width = width;
           canvasElement.height = 295;
-          canvasElement.style.width = hatWidth + 'px';
+          canvasElement.style.width = hatWidth*(1/scaleHeight) + 'px';
           x = leftPoint.x - hatWidth/3.5;
           y = leftEyeBrow[0].y + 20;
-          canvasElement.style.left = (leftPoint.x - hatWidth/3.5) - leftSmech + 'px';
-          canvasElement.style.top = (leftEyeBrow[0].y + 25) - heightSmech + 'px';
+          canvasElement.style.left = (leftPoint.x - (hatWidth*(1/scaleHeight))/3.5) - leftSmech + 'px';
+          canvasElement.style.top = (leftEyeBrow[0].y + 25*scaleHeight) - heightSmech + 'px';
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
       });
