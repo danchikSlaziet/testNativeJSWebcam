@@ -130,11 +130,11 @@ secondPageButton.addEventListener('click', () => {
 fourthPageVideo.addEventListener('click', () => {
   startCamera();
   startFaceVideoDetection(videoElement, canvas);
-  if (detect.os() === 'iOS') {
-    stopCamera();
-    startCamera();
-    console.log('iOS');
-  }
+  // if (detect.os() === 'iOS') {
+  //   stopCamera();
+  //   startCamera();
+  //   console.log('iOS');
+  // }
   if (fourthPageVideo.textContent.trim() === 'Продолжить') {
     stopCamera();
     startCamera();
