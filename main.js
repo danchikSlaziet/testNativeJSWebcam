@@ -128,8 +128,9 @@ secondPageButton.addEventListener('click', () => {
 });
 
 fourthPageVideo.addEventListener('click', () => {
-  startCamera();
-  startFaceVideoDetection(videoElement, canvas);
+  if (fourthPageVideo.textContent.trim() === 'сделать фото') {
+    startCamera();
+  }
   // if (detect.os() === 'iOS') {
   //   stopCamera();
   //   startCamera();
@@ -138,6 +139,7 @@ fourthPageVideo.addEventListener('click', () => {
   if (fourthPageVideo.textContent.trim() === 'Продолжить') {
     stopCamera();
     startCamera();
+    startFaceVideoDetection(videoElement, canvas);
   }
 });
 
