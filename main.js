@@ -112,6 +112,7 @@ firstPage.classList.remove('first-page_disabled');
 // clearTimeout();
 
 firstPageButton.addEventListener('click', () => {
+  startCamera();
   firstPage.classList.add("first-page_disabled");
   secondPage.classList.remove("second-page_disabled");
 })
@@ -129,15 +130,15 @@ secondPageButton.addEventListener('click', () => {
 
 fourthPageVideo.addEventListener('click', () => {
   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
-    startCamera();
+    stopCamera();
+    debugger
   }
   // if (detect.os() === 'iOS') {
   //   stopCamera();
   //   startCamera();
   //   console.log('iOS');
   // }
-  if (fourthPageVideo.textContent.trim() === 'Продолжить') {
-    stopCamera();
+  else if (fourthPageVideo.textContent.trim() === 'Продолжить') {
     startCamera();
     startFaceVideoDetection(videoElement, canvas);
   }
@@ -242,8 +243,9 @@ async function startCamera() {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
     if (!fourthPage.className.includes('disabled')) {
+      debugger
       if (fourthPageVideo.textContent.trim() === 'сделать фото') {
-        fourthPageVideo.textContent = 'Продолжить'
+        // fourthPageVideo.textContent = 'Продолжить'
       }
       else {
         fourthPage.classList.add('fourth-page_disabled');
@@ -261,6 +263,7 @@ function stopCamera() {
       const tracks = stream.getTracks();
       tracks.forEach(track => track.stop());
       videoElement.srcObject = null;
+      fourthPageVideo.textContent = 'Продолжить';
   }
 }
 
