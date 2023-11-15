@@ -70,7 +70,6 @@ async function loadModels() {
   await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
 }
 
-loadModels();
 
 let stream;
 let hatWidth;
@@ -102,12 +101,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 firstPage.classList.remove('first-page_disabled');
 
-loadingNeuro.classList.remove('loading-neuro_disabled');
-setTimeout(() => {
-  loadingNeuro.classList.add('loading-neuro_disabled');
-  firstPage.classList.remove('first-page_disabled');
-}, 4000);
-clearTimeout();
+// loadingNeuro.classList.remove('loading-neuro_disabled');
+// setTimeout(() => {
+//   loadingNeuro.classList.add('loading-neuro_disabled');
+//   firstPage.classList.remove('first-page_disabled');
+// }, 4000);
+// clearTimeout();
 
 firstPageButton.addEventListener('click', () => {
   firstPage.classList.add("first-page_disabled");
@@ -126,7 +125,6 @@ secondPageButton.addEventListener('click', () => {
 });
 
 fourthPageVideo.addEventListener('click', () => {
-  // fourthPage.classList.add('fourth-page_disabled');
   startCamera();
   startFaceVideoDetection(videoElement, canvas);
   if (detect.os() === 'iOS') {
@@ -134,11 +132,6 @@ fourthPageVideo.addEventListener('click', () => {
     startCamera();
     console.log('iOS');
   }
-  setTimeout(() => {
-    loadingNeuro.classList.add('loading-neuro_disabled');
-    mainPage.classList.remove('main-page_disabled');
-  }, 4000);
-  clearTimeout();
 });
 
 
@@ -239,8 +232,10 @@ async function startCamera() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
-    fourthPage.classList.add('fourth-page_disabled');
-    loadingNeuro.classList.remove('loading-neuro_disabled');
+    if (!fourthPage.className.includes('disabled')) {
+      fourthPage.classList.add('fourth-page_disabled');
+      mainPage.classList.remove('main-page_disabled');
+    }
     console.log('доступ к камере дан')
   } catch (error) {
     console.error('Ошибка при получении доступа к камере:', error);
@@ -252,8 +247,6 @@ function stopCamera() {
       const tracks = stream.getTracks();
       tracks.forEach(track => track.stop());
       videoElement.srcObject = null;
-      stopCameraButton.disabled = true;
-      startCameraButton.disabled = false;
   }
 }
 
@@ -262,8 +255,14 @@ function stopCamera() {
 //   startCamera();
 // });
 thirdPageButton.addEventListener('click', () => {
-  fourthPage.classList.remove('fourth-page_disabled');
+  loadModels();
   thirdPage.classList.add('third-page_disabled');
+  loadingNeuro.classList.remove('loading-neuro_disabled');
+  setTimeout(() => {
+    loadingNeuro.classList.add('loading-neuro_disabled');
+    fourthPage.classList.remove('fourth-page_disabled');
+  }, 4000);
+  clearTimeout();
   // startCamera();
   // startFaceVideoDetection(videoElement, canvas);
   // if (detect.os() === 'iOS') {
@@ -494,6 +493,13 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
   detections.forEach((detection) => {
     const landmarks = detection.landmarks;
+
+    // const jawline = landmarks.getJawOutline()
+    // const jawLeft = jawline[0]
+    // const jawRight = jawline.splice(-1)[0]
+    // const adjacent = jawRight.x - jawLeft.x
+    // const opposite = jawRight.y - jawLeft.y
+    // const angle = Math.atan2(opposite, adjacent) * (180 / Math.PI)
 
     const leftEye = landmarks.getLeftEye();
     const rightEye = landmarks.getRightEye();
