@@ -403,6 +403,43 @@ mainPageButton.addEventListener('click', () => {
 //       });
 // });
 
+// finalButton.addEventListener('click', () => {
+//   const canvas = document.createElement('canvas');
+//   canvas.width = finalIMG.width;
+//   canvas.height = finalIMG.height;
+//   const ctx = canvas.getContext('2d');
+
+//   // Нарисуйте изображение на Canvas
+//   ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
+
+//   canvas.toBlob(function (blob) {
+//       // Формируем объект FormData для отправки файла
+//       const formData = new FormData();
+//       formData.append('chat_id', userChatId);
+//       formData.append('photo', blob, 'photo.jpg'); // изменено на .jpg
+
+//       // Формируем URL для отправки фотографии
+//       const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+
+//       // Отправка фотографии на сервер Telegram
+//       fetch(apiUrl, {
+//           method: 'POST',
+//           body: formData,
+//       })
+//       .then(response => response.json())
+//       .then(data => {
+//           console.log(data);
+//           if (data.ok) {
+//               console.log('Фотография успешно отправлена в Telegram.');
+//           } else {
+//               console.error('Произошла ошибка при отправке фотографии.');
+//           }
+//       })
+//       .catch(error => {
+//           console.error('Ошибка:', error);
+//       });
+//   }, 'image/jpeg', 1); // установка типа и качества
+// });
 finalButton.addEventListener('click', () => {
   const canvas = document.createElement('canvas');
   canvas.width = finalIMG.width;
@@ -412,81 +449,43 @@ finalButton.addEventListener('click', () => {
   // Нарисуйте изображение на Canvas
   ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
 
-  canvas.toBlob(function (blob) {
-      // Формируем объект FormData для отправки файла
-      const formData = new FormData();
-      formData.append('chat_id', userChatId);
-      formData.append('photo', blob, 'photo.jpg'); // изменено на .jpg
+  // Получите Data URL изображения
+  const dataURL = canvas.toDataURL('image/jpeg', 1.0);
 
-      // Формируем URL для отправки фотографии
-      const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+  // Формируем объект FormData для отправки файла
+  const formData = new FormData();
+  formData.append('chat_id', userChatId);
+  formData.append('photo', dataURL);
 
-      // Отправка фотографии на сервер Telegram
-      fetch(apiUrl, {
-          method: 'POST',
-          body: formData,
-      })
-      .then(response => response.json())
-      .then(data => {
-          console.log(data);
-          if (data.ok) {
-              console.log('Фотография успешно отправлена в Telegram.');
-          } else {
-              console.error('Произошла ошибка при отправке фотографии.');
-          }
-      })
-      .catch(error => {
-          console.error('Ошибка:', error);
-      });
-  }, 'image/jpeg', 1); // установка типа и качества
+  // Формируем URL для отправки фотографии
+  const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+
+  // Отправка фотографии на сервер Telegram
+  fetch(apiUrl, {
+      method: 'POST',
+      body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log(data);
+      if (data.ok) {
+          console.log('Фотография успешно отправлена в Telegram.');
+      } else {
+          console.error('Произошла ошибка при отправке фотографии.');
+      }
+  })
+  .catch(error => {
+      console.error('Ошибка:', error);
+  });
 });
 
 
-// startCameraButton.addEventListener('click', startCamera);
-// stopCameraButton.addEventListener('click', stopCamera);
 
-// Изначально отключаем кнопку "Выключить камеру"
-// stopCameraButton.disabled = true;
 
-// downloadButton.addEventListener('click', () => {
-  // canvasElement.width = videoElement.videoWidth;
-  // canvasElement.height = videoElement.videoHeight;
 
-  // const hatAspectRatio = hatImage.width / hatImage.height;
-  // const hatHeight = hatWidth / hatAspectRatio;
 
-  // const canvasContext = canvasElement.getContext('2d');
-  // canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
-  // const hatX = x;
-  // const hatY = y;
-  // canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
 
-  // downloadedImage.src = canvasElement.toDataURL('image/png');
-  // downloadedImage.classList.add('result-image_active');
-// });
 
-// inputPhoto.onchange = function(event) {
-//   canvasElement3.style.opacity = 0;
-//   var target = event.target;
-
-//   if (!FileReader) {
-//       alert('FileReader не поддерживается — облом');
-//       return;
-//   }
-
-//   if (!target.files.length) {
-//       alert('Ничего не загружено');
-//       return;
-//   }
-
-//   var fileReader = new FileReader();
-//   fileReader.onload = function() {
-//     attachmentPhoto.classList.add('attachment-photo_active');
-//     attachmentPhoto.src = fileReader.result;
-//   }
-
-//   fileReader.readAsDataURL(target.files[0]);
-// }
 
 // maskButton.addEventListener('click', () => {
 //   canvasElement3.width = attachmentPhoto.width;
