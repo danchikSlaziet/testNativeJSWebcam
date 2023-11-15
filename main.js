@@ -39,8 +39,6 @@ const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
 const photoPage = document.querySelector('.photo-page');
 const photoPageButton = photoPage.querySelector('.photo-page__button');
 const photoCap = photoPage.querySelector('.cap');
-const buttonOn = document.getElementById('on');
-const buttonOff = document.getElementById('off'); 
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -63,14 +61,6 @@ if (detect.os() === null) {
   //   transform: translateX(-50%);
   // `;
 }
-
-buttonOn.addEventListener('click', () => {
-  startCamera();
-})
-
-buttonOff.addEventListener('click', () => {
-  stopCamera();
-})
 
 async function loadModels() {
   const MODEL_URL = './models';
@@ -144,6 +134,10 @@ fourthPageVideo.addEventListener('click', () => {
     stopCamera();
     startCamera();
     console.log('iOS');
+  }
+  if (fourthPageVideo.textContent.trim() === 'Продолжить') {
+    stopCamera();
+    startCamera();
   }
 });
 
@@ -246,8 +240,13 @@ async function startCamera() {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
     if (!fourthPage.className.includes('disabled')) {
-      fourthPage.classList.add('fourth-page_disabled');
-      mainPage.classList.remove('main-page_disabled');
+      if (fourthPageVideo.textContent.trim() === 'сделать фото') {
+        fourthPageVideo.textContent = 'Продолжить'
+      }
+      else {
+        fourthPage.classList.add('fourth-page_disabled');
+        mainPage.classList.remove('main-page_disabled');
+      }
     }
     console.log('доступ к камере дан')
   } catch (error) {
