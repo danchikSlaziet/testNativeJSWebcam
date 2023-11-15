@@ -370,40 +370,6 @@ mainPageButton.addEventListener('click', () => {
 });
 
 // finalButton.addEventListener('click', () => {
-//     const canvas = document.createElement('canvas');
-//     canvas.width = finalIMG.width;
-//     canvas.height = finalIMG.height;
-//     const ctx = canvas.getContext('2d');
-    
-//     ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
-
-//     canvas.toBlob(function (blob) {
-//     const formData = new FormData();
-//     formData.append('chat_id', userChatId);
-//     formData.append('photo', blob, 'photo.png');
-  
-//     const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-
-//     fetch(apiUrl, {
-//       method: 'POST',
-//       body: formData,
-//     })
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log(data);
-//         if (data.ok) {
-//           console.log('Фотография успешно отправлена в Telegram.');
-//         } else {
-//           console.error('Произошла ошибка при отправке фотографии.');
-//         }
-//       })
-//       .catch(error => {
-//         console.error('Ошибка:', error);
-//       });
-//       });
-// });
-
-// finalButton.addEventListener('click', () => {
 //   const canvas = document.createElement('canvas');
 //   canvas.width = finalIMG.width;
 //   canvas.height = finalIMG.height;
@@ -412,75 +378,70 @@ mainPageButton.addEventListener('click', () => {
 //   // Нарисуйте изображение на Canvas
 //   ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
 
-//   canvas.toBlob(function (blob) {
-//       // Формируем объект FormData для отправки файла
-//       const formData = new FormData();
-//       formData.append('chat_id', userChatId);
-//       formData.append('photo', blob, 'photo.jpg'); // изменено на .jpg
+//   // Получите Data URL изображения
+//   const dataURL = canvas.toDataURL('image/jpeg', 1.0);
 
-//       // Формируем URL для отправки фотографии
-//       const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+//   // Формируем объект FormData для отправки файла
+//   const formData = new FormData();
+//   formData.append('chat_id', userChatId);
+//   formData.append('photo', dataURL);
 
-//       // Отправка фотографии на сервер Telegram
-//       fetch(apiUrl, {
-//           method: 'POST',
-//           body: formData,
-//       })
-//       .then(response => response.json())
-//       .then(data => {
-//           console.log(data);
-//           if (data.ok) {
-//               console.log('Фотография успешно отправлена в Telegram.');
-//           } else {
-//               console.error('Произошла ошибка при отправке фотографии.');
-//           }
-//       })
-//       .catch(error => {
-//           console.error('Ошибка:', error);
-//       });
-//   }, 'image/jpeg', 1); // установка типа и качества
+//   // Формируем URL для отправки фотографии
+//   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+
+//   // Отправка фотографии на сервер Telegram
+//   fetch(apiUrl, {
+//       method: 'POST',
+//       body: formData,
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//       console.log(data);
+//       if (data.ok) {
+//           console.log('Фотография успешно отправлена в Telegram.');
+//       } else {
+//           console.error('Произошла ошибка при отправке фотографии.');
+//       }
+//   })
+//   .catch(error => {
+//       console.error('Ошибка:', error);
+//   });
 // });
-finalButton.addEventListener('click', () => {
-  const canvas = document.createElement('canvas');
-  canvas.width = finalIMG.width;
-  canvas.height = finalIMG.height;
-  const ctx = canvas.getContext('2d');
 
-  // Нарисуйте изображение на Canvas
-  ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
 
-  // Получите Data URL изображения
-  const dataURL = canvas.toDataURL('image/jpeg', 1.0);
+finalButton.addEventListener('click', async () => {
+  // Получение ссылки на изображение
+  const imageURL = finalIMG.src;
+
+  // Загрузка изображения в бинарном формате
+  const response = await fetch(imageURL);
+  const imageBlob = await response.blob();
 
   // Формируем объект FormData для отправки файла
   const formData = new FormData();
   formData.append('chat_id', userChatId);
-  formData.append('photo', dataURL);
+  formData.append('photo', imageBlob, 'photo.jpg');
 
   // Формируем URL для отправки фотографии
   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
   // Отправка фотографии на сервер Telegram
-  fetch(apiUrl, {
-      method: 'POST',
-      body: formData,
-  })
-  .then(response => response.json())
-  .then(data => {
+  try {
+      const result = await fetch(apiUrl, {
+          method: 'POST',
+          body: formData,
+      });
+      const data = await result.json();
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
       }
-  })
-  .catch(error => {
+  } catch (error) {
       console.error('Ошибка:', error);
-  });
+  }
 });
-
-
-
 
 
 
