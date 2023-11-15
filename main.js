@@ -79,6 +79,9 @@ let staticHatWidth;
 let staticX;
 let staticY;
 
+let newHatWidth;
+let newHatHeight;
+
 function parseQuery(queryString) {
   let query = {};
   let pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
@@ -128,8 +131,8 @@ fourthPageVideo.addEventListener('click', () => {
   startCamera();
   startFaceVideoDetection(videoElement, canvas);
   if (detect.os() === 'iOS') {
-    stopCamera();
-    startCamera();
+    // stopCamera();
+    // startCamera();
     console.log('iOS');
   }
 });
@@ -436,11 +439,9 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           hatWidth = width;
 
           canvasElement.width = width;
-          // canvasElement.height = 295;
           canvasElement.style.width = hatWidth*(1/scaleHeight) + 'px';
           canvasElement.height = hatImage.height * scaleWidth;
-          // x = leftPoint.x - hatWidth/3.5;
-          // y = leftEyeBrow[0].y + 23;
+
           x = leftPoint.x - hatWidth/3.5;
           y = leftEyeBrow[0].y + 25*scaleHeight;
           canvasElement.style.left = (leftPoint.x - (hatWidth*(1/scaleHeight))/3.5) - leftSmech + 'px';
