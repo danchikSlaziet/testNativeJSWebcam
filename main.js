@@ -369,44 +369,79 @@ mainPageButton.addEventListener('click', () => {
   finalPage.classList.add('final-page_active');
 });
 
-finalButton.addEventListener('click', () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = finalIMG.width; // Ширина вашего изображения
-    canvas.height = finalIMG.height; // Высота вашего изображения
-    const ctx = canvas.getContext('2d');
+// finalButton.addEventListener('click', () => {
+//     const canvas = document.createElement('canvas');
+//     canvas.width = finalIMG.width;
+//     canvas.height = finalIMG.height;
+//     const ctx = canvas.getContext('2d');
     
-    // Нарисуйте изображение на Canvas
-    ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
+//     ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
 
+//     canvas.toBlob(function (blob) {
+//     const formData = new FormData();
+//     formData.append('chat_id', userChatId);
+//     formData.append('photo', blob, 'photo.png');
+  
+//     const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
-    canvas.toBlob(function (blob) {
-    // Формируем объект FormData для отправки файла
-    const formData = new FormData();
-    formData.append('chat_id', userChatId);
-    formData.append('photo', blob, 'photo.png');
-  
-    // Формируем URL для отправки фотографии
-    const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-  
-    // Отправка фотографии на сервер Telegram
-    fetch(apiUrl, {
-      method: 'POST',
-      body: formData,
-    })
+//     fetch(apiUrl, {
+//       method: 'POST',
+//       body: formData,
+//     })
+//       .then(response => response.json())
+//       .then(data => {
+//         console.log(data);
+//         if (data.ok) {
+//           console.log('Фотография успешно отправлена в Telegram.');
+//         } else {
+//           console.error('Произошла ошибка при отправке фотографии.');
+//         }
+//       })
+//       .catch(error => {
+//         console.error('Ошибка:', error);
+//       });
+//       });
+// });
+
+finalButton.addEventListener('click', () => {
+  const canvas = document.createElement('canvas');
+  canvas.width = finalIMG.width;
+  canvas.height = finalIMG.height;
+  const ctx = canvas.getContext('2d');
+
+  // Нарисуйте изображение на Canvas
+  ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
+
+  canvas.toBlob(function (blob) {
+      // Формируем объект FormData для отправки файла
+      const formData = new FormData();
+      formData.append('chat_id', userChatId);
+      formData.append('photo', blob, 'photo.jpg'); // изменено на .jpg
+
+      // Формируем URL для отправки фотографии
+      const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+
+      // Отправка фотографии на сервер Telegram
+      fetch(apiUrl, {
+          method: 'POST',
+          body: formData,
+      })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        if (data.ok) {
-          console.log('Фотография успешно отправлена в Telegram.');
-        } else {
-          console.error('Произошла ошибка при отправке фотографии.');
-        }
+          console.log(data);
+          if (data.ok) {
+              console.log('Фотография успешно отправлена в Telegram.');
+          } else {
+              console.error('Произошла ошибка при отправке фотографии.');
+          }
       })
       .catch(error => {
-        console.error('Ошибка:', error);
+          console.error('Ошибка:', error);
       });
-      });
+  }, 'image/jpeg', 1); // установка типа и качества
 });
+
+
 // startCameraButton.addEventListener('click', startCamera);
 // stopCameraButton.addEventListener('click', stopCamera);
 
