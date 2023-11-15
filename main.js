@@ -131,8 +131,8 @@ fourthPageVideo.addEventListener('click', () => {
   startCamera();
   startFaceVideoDetection(videoElement, canvas);
   if (detect.os() === 'iOS') {
-    // stopCamera();
-    // startCamera();
+    stopCamera();
+    startCamera();
     console.log('iOS');
   }
 });
