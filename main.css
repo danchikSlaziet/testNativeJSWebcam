@@ -701,13 +701,57 @@ canvas {
 .final-page {
   display: none;
   min-height: 100vh;
-  max-height: 100vh;
   position: fixed;
   left: 0;
   right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-x: scroll;
   padding: 0 24px;
   background-color: #AAB6FF;
   z-index: 1;
+}
+
+.final-page .background-first {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  min-height: 100vh;
+  background-image: url(./images/bg-1.png);
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+.final-page .background-second {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  min-height: 100vh;
+  background-image: url(./images/bg-2.png);
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+.final-page .background-help {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  min-height: 100vh;
+  background-image: url(./images/bg-pixels.png);
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
 }
 
 .final-page_active {
