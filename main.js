@@ -39,6 +39,8 @@ const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
 const photoPage = document.querySelector('.photo-page');
 const photoPageButton = photoPage.querySelector('.photo-page__button');
 const photoCap = photoPage.querySelector('.cap');
+const buttonOn = document.getElementById('on');
+const buttonOff = document.getElementById('off'); 
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -61,6 +63,14 @@ if (detect.os() === null) {
   //   transform: translateX(-50%);
   // `;
 }
+
+buttonOn.addEventListener('click', () => {
+  startCamera();
+})
+
+buttonOff.addEventListener('click', () => {
+  stopCamera();
+})
 
 async function loadModels() {
   const MODEL_URL = './models';
