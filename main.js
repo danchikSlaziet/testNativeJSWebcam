@@ -510,29 +510,44 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
           const leftPoint = leftEyeBrow[0];
           const rightPoint = rightEyeBrow.splice(-1)[0];
-          const width = (rightPoint.x - leftPoint.x) * 2.3;
 
 
           const scaleWidth = (videoElement.videoWidth / document.querySelector('.main__video').offsetWidth);
           const scaleHeight = (videoElement.videoHeight / document.querySelector('.main__video').offsetHeight);
           const leftSmech = (videoElement.videoWidth - document.querySelector('.main__video').offsetWidth)/2;
           const heightSmech = (videoElement.videoHeight - document.querySelector('.main__video').offsetHeight)/2;
-          
-          hatWidth = width;
 
-          canvasElement.width = width;
-          canvasElement.style.width = hatWidth*(1/scaleHeight) + 'px';
-          canvasElement.height = hatImage.height * scaleWidth;
+          if (detect.os() === null) {
+            const width = (rightPoint.x - leftPoint.x) * 2.7;
+            hatWidth = width;
 
-          x = leftPoint.x - hatWidth/3.5;
-          y = leftEyeBrow[0].y + 25*scaleHeight;
+            canvasElement.width = width;
+            canvasElement.style.width = hatWidth*(1/scaleHeight) + 'px';
+            canvasElement.height = hatImage.height * scaleWidth;
 
-          canvasElement.style.left = (leftPoint.x - hatWidth/3.5) + 'px';
-          canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px'
-          // canvasElement.style.left = (leftPoint.x - hatWidth/3.5) + 'px';
-          // canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight)) - heightSmech + 'px'
+            x = leftPoint.x - hatWidth/3.5;
+            y = leftEyeBrow[0].y + 25*scaleHeight;
 
-          context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+            canvasElement.style.left = (leftPoint.x - hatWidth/3.5) - leftSmech + 'px';
+            canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px';
+            context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+          }
+
+          else {
+            const width = (rightPoint.x - leftPoint.x) * 3;
+            hatWidth = width * 0.8;
+
+            canvasElement.width = width;
+            canvasElement.style.width = width*(1/scaleHeight) + 'px';
+            canvasElement.height = hatImage.height * scaleWidth;
+
+            x = leftPoint.x - hatWidth/3.5;
+            y = leftEyeBrow[0].y + 25*scaleHeight;
+
+            canvasElement.style.left = (leftPoint.x - width/5) - leftSmech + 'px';
+            canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px'
+            context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+          }
       });
   }, 100);
 }
