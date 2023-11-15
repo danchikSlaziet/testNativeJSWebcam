@@ -24,19 +24,24 @@ const screenButton = document.querySelector('.screen-button');
 const nextButton = document.getElementById('next-button');
 const loadingText = document.querySelector('.loading-neuro__text');
 const secondPage = document.querySelector('.second-page');
+const secondPageBack = secondPage.querySelector('.second-page__back');
 const secondPageInput = secondPage.querySelector('.second-page__input');
 const secondPageButton = secondPage.querySelector('.second-page__button');
 const thirdPage = document.querySelector('.third-page');
+const thirdPageBack = thirdPage.querySelector('.third-page__back');
 const thirdPageButton = thirdPage.querySelector('.third-page__button');
 const mainPage = document.querySelector('.main-page');
+const mainPageBack = mainPage.querySelector('.main-page__back');
 const mainPageButton = mainPage.querySelector('.main-page__button');
 const finalPage = document.querySelector('.final-page');
+const finalPageBack = finalPage.querySelector('.final-page__back');
 const finalIMG = finalPage.querySelector('.final-page__result-image');
 const finalButton = finalPage.querySelector('.final-page__button');
 const fourthPage = document.querySelector('.fourth-page');
 const fourthPageVideo = fourthPage.querySelector('.fourth-page__button_video');
 const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
 const photoPage = document.querySelector('.photo-page');
+const photoPageBack = photoPage.querySelector('.photo-page__back');
 const photoPageButton = photoPage.querySelector('.photo-page__button');
 const photoCap = photoPage.querySelector('.cap');
 
@@ -117,9 +122,46 @@ firstPageButton.addEventListener('click', () => {
   secondPage.classList.remove("second-page_disabled");
 })
 
+secondPageBack.addEventListener('click', () => {
+  secondPage.classList.add('second-page_disabled');
+  firstPage.classList.remove('first-page_disabled');
+});
+
+thirdPageBack.addEventListener('click', () => {
+  thirdPage.classList.add('third-page_disabled');
+  secondPage.classList.remove('second-page_disabled');
+});
+
+mainPageBack.addEventListener('click', () => {
+  stopCamera();
+  mainPage.classList.add('main-page_disabled');
+  fourthPage.classList.remove('fourth-page_disabled');
+});
+
+photoPageBack.addEventListener('click', () => {
+  photoPage.classList.add('photo-page_disabled');
+  fourthPage.classList.remove('fourth-page_disabled');
+  attachmentPhoto.src = null;
+});
+
+finalPageBack.addEventListener('click', () => {
+  finalPage.classList.remove('final-page_active');
+  mainPage.classList.remove('main-page_disabled');
+});
+
 secondPageInput.addEventListener('input', (evt) => {
   if (evt.target.value.trim().length !== 0) {
     secondPageButton.disabled = false;
+  }
+});
+
+document.addEventListener('click', function(event) {
+  // Проверяем, был ли клик вне элемента input
+  var isClickInsideInput = event.target.tagName === 'INPUT';
+  
+  // Если клик был вне элемента input, скрываем клавиатуру
+  if (!isClickInsideInput) {
+    document.activeElement.blur(); // Снимаем фокус с активного элемента (в данном случае, инпута)
   }
 });
 
@@ -130,8 +172,15 @@ secondPageButton.addEventListener('click', () => {
 
 fourthPageVideo.addEventListener('click', () => {
   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
-    stopCamera();
-    debugger
+    if (detect.os() === 'iOS') {
+      stopCamera();
+    }
+    else {
+      startCamera();
+      mainPage.classList.remove('main-page_disabled');
+      fourthPage.classList.add('fourth-page_disabled');
+      startFaceVideoDetection(videoElement, canvas);
+    }
   }
   // if (detect.os() === 'iOS') {
   //   stopCamera();
@@ -139,14 +188,14 @@ fourthPageVideo.addEventListener('click', () => {
   //   console.log('iOS');
   // }
   else if (fourthPageVideo.textContent.trim() === 'Продолжить') {
-    startCamera();
-    startFaceVideoDetection(videoElement, canvas);
+    if (detect.os() === 'iOS') {
+      startCamera();
+      startFaceVideoDetection(videoElement, canvas);
+    }
   }
 });
 
-
-
-fourthPagePhoto.onchange = function(event) {
+fourthPagePhoto.addEventListener('change', (event) => {
   var target = event.target;
 
   if (!FileReader) {
@@ -174,8 +223,7 @@ fourthPagePhoto.onchange = function(event) {
   }
 
   fileReader.readAsDataURL(target.files[0]);
-
-}
+})
   
   // maskButton.addEventListener('click', () => {
     // canvasElement3.width = attachmentPhoto.width;
@@ -243,7 +291,6 @@ async function startCamera() {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
     if (!fourthPage.className.includes('disabled')) {
-      debugger
       if (fourthPageVideo.textContent.trim() === 'сделать фото') {
         // fourthPageVideo.textContent = 'Продолжить'
       }
@@ -263,7 +310,9 @@ function stopCamera() {
       const tracks = stream.getTracks();
       tracks.forEach(track => track.stop());
       videoElement.srcObject = null;
-      fourthPageVideo.textContent = 'Продолжить';
+      if (detect.os() === 'iOS') {
+        fourthPageVideo.textContent = 'Продолжить';
+      }
   }
 }
 
@@ -321,8 +370,42 @@ mainPageButton.addEventListener('click', () => {
 });
 
 finalButton.addEventListener('click', () => {
-  finalPage.classList.remove('final-page_active');
-  mainPage.classList.remove('main-page_disabled');
+    const canvas = document.createElement('canvas');
+    canvas.width = finalIMG.width; // Ширина вашего изображения
+    canvas.height = finalIMG.height; // Высота вашего изображения
+    const ctx = canvas.getContext('2d');
+    
+    // Нарисуйте изображение на Canvas
+    ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
+
+
+    canvas.toBlob(function (blob) {
+    // Формируем объект FormData для отправки файла
+    const formData = new FormData();
+    formData.append('chat_id', userChatId);
+    formData.append('photo', blob, 'photo.png');
+  
+    // Формируем URL для отправки фотографии
+    const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+  
+    // Отправка фотографии на сервер Telegram
+    fetch(apiUrl, {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data.ok) {
+          console.log('Фотография успешно отправлена в Telegram.');
+        } else {
+          console.error('Произошла ошибка при отправке фотографии.');
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
+      });
 });
 // startCameraButton.addEventListener('click', startCamera);
 // stopCameraButton.addEventListener('click', stopCamera);
@@ -419,20 +502,8 @@ finalButton.addEventListener('click', () => {
 // });
 
 async function startFaceVideoDetection(assetElement, canvasElement) {
-  // const MODEL_URL = './models';
-  // await window.faceapi.loadTinyFaceDetectorModel(MODEL_URL);
-  // await window.faceapi.loadFaceLandmarkModel(MODEL_URL);
-  // await window.faceapi.loadFaceRecognitionModel(MODEL_URL);
-  // await window.faceapi.loadSsdMobilenetv1Model(MODEL_URL);
-
   const context = canvasElement.getContext('2d');
-
-  // await new Promise((resolve) => {
-  //   assetElement.addEventListener('loadedmetadata', resolve);
-  // });
-
-  const scale = videoElement.videoWidth / document.querySelector('.main__video').offsetWidth;
-
+  
   setInterval(async () => {
       const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
       context.clearRect(0, 0, canvasElement.width, canvasElement.height);
@@ -444,12 +515,14 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
           const leftPoint = leftEyeBrow[0];
           const rightPoint = rightEyeBrow.splice(-1)[0];
-          const width = (rightPoint.x - leftPoint.x) * 2.7;
+          const width = (rightPoint.x - leftPoint.x) * 2.3;
+
 
           const scaleWidth = (videoElement.videoWidth / document.querySelector('.main__video').offsetWidth);
           const scaleHeight = (videoElement.videoHeight / document.querySelector('.main__video').offsetHeight);
           const leftSmech = (videoElement.videoWidth - document.querySelector('.main__video').offsetWidth)/2;
           const heightSmech = (videoElement.videoHeight - document.querySelector('.main__video').offsetHeight)/2;
+          
           hatWidth = width;
 
           canvasElement.width = width;
@@ -458,8 +531,11 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
           x = leftPoint.x - hatWidth/3.5;
           y = leftEyeBrow[0].y + 25*scaleHeight;
-          canvasElement.style.left = (leftPoint.x - (hatWidth*(1/scaleHeight))/3.5) - leftSmech + 'px';
-          canvasElement.style.top = (leftEyeBrow[0].y + 25*scaleHeight) - heightSmech + 'px';
+
+          canvasElement.style.left = (leftPoint.x - hatWidth/3.5) + 'px';
+          canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px'
+          // canvasElement.style.left = (leftPoint.x - hatWidth/3.5) + 'px';
+          // canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight)) - heightSmech + 'px'
 
           context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
       });
