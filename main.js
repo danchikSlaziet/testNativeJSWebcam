@@ -368,6 +368,7 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
 async function startFacePhotoDetection(assetElement, canvasElement) {
   const context = canvasElement.getContext('2d');
+  debugger
 
   const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
   
@@ -375,6 +376,7 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
   detections.forEach((detection) => {
     const landmarks = detection.landmarks;
+    debugger
 
     // const jawline = landmarks.getJawOutline()
     // const jawLeft = jawline[0]
@@ -409,35 +411,16 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
     context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
 
-
-
-    // canvasElement3.width = attachmentPhoto.width;
-    // canvasElement3.height = attachmentPhoto.height;
-    // const canvasContext = canvasElement3.getContext('2d');
-    // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-    // const hatX = staticX;
-    // const hatY = staticY;
-    // const hatAspectRatioN = hatImage.width / hatImage.height;
-    // const hatHeightN = staticHatWidth / hatAspectRatioN;
-    // canvasContext.drawImage(hatImage, hatX, hatY - hatHeightN/2, staticHatWidth, hatHeightN);
-    // canvasElement3.style.opacity = 0;
-    // photoToSend.src = canvasElement3.toDataURL('image/png');
-
-
-        // Получение элемента, который нужно сфотографировать
-    const elementToCapture = photoContainer;
-
-    // Использование html2canvas для создания скриншота
-    html2canvas(elementToCapture).then((canvas) => {
-      // Получение данных из канваса в виде URL
-      const screenshotUrl = canvas.toDataURL('image/png');
-
-      // Создание изображения для предпросмотра или других целей
-      const screenshotImage = new Image();
-      screenshotImage.src = screenshotUrl;
-
-      // Добавление изображения куда-то в ваш документ, например:
-      photoToSend.src = screenshotImage.src;
-    });
+    canvasElement3.width = attachmentPhoto.width;
+    canvasElement3.height = attachmentPhoto.height;
+    const canvasContext = canvasElement3.getContext('2d');
+    canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+    const hatX = staticX;
+    const hatY = staticY;
+    const hatAspectRatioN = hatImage.width / hatImage.height;
+    const hatHeightN = staticHatWidth / hatAspectRatioN;
+    canvasContext.drawImage(hatImage, hatX, hatY - hatHeightN/2, staticHatWidth, hatHeightN);
+    canvasElement3.style.opacity = 0;
+    photoToSend.src = canvasElement3.toDataURL('image/png');
   });
 }
