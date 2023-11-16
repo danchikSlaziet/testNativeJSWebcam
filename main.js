@@ -41,6 +41,7 @@ const fourthPage = document.querySelector('.fourth-page');
 const fourthPageVideo = fourthPage.querySelector('.fourth-page__button_video');
 const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
 const photoPage = document.querySelector('.photo-page');
+const photoContainer = photoPage.querySelector('.photo-container');
 const photoToSend = photoPage.querySelector('.photo-to-send');
 const photoPageBack = photoPage.querySelector('.photo-page__back');
 const photoPageButton = photoPage.querySelector('.photo-page__button');
@@ -82,6 +83,7 @@ let staticY;
 
 let newHatWidth;
 let newHatHeight;
+
 
 function parseQuery(queryString) {
   let query = {};
@@ -409,16 +411,33 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
 
 
-    canvasElement3.width = attachmentPhoto.width;
-    canvasElement3.height = attachmentPhoto.height;
-    const canvasContext = canvasElement3.getContext('2d');
-    canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-    const hatX = staticX;
-    const hatY = staticY;
-    const hatAspectRatioN = hatImage.width / hatImage.height;
-    const hatHeightN = staticHatWidth / hatAspectRatioN;
-    canvasContext.drawImage(hatImage, hatX, hatY - hatHeightN/2, staticHatWidth, hatHeightN);
-    canvasElement3.style.opacity = 0;
-    photoToSend.src = canvasElement3.toDataURL('image/png');
+    // canvasElement3.width = attachmentPhoto.width;
+    // canvasElement3.height = attachmentPhoto.height;
+    // const canvasContext = canvasElement3.getContext('2d');
+    // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+    // const hatX = staticX;
+    // const hatY = staticY;
+    // const hatAspectRatioN = hatImage.width / hatImage.height;
+    // const hatHeightN = staticHatWidth / hatAspectRatioN;
+    // canvasContext.drawImage(hatImage, hatX, hatY - hatHeightN/2, staticHatWidth, hatHeightN);
+    // canvasElement3.style.opacity = 0;
+    // photoToSend.src = canvasElement3.toDataURL('image/png');
+
+
+        // Получение элемента, который нужно сфотографировать
+    const elementToCapture = photoContainer;
+
+    // Использование html2canvas для создания скриншота
+    html2canvas(elementToCapture).then((canvas) => {
+      // Получение данных из канваса в виде URL
+      const screenshotUrl = canvas.toDataURL('image/png');
+
+      // Создание изображения для предпросмотра или других целей
+      const screenshotImage = new Image();
+      screenshotImage.src = screenshotUrl;
+
+      // Добавление изображения куда-то в ваш документ, например:
+      photoToSend.src = screenshotImage.src;
+    });
   });
 }
