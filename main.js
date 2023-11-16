@@ -368,15 +368,12 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
 async function startFacePhotoDetection(assetElement, canvasElement) {
   const context = canvasElement.getContext('2d');
-  debugger
-
   const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
   
   context.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   detections.forEach((detection) => {
     const landmarks = detection.landmarks;
-    debugger
 
     // const jawline = landmarks.getJawOutline()
     // const jawLeft = jawline[0]
