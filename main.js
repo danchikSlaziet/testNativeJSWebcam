@@ -41,6 +41,7 @@ const fourthPage = document.querySelector('.fourth-page');
 const fourthPageVideo = fourthPage.querySelector('.fourth-page__button_video');
 const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
 const photoPage = document.querySelector('.photo-page');
+const photoToSend = photoPage.querySelector('.photo-to-send');
 const photoPageBack = photoPage.querySelector('.photo-page__back');
 const photoPageButton = photoPage.querySelector('.photo-page__button');
 const photoCap = photoPage.querySelector('.cap');
@@ -60,11 +61,6 @@ if (detect.os() === null) {
     left: 50%;
     transform: translateX(-50%);
   `;
-  // resultImage.style = `
-  //   position: relative;
-  //   left: 50%;
-  //   transform: translateX(-50%);
-  // `;
 }
 
 async function loadModels() {
@@ -109,12 +105,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 firstPage.classList.remove('first-page_disabled');
 
-// loadingNeuro.classList.remove('loading-neuro_disabled');
-// setTimeout(() => {
-//   loadingNeuro.classList.add('loading-neuro_disabled');
-//   firstPage.classList.remove('first-page_disabled');
-// }, 4000);
-// clearTimeout();
 
 firstPageButton.addEventListener('click', () => {
   startCamera();
@@ -141,7 +131,7 @@ mainPageBack.addEventListener('click', () => {
 photoPageBack.addEventListener('click', () => {
   photoPage.classList.add('photo-page_disabled');
   fourthPage.classList.remove('fourth-page_disabled');
-  attachmentPhoto.src = null;
+  attachmentPhoto.src = '';
 });
 
 finalPageBack.addEventListener('click', () => {
@@ -182,11 +172,6 @@ fourthPageVideo.addEventListener('click', () => {
       startFaceVideoDetection(videoElement, canvas);
     }
   }
-  // if (detect.os() === 'iOS') {
-  //   stopCamera();
-  //   startCamera();
-  //   console.log('iOS');
-  // }
   else if (fourthPageVideo.textContent.trim() === 'Продолжить') {
     if (detect.os() === 'iOS') {
       startCamera();
@@ -214,76 +199,12 @@ fourthPagePhoto.addEventListener('change', (event) => {
     fourthPage.classList.add('fourth-page_disabled');
     photoPage.classList.remove('photo-page_disabled');
     
-    // canvasElement3.width = attachmentPhoto.width;
-    // canvasElement3.height = attachmentPhoto.height;
-    // const canvasContext = canvasElement3.getContext('2d');
-    // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-    // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
     startFacePhotoDetection(attachmentPhoto, canvas2);
   }
 
   fileReader.readAsDataURL(target.files[0]);
 })
-  
-  // maskButton.addEventListener('click', () => {
-    // canvasElement3.width = attachmentPhoto.width;
-    // canvasElement3.height = attachmentPhoto.height;
-    // const canvasContext = canvasElement3.getContext('2d');
-    // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-    // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
-    // startFacePhotoDetection(attachmentPhoto, canvas2);
-  // });
-// thirdPageButton.addEventListener('click', () => {
-//   thirdPage.classList.add('third-page_disabled');
-// })
 
-// sendButton.addEventListener('click', () => {
-
-//     const canvas = document.createElement('canvas');
-//     canvas.width = downloadedImage.width; // Ширина вашего изображения
-//     canvas.height = downloadedImage.height; // Высота вашего изображения
-//     const ctx = canvas.getContext('2d');
-    
-//     // Нарисуйте изображение на Canvas
-//     ctx.drawImage(downloadedImage, 0, 0, canvas.width, canvas.height);
-
-
-//     canvas.toBlob(function (blob) {
-//     // Формируем объект FormData для отправки файла
-//     const formData = new FormData();
-//     formData.append('chat_id', userChatId);
-//     formData.append('photo', blob, 'photo.png');
-  
-//     // Формируем URL для отправки фотографии
-//     const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-  
-//     // Отправка фотографии на сервер Telegram
-//     fetch(apiUrl, {
-//       method: 'POST',
-//       body: formData,
-//     })
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log(data);
-//         if (data.ok) {
-//           console.log('Фотография успешно отправлена в Telegram.');
-//         } else {
-//           console.error('Произошла ошибка при отправке фотографии.');
-//         }
-//       })
-//       .catch(error => {
-//         console.error('Ошибка:', error);
-//       });
-//   });
-// });
-
-
-// setTimeout(() => {
-//   loadingPage.classList.add('loading-page_disabled');
-// }, 2500);
-// clearTimeout();
-
-// secondPage.classList.remove('second-page_disabled');
 
 // Функция для получения доступа к камере
 async function startCamera() {
@@ -316,10 +237,6 @@ function stopCamera() {
   }
 }
 
-// Назначение обработчиков событий кнопкам
-// startCameraFirst.addEventListener('click', () => {
-//   startCamera();
-// });
 thirdPageButton.addEventListener('click', () => {
   loadModels();
   thirdPage.classList.add('third-page_disabled');
@@ -329,22 +246,6 @@ thirdPageButton.addEventListener('click', () => {
     fourthPage.classList.remove('fourth-page_disabled');
   }, 4000);
   clearTimeout();
-  // startCamera();
-  // startFaceVideoDetection(videoElement, canvas);
-  // if (detect.os() === 'iOS') {
-  //   stopCamera();
-  //   startCamera();
-  //   console.log('iOS');
-  // }
-  // fourthPage.classList.remove('fourth-page_disabled')
-  // setTimeout(() => {
-  //   loadingText.textContent = 'готовим фирменную кепочку...';
-  // }, 1700);
-  // setTimeout(() => {
-  //   loadingNeuro.classList.add('loading-neuro_disabled');
-  //   fourthPage.classList.remove('fourth-page_disabled')
-  // }, 4000);
-  // clearTimeout();
 });
 
 mainPageButton.addEventListener('click', () => {
@@ -369,49 +270,9 @@ mainPageButton.addEventListener('click', () => {
   finalPage.classList.add('final-page_active');
 });
 
-// finalButton.addEventListener('click', () => {
-//   const canvas = document.createElement('canvas');
-//   canvas.width = finalIMG.width;
-//   canvas.height = finalIMG.height;
-//   const ctx = canvas.getContext('2d');
-
-//   // Нарисуйте изображение на Canvas
-//   ctx.drawImage(finalIMG, 0, 0, canvas.width, canvas.height);
-
-//   // Получите Data URL изображения
-//   const dataURL = canvas.toDataURL('image/jpeg', 1.0);
-
-//   // Формируем объект FormData для отправки файла
-//   const formData = new FormData();
-//   formData.append('chat_id', userChatId);
-//   formData.append('photo', dataURL);
-
-//   // Формируем URL для отправки фотографии
-//   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-
-//   // Отправка фотографии на сервер Telegram
-//   fetch(apiUrl, {
-//       method: 'POST',
-//       body: formData,
-//   })
-//   .then(response => response.json())
-//   .then(data => {
-//       console.log(data);
-//       if (data.ok) {
-//           console.log('Фотография успешно отправлена в Telegram.');
-//       } else {
-//           console.error('Произошла ошибка при отправке фотографии.');
-//       }
-//   })
-//   .catch(error => {
-//       console.error('Ошибка:', error);
-//   });
-// });
-
-
-finalButton.addEventListener('click', async () => {
+async function sendPhoto(assetElement) {
   // Получение ссылки на изображение
-  const imageURL = finalIMG.src;
+  const imageURL = assetElement.src;
 
   // Загрузка изображения в бинарном формате
   const response = await fetch(imageURL);
@@ -441,60 +302,10 @@ finalButton.addEventListener('click', async () => {
   } catch (error) {
       console.error('Ошибка:', error);
   }
-});
+}
 
-
-
-
-
-
-// maskButton.addEventListener('click', () => {
-//   canvasElement3.width = attachmentPhoto.width;
-//   canvasElement3.height = attachmentPhoto.height;
-//   const canvasContext = canvasElement3.getContext('2d');
-//   canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-//   attachmentPhoto.src = canvasElement3.toDataURL('image/png');
-//   startFacePhotoDetection(attachmentPhoto, canvas2);
-// });
-
-// sendAttachButton.addEventListener('click', () => {
-//   const canvas = document.createElement('canvas');
-//     canvas.width = attachmentPhoto.width; // Ширина вашего изображения
-//     canvas.height = attachmentPhoto.height; // Высота вашего изображения
-//     const ctx = canvas.getContext('2d');
-    
-//     // Нарисуйте изображение на Canvas
-//     ctx.drawImage(attachmentPhoto, 0, 0, canvas.width, canvas.height);
-
-
-//     canvas.toBlob(function (blob) {
-//     // Формируем объект FormData для отправки файла
-//     const formData = new FormData();
-//     formData.append('chat_id', userChatId);
-//     formData.append('photo', blob, 'photo.png');
-  
-//     // Формируем URL для отправки фотографии
-//     const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-  
-//     // Отправка фотографии на сервер Telegram
-//     fetch(apiUrl, {
-//       method: 'POST',
-//       body: formData,
-//     })
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log(data);
-//         if (data.ok) {
-//           console.log('Фотография успешно отправлена в Telegram.');
-//         } else {
-//           console.error('Произошла ошибка при отправке фотографии.');
-//         }
-//       })
-//       .catch(error => {
-//         console.error('Ошибка:', error);
-//       });
-//   });
-// });
+finalButton.addEventListener('click', () => sendPhoto(finalIMG));
+photoPageButton.addEventListener('click', () => sendPhoto(photoToSend));
 
 async function startFaceVideoDetection(assetElement, canvasElement) {
   const context = canvasElement.getContext('2d');
@@ -518,7 +329,7 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           const heightSmech = (videoElement.videoHeight - document.querySelector('.main__video').offsetHeight)/2;
 
           if (detect.os() === null) {
-            const width = (rightPoint.x - leftPoint.x) * 2.7;
+            const width = (rightPoint.x - leftPoint.x) * 2.4;
             hatWidth = width;
 
             canvasElement.width = width;
@@ -552,38 +363,6 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
   }, 100);
 }
 
-// async function startFacePhotoDetection(assetElement, canvasElement) {
-
-//   const context = canvasElement.getContext('2d');
-
-//   const detections = await window.faceapi.detectAllFaces(assetElement).withFaceLandmarks();
-//     context.clearRect(0, 0, canvasElement.width, canvasElement.height);
-//     detections.forEach((detection) => {
-//         const landmarks = detection.landmarks;
-//         const leftEyeBrow = landmarks.getLeftEyeBrow();
-//         const rightEyeBrow = landmarks.getRightEyeBrow();
-
-//         const leftPoint = leftEyeBrow[0];
-//         const rightPoint = rightEyeBrow.splice(-1)[0];
-//         const width = (rightPoint.x - leftPoint.x) * 2.7;
-//         console.log(width)
-//         const scaleWidth = (attachmentPhoto.width / attachmentPhoto.naturalWidth);
-//         const leftSmech = (attachmentPhoto.width - attachmentPhoto.naturalWidth)/2;
-//         const scaleHeight = (attachmentPhoto.height / attachmentPhoto.naturalHeight);
-//         const heightSmech = (attachmentPhoto.height - attachmentPhoto.naturalHeight)/2;
-
-//         const hatAspectRatio = hatImage.width / hatImage.height;
-//         const hatHeight = width / hatAspectRatio;
-
-//         canvasElement.width = width;
-//         canvasElement.height = hatHeight;
-//         canvasElement.style.width = width*scaleWidth + 'px';
-//         canvasElement.style.left = (leftPoint.x*scaleWidth - width*scaleWidth/3) + 'px';
-//         canvasElement.style.top = (leftEyeBrow[0].y*scaleHeight + 15*scaleHeight) + 'px';
-
-//         context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
-//       })
-//   }
 
 async function startFacePhotoDetection(assetElement, canvasElement) {
   const context = canvasElement.getContext('2d');
@@ -619,27 +398,27 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
     canvasElement.height = hatHeight;
     canvasElement.style.width = width * scaleWidth + 'px';
     console.log(canvasElement.height);
-    // canvasElement.style.left = (leftPoint.x * scaleWidth - width * scaleWidth / 3) + 'px';
-    // canvasElement.style.top = (leftEye[0].y * scaleHeight) + 'px';
+    staticX = (leftPoint.x * scaleWidth - width * scaleWidth / 3);
+    staticY = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (2.5 / 100));
+    staticHatWidth = width * scaleWidth; 
+
     canvasElement.style.left = (leftPoint.x * scaleWidth - width * scaleWidth / 3) + 'px';
     canvasElement.style.top = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (2.5 / 100)) + 'px';
 
     context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+
+
+
+    canvasElement3.width = attachmentPhoto.width;
+    canvasElement3.height = attachmentPhoto.height;
+    const canvasContext = canvasElement3.getContext('2d');
+    canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
+    const hatX = staticX;
+    const hatY = staticY;
+    const hatAspectRatioN = hatImage.width / hatImage.height;
+    const hatHeightN = staticHatWidth / hatAspectRatioN;
+    canvasContext.drawImage(hatImage, hatX, hatY - hatHeightN/2, staticHatWidth, hatHeightN);
+    canvasElement3.style.opacity = 0;
+    photoToSend.src = canvasElement3.toDataURL('image/png');
   });
 }
-
-
-  // canvasElement3.width = attachmentPhoto.width;
-  // canvasElement3.height = attachmentPhoto.height;
-
-  // const hatAspectRatio = hatImage.width / hatImage.height;
-  // const hatHeight = staticHatWidth / hatAspectRatio;
-
-  // const canvasContext = canvasElement3.getContext('2d');
-  // canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
-  // const hatX = staticX;
-  // const hatY = staticY;
-  // canvasContext.drawImage(hatImage, hatX - 4, hatY, staticHatWidth, hatHeight);
-  // attachmentPhoto.src = canvasElement3.toDataURL('image/png');
-
-// startFaceVideoDetection(videoElement, canvas);

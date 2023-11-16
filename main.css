@@ -696,6 +696,7 @@ canvas {
 
 #canvas3 {
   pointer-events: none;
+  transform: translateY(0) !important;
 }
 
 .final-page {
@@ -706,7 +707,7 @@ canvas {
   right: 0;
   top: 0;
   bottom: 0;
-  overflow-x: scroll;
+  overflow-y: scroll;
   padding: 0 24px;
   background-color: #AAB6FF;
   z-index: 1;
@@ -727,7 +728,7 @@ canvas {
 }
 
 .final-page .background-second {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -741,7 +742,7 @@ canvas {
 }
 
 .final-page .background-help {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -802,4 +803,9 @@ canvas {
   padding: 23px 10px;
   border-radius: 40px;
   background: #FF0032;
+  margin-bottom: 38px;
+}
+
+.photo-to-send {
+  display: none;
 }
