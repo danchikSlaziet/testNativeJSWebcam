@@ -254,8 +254,8 @@ mainPageButton.addEventListener('click', () => {
   mainPage.classList.add('main-page_disabled');
 
   const scaleFactor = 100;
-  canvasElement.width = videoElement.videoWidth*scaleFactor;
-  canvasElement.height = videoElement.videoHeight*scaleFactor;
+  canvasElement.width = videoElement.videoWidth;
+  canvasElement.height = videoElement.videoHeight;
 
 
   const hatAspectRatio = hatImage.width / hatImage.height;
@@ -263,12 +263,12 @@ mainPageButton.addEventListener('click', () => {
 
   const canvasContext = canvasElement.getContext('2d');
   canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
-  const hatX = x*scaleFactor;
-  const hatY = (y - hatHeight / 2)*scaleFactor;
+  const hatX = x;
+  const hatY = (y - hatHeight / 2);
 
-  canvasContext.drawImage(hatImage, hatX, hatY, hatWidth*scaleFactor, hatHeight*scaleFactor);
+  canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
 
-  finalIMG.src = canvasElement.toDataURL('image/png', 1);
+  finalIMG.src = canvasElement.toDataURL('image/jpeg', 1);
 
   finalPage.classList.add('final-page_active');
 });
@@ -409,15 +409,17 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
 
     context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
 
-    canvasElement3.width = attachmentPhoto.width;
-    canvasElement3.height = attachmentPhoto.height;
+    const scaleFactor = 4;
+
+    canvasElement3.width = attachmentPhoto.width*scaleFactor;
+    canvasElement3.height = attachmentPhoto.height*scaleFactor;
     const canvasContext = canvasElement3.getContext('2d');
     canvasContext.drawImage(attachmentPhoto, 0, 0, canvasElement3.width, canvasElement3.height);
     const hatX = staticX;
     const hatY = staticY;
     const hatAspectRatioN = hatImage.width / hatImage.height;
     const hatHeightN = staticHatWidth / hatAspectRatioN;
-    canvasContext.drawImage(hatImage, hatX, hatY - hatHeightN/2, staticHatWidth, hatHeightN);
+    canvasContext.drawImage(hatImage, hatX*scaleFactor, (hatY - hatHeightN/2)*scaleFactor, staticHatWidth*scaleFactor, hatHeightN*scaleFactor);
     canvasElement3.style.opacity = 0;
     photoToSend.src = canvasElement3.toDataURL('image/png');
   });
