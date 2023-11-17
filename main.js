@@ -253,19 +253,20 @@ thirdPageButton.addEventListener('click', () => {
 mainPageButton.addEventListener('click', () => {
   mainPage.classList.add('main-page_disabled');
 
+  const scaleFactor = 100;
+  canvasElement.width = videoElement.videoWidth*scaleFactor;
+  canvasElement.height = videoElement.videoHeight*scaleFactor;
 
-  canvasElement.width = videoElement.videoWidth;
-  canvasElement.height = videoElement.videoHeight;
 
   const hatAspectRatio = hatImage.width / hatImage.height;
   const hatHeight = hatWidth / hatAspectRatio;
 
   const canvasContext = canvasElement.getContext('2d');
   canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
-  const hatX = x;
-  const hatY = y - hatHeight / 2;
+  const hatX = x*scaleFactor;
+  const hatY = (y - hatHeight / 2)*scaleFactor;
 
-  canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
+  canvasContext.drawImage(hatImage, hatX, hatY, hatWidth*scaleFactor, hatHeight*scaleFactor);
 
   finalIMG.src = canvasElement.toDataURL('image/png', 1);
 
