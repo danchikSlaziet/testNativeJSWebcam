@@ -253,9 +253,9 @@ thirdPageButton.addEventListener('click', () => {
 mainPageButton.addEventListener('click', () => {
   mainPage.classList.add('main-page_disabled');
 
-  const scaleFactor = 100;
-  canvasElement.width = videoElement.videoWidth;
-  canvasElement.height = videoElement.videoHeight;
+  const scaleFactor = 2;
+  canvasElement.width = videoElement.videoWidth*scaleFactor;
+  canvasElement.height = videoElement.videoHeight*scaleFactor;
 
 
   const hatAspectRatio = hatImage.width / hatImage.height;
@@ -266,9 +266,9 @@ mainPageButton.addEventListener('click', () => {
   const hatX = x;
   const hatY = (y - hatHeight / 2);
 
-  canvasContext.drawImage(hatImage, hatX, hatY, hatWidth, hatHeight);
+  canvasContext.drawImage(hatImage, hatX*scaleFactor, hatY*scaleFactor, hatWidth*scaleFactor, hatHeight*scaleFactor);
 
-  finalIMG.src = canvasElement.toDataURL('image/jpeg', 1);
+  finalIMG.src = canvasElement.toDataURL('image/png', 1);
 
   finalPage.classList.add('final-page_active');
 });
@@ -324,7 +324,6 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
 
           const leftPoint = leftEyeBrow[0];
           const rightPoint = rightEyeBrow.splice(-1)[0];
-
 
           const scaleWidth = (videoElement.videoWidth / document.querySelector('.main__video').offsetWidth);
           const scaleHeight = (videoElement.videoHeight / document.querySelector('.main__video').offsetHeight);
