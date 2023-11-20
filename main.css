@@ -17,7 +17,7 @@ video::-webkit-media-controls-enclosure {
 body {
   margin: 0;
   overflow-x: hidden;
-  max-height: 100vh;
+  min-height: 100vh;
   color: #FFF;
   font-weight: 500;
   font-family: 'MTS', sans-serif;
@@ -80,7 +80,7 @@ body {
 }
 
 .second-page {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   background: linear-gradient(347deg, #FFD4C9 -2.24%, #EDCCD3 16.66%, #BFB8ED 52.9%, #9FAAFF 76.53%, #A1A1FF 103.3%);
@@ -121,6 +121,7 @@ body {
   text-align: left;
   width: 100%;
   box-sizing: border-box;
+  transition: transform .3s ease-out;
 }
 
 .second-page__input {
@@ -140,6 +141,7 @@ body {
   width: 100%;
   margin-bottom: 10px;
   z-index: 100;
+  transition: transform .3s ease-out;
 }
 
 .second-page__button {
@@ -159,6 +161,7 @@ body {
   border-radius: 40px;
   background: #FF0032;
   backdrop-filter: blur(15px);
+  transition: transform .3s ease-out;
 }
 
 
@@ -421,7 +424,7 @@ body {
 }
 
 .first-page {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   background: linear-gradient(347deg, #FFD4C9 -2.24%, #EDCCD3 16.66%, #BFB8ED 52.9%, #9FAAFF 76.53%, #A1A1FF 103.3%);

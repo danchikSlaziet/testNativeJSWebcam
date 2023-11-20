@@ -26,6 +26,7 @@ const loadingText = document.querySelector('.loading-neuro__text');
 const secondPage = document.querySelector('.second-page');
 const secondPageBack = secondPage.querySelector('.second-page__back');
 const secondPageInput = secondPage.querySelector('.second-page__input');
+const secondPagetext = secondPage.querySelector('.second-page__text');
 const secondPageButton = secondPage.querySelector('.second-page__button');
 const thirdPage = document.querySelector('.third-page');
 const thirdPageBack = thirdPage.querySelector('.third-page__back');
@@ -144,6 +145,26 @@ finalPageBack.addEventListener('click', () => {
 secondPageInput.addEventListener('input', (evt) => {
   if (evt.target.value.trim().length !== 0) {
     secondPageButton.disabled = false;
+  }
+});
+
+secondPageInput.addEventListener('focus', () => {
+  if (detect.os() === 'iOS') {
+    setTimeout(() => {
+      secondPageButton.style.transform = 'translateY(-90px)';
+      secondPageInput.style.transform = 'translateY(-90px)';
+      secondPagetext.style.transform = 'translateY(-90px)';
+    }, 10)
+
+  }
+});
+
+secondPageInput.addEventListener('blur', () => {
+  if (detect.os() === 'iOS') {
+    secondPageButton.style.transform = 'translateY(0)';
+    secondPageInput.style.transform = 'translateY(0)';
+    secondPagetext.style.transform = 'translateY(0)';
+    window.scrollTo({top: 0, behavior: "smooth"});
   }
 });
 
