@@ -32,6 +32,7 @@ const thirdPage = document.querySelector('.third-page');
 const thirdPageBack = thirdPage.querySelector('.third-page__back');
 const thirdPageButton = thirdPage.querySelector('.third-page__button');
 const mainPage = document.querySelector('.main-page');
+const mainVideo = document.querySelector('.main__video');
 const mainPageBack = mainPage.querySelector('.main-page__back');
 const mainPageButton = mainPage.querySelector('.main-page__button');
 const finalPage = document.querySelector('.final-page');
@@ -201,6 +202,11 @@ fourthPageVideo.addEventListener('click', () => {
       startFaceVideoDetection(videoElement, canvas);
     }
   }
+});
+
+mainVideo.addEventListener('loadedmetadata', (event) => {
+  mainVideo.width = 640
+  mainVideo.height = 480;
 });
 
 fourthPagePhoto.addEventListener('change', (event) => {
