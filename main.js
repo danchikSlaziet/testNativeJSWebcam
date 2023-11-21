@@ -184,6 +184,11 @@ secondPageButton.addEventListener('click', () => {
   thirdPage.classList.remove('third-page_disabled');
 });
 
+function updateVideoSize() {
+  videoElement.width = 640;
+  videoElement.height = 480;
+}
+
 fourthPageVideo.addEventListener('click', () => {
   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
     if (detect.os() === 'iOS') {
@@ -199,15 +204,18 @@ fourthPageVideo.addEventListener('click', () => {
   else if (fourthPageVideo.textContent.trim() === 'Продолжить') {
     if (detect.os() === 'iOS') {
       startCamera();
+      setTimeout(() => {
+        videoElement.style.opacity = 1;
+      }, 1000)
       startFaceVideoDetection(videoElement, canvas);
     }
   }
 });
 
-mainVideo.addEventListener('loadedmetadata', (event) => {
-  mainVideo.width = 640
-  mainVideo.height = 480;
-});
+if (detect.os() === 'iOS') {
+  videoElement.style.opacity = 0;
+}
+
 
 fourthPagePhoto.addEventListener('change', (event) => {
   var target = event.target;
@@ -233,7 +241,6 @@ fourthPagePhoto.addEventListener('change', (event) => {
 
   fileReader.readAsDataURL(target.files[0]);
 })
-
 
 // Функция для получения доступа к камере
 async function startCamera() {
