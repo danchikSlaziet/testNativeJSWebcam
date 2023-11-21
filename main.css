@@ -172,6 +172,9 @@ button:hover {
   transition: transform .3s ease-out;
 }
 
+.second-page__button:disabled {
+  opacity: .2;
+}
 
 .loading-page {
   position: fixed;

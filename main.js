@@ -143,11 +143,19 @@ finalPageBack.addEventListener('click', () => {
   mainPage.classList.remove('main-page_disabled');
 });
 
-secondPageInput.addEventListener('input', (evt) => {
-  if (evt.target.value.trim().length !== 0) {
-    secondPageButton.disabled = false;
-  }
+const phoneMask = new IMask(secondPageInput, {
+  mask: "+{7} (000) 000-00-00",
 });
+
+function phoneInputHandler() {
+  if (phoneMask.masked.isComplete) {
+    secondPageButton.disabled = false;
+  } else {
+    secondPageButton.disabled = true;
+  }
+}
+
+secondPageInput.addEventListener('input', phoneInputHandler);
 
 secondPageInput.addEventListener('focus', () => {
   if (detect.os() === 'iOS') {
