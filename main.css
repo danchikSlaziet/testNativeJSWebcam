@@ -16,7 +16,7 @@ video::-webkit-media-controls-enclosure {
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   min-height: 100vh;
   color: #FFF;
   font-weight: 500;

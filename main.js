@@ -135,7 +135,9 @@ mainPageBack.addEventListener('click', () => {
 photoPageBack.addEventListener('click', () => {
   photoPage.classList.add('photo-page_disabled');
   fourthPage.classList.remove('fourth-page_disabled');
-  attachmentPhoto.src = '';
+  setTimeout(() => {
+    attachmentPhoto.src = '';
+  }, 1000);
   photoPageButton.textContent = 'Отправить';
 });
 
