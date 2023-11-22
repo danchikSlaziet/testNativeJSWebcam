@@ -136,11 +136,13 @@ photoPageBack.addEventListener('click', () => {
   photoPage.classList.add('photo-page_disabled');
   fourthPage.classList.remove('fourth-page_disabled');
   attachmentPhoto.src = '';
+  photoPageButton.textContent = 'Отправить';
 });
 
 finalPageBack.addEventListener('click', () => {
   finalPage.classList.remove('final-page_active');
   mainPage.classList.remove('main-page_disabled');
+  finalButton.textContent = 'Отправить';
 });
 
 const phoneMask = new IMask(secondPageInput, {
@@ -315,7 +317,7 @@ mainPageButton.addEventListener('click', () => {
   finalPage.classList.add('final-page_active');
 });
 
-async function sendPhoto(assetElement) {
+async function sendPhoto(assetElement, place) {
   // Получение ссылки на изображение
   const imageURL = assetElement.src;
 
@@ -331,6 +333,13 @@ async function sendPhoto(assetElement) {
   // Формируем URL для отправки фотографии
   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
+  if (place === 'photo') {
+    photoPageButton.textContent = 'Отправка...';
+  }
+  else {
+    finalButton.textContent = 'Отправка...';
+  }
+
   // Отправка фотографии на сервер Telegram
   try {
       const result = await fetch(apiUrl, {
@@ -341,16 +350,34 @@ async function sendPhoto(assetElement) {
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
+          if (place === 'photo') {
+            photoPageButton.textContent = 'Отправлено';
+          }
+          else {
+            finalButton.textContent = 'Отправлено';
+          }
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
+          if (place === 'photo') {
+            photoPageButton.textContent = 'Ошибка';
+          }
+          else {
+            finalButton.textContent = 'Ошибка';
+          }
       }
   } catch (error) {
       console.error('Ошибка:', error);
+      if (place === 'photo') {
+        photoPageButton.textContent = 'Ошибка';
+      }
+      else {
+        finalButton.textContent = 'Ошибка';
+      }
   }
 }
 
-finalButton.addEventListener('click', () => sendPhoto(finalIMG));
-photoPageButton.addEventListener('click', () => sendPhoto(photoToSend));
+finalButton.addEventListener('click', () => sendPhoto(finalIMG, 'video'));
+photoPageButton.addEventListener('click', () => sendPhoto(photoToSend, 'photo'));
 
 async function startFaceVideoDetection(assetElement, canvasElement) {
   const context = canvasElement.getContext('2d');

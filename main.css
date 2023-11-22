@@ -102,6 +102,9 @@ button:hover {
   max-height: 100vh;
   min-height: 100vh;
   padding: 0 24px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility .5s, opacity .5s linear;
 }
 
 @media screen and (max-height: 559px) {
@@ -112,7 +115,9 @@ button:hover {
 
 
 .second-page_disabled {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
+  opacity: 0;
 }
 
 .second-page__text {
@@ -169,7 +174,7 @@ button:hover {
   border-radius: 40px;
   background: #FF0032;
   backdrop-filter: blur(15px);
-  transition: transform .3s ease-out;
+  transition: transform .3s ease-out, opacity .24s ease-in;
 }
 
 .second-page__button:disabled {
@@ -182,7 +187,6 @@ button:hover {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: #e40422;
   display: flex;
   z-index: 200;
 }
@@ -210,7 +214,7 @@ button:hover {
   position: fixed;
   left: 0;
   right: 0;
-  background-color: #AAB6FF;
+  background: linear-gradient(347deg, #FFD4C9 -2.24%, #EDCCD3 16.66%, #BFB8ED 52.9%, #9FAAFF 76.53%, #A1A1FF 103.3%);
   display: flex;
   flex-direction: column;
   z-index: 100;
@@ -316,6 +320,9 @@ button:hover {
   max-height: 100vh;
   min-height: 100vh;
   padding: 0 24px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility .5s linear, opacity .5s linear;
 }
 
 .fourth-page__text {
@@ -340,7 +347,9 @@ button:hover {
 }
 
 .fourth-page_disabled {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
+  opacity: 0;
 }
 
 .fourth-page__button {
@@ -380,10 +389,15 @@ button:hover {
   max-height: 100vh;
   min-height: 100vh;
   padding: 0 24px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility .5s, opacity .5s linear;
 }
 
 .third-page_disabled {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
+  opacity: 0;
 }
 
 .third-page__text {
@@ -449,10 +463,15 @@ button:hover {
   min-height: 100vh;
   padding: 0 24px;
   gap: 15px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility .5s, opacity .5s linear;
 }
 
 .first-page_disabled {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
+  opacity: 0;
 }
 
 .first-page__text {
@@ -540,6 +559,9 @@ button:hover {
   max-height: 100vh;
   min-height: 100vh;
   padding: 0 24px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility .5s linear, opacity .5s linear;
 }
 
 .photo-main {
@@ -561,7 +583,9 @@ button:hover {
 }
 
 .photo-page_disabled {
-  display: none;
+  /* display: none; */
+  visibility: hidden;
+  opacity: 0;
 }
 
 .photo-page__button {
@@ -607,10 +631,15 @@ button:hover {
   max-height: 100vh;
   min-height: 100vh;
   padding: 0 24px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility .5s, opacity .5s linear;
 }
 
 .main-page_disabled {
   display: none;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .main-page__button {
