@@ -35,6 +35,7 @@ button:hover {
   top: 40px;
   left: 20px;
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 50%;
 }
 
@@ -118,7 +119,7 @@ button:hover {
   padding: 0 24px;
   visibility: visible;
   opacity: 1;
-  transition: visibility .5s, opacity .5s linear;
+  transition: visibility .3s, opacity .3s linear;
 }
 
 @media screen and (max-height: 559px) {
@@ -138,6 +139,7 @@ button:hover {
   border: 1px solid #AAB6FF;
   background: rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   width: 100%;
   flex-grow: 1;
   margin-top: 134px;
@@ -285,12 +287,14 @@ button:hover {
 .loading-neuro__block {
   display: flex;
   flex-direction: column;
+  z-index: 100;
   justify-content: center;
   align-items: center;
   border-radius: 22px 22px 62px 22px;
   border: 1px solid #AAB6FF;
   background: rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   width: 100%;
   flex-grow: 1;
   padding-left: 32px;
@@ -399,7 +403,7 @@ button:hover {
   padding: 0 24px;
   visibility: visible;
   opacity: 1;
-  transition: visibility .5s linear, opacity .5s linear;
+  transition: visibility .3s linear, opacity .3s linear;
 }
 
 .fourth-page__text {
@@ -414,6 +418,7 @@ button:hover {
   border: 1px solid #AAB6FF;
   background: rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   padding: 25px 15px 24px 24px;
 }
 
@@ -472,7 +477,7 @@ button:hover {
   gap: 15px;
   visibility: visible;
   opacity: 1;
-  transition: visibility .5s, opacity .5s linear;
+  transition: visibility .3s, opacity .3s linear;
 }
 
 .first-page_disabled {
@@ -493,6 +498,7 @@ button:hover {
   border-radius: 22px 22px 62px 22px;
   border: 1px solid #AAB6FF;
   background: rgba(144, 144, 144, 0.30);
+  -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   margin: 0;
   margin-top: 149px;
@@ -568,7 +574,7 @@ button:hover {
   padding: 0 24px;
   visibility: visible;
   opacity: 1;
-  transition: visibility .5s linear, opacity .5s linear;
+  transition: visibility .3s linear, opacity .3s linear;
 }
 
 .photo-main {
@@ -642,7 +648,7 @@ button:hover {
   padding: 0 24px;
   visibility: visible;
   opacity: 1;
-  transition: visibility .5s, opacity .5s linear;
+  transition: visibility .3s, opacity .3s linear;
 }
 
 .main-page_disabled {
@@ -871,6 +877,7 @@ canvas {
   border: 1px solid #AAB6FF;
   background: rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   margin: 130px 0 10px 0;
 }
 
@@ -887,6 +894,7 @@ canvas {
   border-radius: 22px 22px 62px 22px;
   background: linear-gradient(0deg, #FFF 0%, #FFF 100%), rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 .final-page__button {
@@ -933,7 +941,7 @@ canvas {
   padding: 0 24px;
   visibility: visible;
   opacity: 1;
-  transition: visibility .5s, opacity .5s linear;
+  transition: visibility .3s, opacity .3s linear;
 }
 
 .message-page_disabled {
@@ -954,6 +962,7 @@ canvas {
   border: 1px solid #AAB6FF;
   background: rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   margin-top: 134px;
 }
 
@@ -964,6 +973,7 @@ canvas {
   border: 1px solid #AAB6FF;
   background: rgba(144, 144, 144, 0.30);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   color: #FFF;
   font-size: 18px;
   font-style: normal;
