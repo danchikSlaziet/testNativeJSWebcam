@@ -1,6 +1,8 @@
 const sendButton = document.querySelector('.send-button');
 const loadingPage = document.querySelector('.loading-page');
 const loadingNeuro = document.querySelector('.loading-neuro');
+const loadingNeuroBack = loadingNeuro.querySelector('.loading-neuro__back');
+const loadingNeuroBtn = loadingNeuro.querySelector('.loading-neuro__button');
 const videoElement = document.getElementById('camera-stream');
 const startCameraFirst = document.getElementById('start-camera-first');
 const startCameraButton = document.getElementById('start-camera');
@@ -28,9 +30,6 @@ const secondPageBack = secondPage.querySelector('.second-page__back');
 const secondPageInput = secondPage.querySelector('.second-page__input');
 const secondPagetext = secondPage.querySelector('.second-page__text');
 const secondPageButton = secondPage.querySelector('.second-page__button');
-const thirdPage = document.querySelector('.third-page');
-const thirdPageBack = thirdPage.querySelector('.third-page__back');
-const thirdPageButton = thirdPage.querySelector('.third-page__button');
 const mainPage = document.querySelector('.main-page');
 const mainVideo = document.querySelector('.main__video');
 const mainPageBack = mainPage.querySelector('.main-page__back');
@@ -40,6 +39,7 @@ const finalPageBack = finalPage.querySelector('.final-page__back');
 const finalIMG = finalPage.querySelector('.final-page__result-image');
 const finalButton = finalPage.querySelector('.final-page__button');
 const fourthPage = document.querySelector('.fourth-page');
+const fourthPageBack = fourthPage.querySelector('.fourth-page__back');
 const fourthPageVideo = fourthPage.querySelector('.fourth-page__button_video');
 const fourthPagePhoto = fourthPage.querySelector('.fourth-page__button_photo');
 const photoPage = document.querySelector('.photo-page');
@@ -48,11 +48,16 @@ const photoToSend = photoPage.querySelector('.photo-to-send');
 const photoPageBack = photoPage.querySelector('.photo-page__back');
 const photoPageButton = photoPage.querySelector('.photo-page__button');
 const photoCap = photoPage.querySelector('.cap');
+const messagePage = document.querySelector('.message-page');
+const messagePageBack = messagePage.querySelector('.message-page__back');
+const messagePageButton = messagePage.querySelector('.message-page__button');
 
-const botToken = '6744947112:AAHDEu8mSb8tIWPw_WcGZ0LWuYcc7VeyEwM';
+const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+
+let wasLoading = false;
 
 let detect = new MobileDetect(window.navigator.userAgent);
 
@@ -121,8 +126,14 @@ secondPageBack.addEventListener('click', () => {
   firstPage.classList.remove('first-page_disabled');
 });
 
-thirdPageBack.addEventListener('click', () => {
-  thirdPage.classList.add('third-page_disabled');
+loadingNeuroBack.addEventListener('click', () => {
+  loadingNeuro.classList.add('loading-neuro_disabled');
+  secondPage.classList.remove('second-page_disabled');
+  loadingNeuroBtn.style.opacity = '0.2';
+});
+
+fourthPageBack.addEventListener('click', () => {
+  fourthPage.classList.add('fourth-page_disabled');
   secondPage.classList.remove('second-page_disabled');
 });
 
@@ -132,68 +143,50 @@ mainPageBack.addEventListener('click', () => {
   fourthPage.classList.remove('fourth-page_disabled');
 });
 
+messagePageBack.addEventListener('click', () => {
+  messagePage.classList.add('message-page_disabled');
+  finalPage.classList.add('final-page_active');
+  finalButton.textContent = 'Отправить в бота';
+});
+
 photoPageBack.addEventListener('click', () => {
   photoPage.classList.add('photo-page_disabled');
   fourthPage.classList.remove('fourth-page_disabled');
   setTimeout(() => {
     attachmentPhoto.src = '';
+    photoPageButton.textContent = 'Отправить в бота';
   }, 1000);
-  photoPageButton.textContent = 'Отправить';
 });
 
 finalPageBack.addEventListener('click', () => {
   finalPage.classList.remove('final-page_active');
   mainPage.classList.remove('main-page_disabled');
-  finalButton.textContent = 'Отправить';
-});
-
-const phoneMask = new IMask(secondPageInput, {
-  mask: "+{7} (000) 000-00-00",
-});
-
-function phoneInputHandler() {
-  if (phoneMask.masked.isComplete) {
-    secondPageButton.disabled = false;
-  } else {
-    secondPageButton.disabled = true;
-  }
-}
-
-secondPageInput.addEventListener('input', phoneInputHandler);
-
-secondPageInput.addEventListener('focus', () => {
-  if (detect.os() === 'iOS') {
-    setTimeout(() => {
-      secondPageButton.style.transform = 'translateY(-90px)';
-      secondPageInput.style.transform = 'translateY(-90px)';
-      secondPagetext.style.transform = 'translateY(-90px)';
-    }, 10)
-
-  }
-});
-
-secondPageInput.addEventListener('blur', () => {
-  if (detect.os() === 'iOS') {
-    secondPageButton.style.transform = 'translateY(0)';
-    secondPageInput.style.transform = 'translateY(0)';
-    secondPagetext.style.transform = 'translateY(0)';
-    window.scrollTo({top: 0, behavior: "smooth"});
-  }
-});
-
-document.addEventListener('click', function(event) {
-  // Проверяем, был ли клик вне элемента input
-  var isClickInsideInput = event.target.tagName === 'INPUT';
-  
-  // Если клик был вне элемента input, скрываем клавиатуру
-  if (!isClickInsideInput) {
-    document.activeElement.blur(); // Снимаем фокус с активного элемента (в данном случае, инпута)
-  }
+  finalButton.textContent = 'Отправить в бота';
 });
 
 secondPageButton.addEventListener('click', () => {
   secondPage.classList.add('second-page_disabled');
-  thirdPage.classList.remove('third-page_disabled');
+  if (wasLoading) {
+    secondPage.classList.add('second-page_disabled');
+    fourthPage.classList.remove('fourth-page_disabled');
+  }
+  else {
+    loadModels();
+    wasLoading = true;
+    outNum(100,document.querySelector('.loading-neuro__round'));
+    loadingNeuro.classList.remove('loading-neuro_disabled');
+  }
+});
+
+loadingNeuroBtn.addEventListener('click', () => {
+  loadingNeuro.classList.add('loading-neuro_disabled');
+  fourthPage.classList.remove('fourth-page_disabled');
+});
+
+messagePageButton.addEventListener('click', () => {
+  messagePage.classList.add('message-page_disabled');
+  mainPage.classList.remove('main-page_disabled');
+  finalButton.textContent = 'Отправить в бота';
 });
 
 function updateVideoSize() {
@@ -285,16 +278,27 @@ function stopCamera() {
   }
 }
 
-thirdPageButton.addEventListener('click', () => {
-  loadModels();
-  thirdPage.classList.add('third-page_disabled');
-  loadingNeuro.classList.remove('loading-neuro_disabled');
-  setTimeout(() => {
-    loadingNeuro.classList.add('loading-neuro_disabled');
-    fourthPage.classList.remove('fourth-page_disabled');
-  }, 4000);
-  clearTimeout();
-});
+const time = 2000;
+const step = 1;
+
+function outNum(num, elem) {
+  loadingNeuroBack.style = 'pointer-events: none';
+  loadingNeuroBack.style.opacity = '.2'
+  n = 0;
+  let t = Math.round(time/(num/step));
+  let interval = setInterval(() => {
+      n = n + step;
+      if(n == num) {
+            clearInterval(interval);
+            loadingNeuroBtn.style.opacity = '1';
+            loadingNeuroBtn.disabled = false;
+            loadingNeuroBack.style = 'pointer-events: all';
+            loadingNeuroBack.style.opacity = '1'
+       }
+  elem.innerHTML = `${n}%`;
+  },
+t);
+};
 
 mainPageButton.addEventListener('click', () => {
   mainPage.classList.add('main-page_disabled');
@@ -357,6 +361,10 @@ async function sendPhoto(assetElement, place) {
           }
           else {
             finalButton.textContent = 'Отправлено';
+            setTimeout(() => {
+              finalPage.classList.remove('final-page_active');
+              messagePage.classList.remove('message-page_disabled');
+            }, 1000);
           }
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
@@ -365,6 +373,10 @@ async function sendPhoto(assetElement, place) {
           }
           else {
             finalButton.textContent = 'Ошибка';
+            setTimeout(() => {
+              finalPage.classList.remove('final-page_active');
+              messagePage.classList.remove('message-page_disabled');
+            }, 500);
           }
       }
   } catch (error) {

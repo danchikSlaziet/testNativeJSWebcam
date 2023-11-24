@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="./main.css">
   <script defer src="mobile-detect.min.js"></script>
   <script defer src="face-api.min.js"></script>
-  <script defer src="imask.js"></script>
   <script defer src="main.js"></script>
   <title>Доступ к камере</title> 
 </head>
@@ -23,6 +22,8 @@
   <div class="background-help">
     
   </div>
+  <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
+  <img class="background-bottom" src="./images/bottom-help.svg" alt="">
   <div class="first-page first-page_disabled">
     <img class="logo" src="./images/logo.svg" alt="МТС логотип">
     <div class="background-first">
@@ -35,18 +36,24 @@
       
     </div>
     <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
     <p class="first-page__text">
-      Текст с инструкцией or sit amet, et vix ntell egat adipiscing, graeco utamur 
-      iudicabit cum eu. Mel dictas dolorum vituperatoribus in, etiam ubique te sed. 
-      Eos ad malis elitr, inani appetere argumentum eos ut. Pri ne quis meis, usu id 
-      inermis nonumes
+      Краткая инструкция! Для принятия участия в розыгрыше и получения приза нужно выполнить следующие пункты:
+      <br><br>
+      — разрешить доступ к камере телефона<br>
+      — сделать фото с маской нашей шапки, выбрав один из двух вариантов<br>
+      — поделиться с друзьями и поставить на аватарку в телеграме<br>
+      — ждать результатов конкурса<br>
     </p>
     <button class="first-page__button" type="button">
-      Далее
+      Погнали?
     </button>
   </div>
   <div class="loading-neuro loading-neuro_disabled">
     <img class="logo" src="./images/logo.svg" alt="МТС логотип">
+    <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <img class="loading-neuro__back back-btn" src="./images/back.svg" alt="back left arrow">
     <div class="background-first">
       
     </div>
@@ -56,10 +63,18 @@
     <div class="background-help">
       
     </div>
-    <div class="loading-neuro__progress">
-      <div class="loading-neuro__currentProgress"></div>
+    <div class="loading-neuro__block">
+      <div class="loading-neuro__round">
+        0%
+      </div>
+      <div class="loading-neuro__progress">
+        <div class="loading-neuro__currentProgress"></div>
+      </div>
+      <p class="loading-neuro__text">LOADING</p>
     </div>
-    <p class="loading-neuro__text">LOADING</p>
+    <button class="loading-neuro__button" disabled type="button">
+      Давай генерировать!
+    </button>
   </div>
   <div id="sec-page" class="second-page second-page_disabled">
     <img class="logo" src="./images/logo.svg" alt="МТС логотип">
@@ -74,33 +89,18 @@
       
     </div>
     <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
-    <p class="second-page__text">
-      Оставь свой номер для участия в конкурсе
-    </p>
-    <input class="second-page__input" type="tel" value="+7" name="phone">
-    <button class="second-page__button" disabled type="button">Проверить подписку MTC Premium</button>
-  </div>
-  <div class="third-page third-page_disabled">
-    <img class="logo" src="./images/logo.svg" alt="МТС логотип">
-    <img class="third-page__back back-btn" src="./images/back.svg" alt="back left arrow">
-    <div class="background-first">
-      
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <div class="second-page__info-block">
+      <img class="second-page__info-img" src="./images/second-page-rectangle.svg" alt="">
+      <p class="second-page__info-text">
+        Установи изображение 
+        в рамке так, чтобы голова была в центре композиции
+      </p>
     </div>
-    <div class="background-second">
-      
-    </div>
-    <div class="background-help">
-      
-    </div>
-    <p class="third-page__text">
-      Твой номер записан<br>
-      Вы можете создать новое изображение
-    </p>
-    <button class="third-page__button" type="button">
-      Приступить
-    </button>
+    <button class="second-page__button" type="button">Приступим!</button>
   </div>
   <div class="fourth-page fourth-page_disabled">
+    <img class="fourth-page__back back-btn" src="./images/back.svg" alt="back left arrow">
     <img class="logo" src="./images/logo.svg" alt="МТС логотип">
     <div class="background-first">
       
@@ -111,6 +111,8 @@
     <div class="background-help">
       
     </div>
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
     <p class="fourth-page__text">
       Выбери источник изображения
     </p>
@@ -133,6 +135,8 @@
     <div class="background-help">
       
     </div>
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
     <div class="main">
       <div class="main__video-container">
         <video id="camera-stream" width="640" height="480" playsinline autoplay muted class="main__video"></video>
@@ -171,6 +175,8 @@
     <div class="background-help">
       
     </div>
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
     <div class="photo-main">
       <div class="photo-container">
         <img class="attachment-photo" src="" alt="photo">
@@ -180,7 +186,7 @@
       </div>
     </div>
     <button class="photo-page__button" type="button">
-      отправить
+      отправить в бота
     </button>
   </div>
   <div class="final-page">
@@ -195,12 +201,40 @@
     <div class="background-help">
       
     </div>
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
     <p class="final-page__text">
       Поздравляем с созданием аватара от мтс
     </p>
     <img class="final-page__result-image" src="" alt="photo">
     <button class="final-page__button" type="button">
-      отправить
+      отправить в бота
+    </button>
+  </div>
+  <div class="message-page message-page_disabled">
+    <img class="logo" src="./images/logo.svg" alt="МТС логотип">
+    <img class="message-page__back back-btn" src="./images/back.svg" alt="back left arrow">
+    <div class="background-first">
+      
+    </div>
+    <div class="background-second">
+      
+    </div>
+    <div class="background-help">
+      
+    </div>
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
+    <p class="message-page__text">
+      Ура, твоя фотка в нашей шапке уже готова!
+    </p>
+    <p class="message-page__subtext">
+      Бот пришлет ее тебе в личные сообщения. Сохрани ее себе, поставь сгенерированный результат на аватарку у себя в Telegram, а также отправь в комментарии к посту у наших друзей на канале Радуги.
+      Не забудь, что для участия в конкурсе необходимо иметь активную подписку МТС Premium
+      Если все шаги выполнены - готово! Ты участник в розыгрыше, желаем удачи! 
+    </p>
+    <button class="message-page__button" type="button">
+      создать ещё
     </button>
   </div>
 </body>
