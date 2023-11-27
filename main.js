@@ -194,6 +194,12 @@ function updateVideoSize() {
   videoElement.height = 480;
 }
 
+mainVideo.addEventListener('loadedmetadata', (event) => {
+  mainVideo.width = 640
+  mainVideo.height = 480;
+  console.log(`main video width: ${mainVideo.width}`)
+});
+
 fourthPageVideo.addEventListener('click', () => {
   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
     if (detect.os() === 'iOS') {
