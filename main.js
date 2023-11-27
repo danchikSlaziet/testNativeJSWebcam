@@ -194,12 +194,6 @@ function updateVideoSize() {
   videoElement.height = 480;
 }
 
-mainVideo.addEventListener('loadedmetadata', (event) => {
-  mainVideo.width = 640
-  mainVideo.height = 480;
-  console.log(`main video width: ${mainVideo.width}`)
-});
-
 fourthPageVideo.addEventListener('click', () => {
   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
     if (detect.os() === 'iOS') {
@@ -219,6 +213,13 @@ fourthPageVideo.addEventListener('click', () => {
         videoElement.style.opacity = 1;
       }, 1000)
       startFaceVideoDetection(videoElement, canvas);
+      mainVideo.addEventListener('loadedmetadata', (event) => {
+        mainVideo.width = 640
+        mainVideo.height = 480;
+        mainVideo.style.width = "640px";
+        mainVideo.style.height = '480px';
+        console.log(`main video width: ${mainVideo.width}`)
+      });
     }
   }
 });
