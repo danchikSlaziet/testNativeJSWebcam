@@ -211,15 +211,12 @@ fourthPageVideo.addEventListener('click', () => {
       startCamera();
       setTimeout(() => {
         videoElement.style.opacity = 1;
-      }, 1000)
-      startFaceVideoDetection(videoElement, canvas);
-      mainVideo.addEventListener('loadedmetadata', (event) => {
         mainVideo.width = 640
         mainVideo.height = 480;
         mainVideo.style.width = "640px";
         mainVideo.style.height = '480px';
-        console.log(`main video width: ${mainVideo.width}`)
-      });
+      }, 1000)
+      startFaceVideoDetection(videoElement, canvas);
     }
   }
 });
