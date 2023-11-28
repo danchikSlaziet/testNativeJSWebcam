@@ -580,6 +580,7 @@ button:hover {
 
 .photo-page {
   overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
   background: linear-gradient(347deg, #FFD4C9 -2.24%, #EDCCD3 16.66%, #BFB8ED 52.9%, #9FAAFF 76.53%, #A1A1FF 103.3%);
   display: flex;

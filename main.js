@@ -474,10 +474,10 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
             if (hatImage.src.includes('overlay-cap-2')) {
               width = (rightPoint.x - leftPoint.x) * 5.3
               canvasElement.style.left = (leftPoint.x - width/3.55) - leftSmech + 'px';
-              canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px';
-              hatWidth = width * 0.78;
-              x = leftPoint.x - width/3.3;
-              y = leftEyeBrow[0].y + 25*scaleHeight;
+              canvasElement.style.top = ((leftEyeBrow[0].y + 32*scaleHeight) - heightSmech) + 'px';
+              hatWidth = width * 0.77;
+              x = leftPoint.x - width/3.34;
+              y = leftEyeBrow[0].y + 32*scaleHeight;
             }
             else {
               width = (rightPoint.x - leftPoint.x) * 3
