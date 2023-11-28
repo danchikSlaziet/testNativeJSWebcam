@@ -57,6 +57,8 @@ const hatPagePhotoBtn = hatPage.querySelector('.hat-page__photo-button');
 const hatPageVideoBtn = hatPage.querySelector('.hat-page__video-button');
 const hatPageImages = hatPage.querySelectorAll('.hat-page__img-wrapper');
 const hatPageBack = hatPage.querySelector('.hat-page__back');
+const infoPage = document.querySelector('.info-page');
+const infoPageButton = infoPage.querySelector('.info-page__button');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -118,10 +120,17 @@ window.addEventListener('DOMContentLoaded', () => {
   userChatId = user_data["id"];
 });
 
+infoPageButton.addEventListener('click', () => {
+  location.reload();
+});
+
 firstPage.classList.remove('first-page_disabled');
 
 hatPageImages.forEach((img, index) => {
   img.addEventListener('click', () => {
+    if (detect.os() === 'iOS') {
+      stopCamera();
+    }
     hatPageImages.forEach((img) => {
       img.querySelector('.hat-page__border').classList.remove('hat-page__border_active')
     });
@@ -215,33 +224,54 @@ loadingNeuroBtn.addEventListener('click', () => {
 });
 
 hatPageVideoBtn.addEventListener('click', () => {
-  if (hatPageVideoBtn.textContent.trim().toLowerCase() === 'сделать фото') {
-    if (detect.os() === 'iOS') {
-      stopCamera();
-      hatPageVideoBtn.textContent = 'Продолжить';
-    }
-    else {
-      startCamera();
-      mainPage.classList.remove('main-page_disabled');
-      hatPage.classList.add('hat-page_disabled');
-      startFaceVideoDetection(videoElement, canvas);
-    }
+  if (detect.os() === 'iOS') {
+    startCamera();
+    mainPage.classList.remove('main-page_disabled');
+    hatPage.classList.add('hat-page_disabled');
+    setTimeout(() => {
+      console.log('setTimeOut')
+      videoElement.style.opacity = 1;
+      mainVideo.width = 640
+      mainVideo.height = 480;
+      mainVideo.style.width = "640px";
+      mainVideo.style.height = '480px';
+      document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
+    }, 1000)
+    startFaceVideoDetection(videoElement, canvas);
   }
-  else if (hatPageVideoBtn.textContent.trim() === 'Продолжить') {
-    if (detect.os() === 'iOS') {
-      startCamera();
-      mainPage.classList.remove('main-page_disabled');
-      hatPage.classList.add('hat-page_disabled');
-      setTimeout(() => {
-        videoElement.style.opacity = 1;
-        mainVideo.width = 640
-        mainVideo.height = 480;
-        mainVideo.style.width = "640px";
-        mainVideo.style.height = '480px';
-      }, 1000)
-      startFaceVideoDetection(videoElement, canvas);
-    }
+  else {
+    startCamera();
+    mainPage.classList.remove('main-page_disabled');
+    hatPage.classList.add('hat-page_disabled');
+    startFaceVideoDetection(videoElement, canvas);
   }
+  // if (hatPageVideoBtn.textContent.trim().toLowerCase() === 'сделать фото') {
+  //   if (detect.os() === 'iOS') {
+  //     stopCamera();
+  //     hatPageVideoBtn.textContent = 'Продолжить';
+  //   }
+  //   else {
+  //     startCamera();
+  //     mainPage.classList.remove('main-page_disabled');
+  //     hatPage.classList.add('hat-page_disabled');
+  //     startFaceVideoDetection(videoElement, canvas);
+  //   }
+  // }
+  // else if (hatPageVideoBtn.textContent.trim() === 'Продолжить') {
+  //   if (detect.os() === 'iOS') {
+  //     startCamera();
+  //     mainPage.classList.remove('main-page_disabled');
+  //     hatPage.classList.add('hat-page_disabled');
+  //     setTimeout(() => {
+  //       videoElement.style.opacity = 1;
+  //       mainVideo.width = 640
+  //       mainVideo.height = 480;
+  //       mainVideo.style.width = "640px";
+  //       mainVideo.style.height = '480px';
+  //     }, 1000)
+  //     startFaceVideoDetection(videoElement, canvas);
+  //   }
+  // }
 })
 
 hatPagePhotoBtn.addEventListener('change', (event) => {
@@ -358,7 +388,8 @@ async function startCamera() {
     console.log('доступ к камере дан')
   } catch (error) {
     console.error('Ошибка при получении доступа к камере:', error);
-
+    secondPage.classList.add('second-page_disabled');
+    infoPage.classList.remove('info-page_disabled');
   }
 }
 
