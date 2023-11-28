@@ -51,6 +51,10 @@ const photoCap = photoPage.querySelector('.cap');
 const messagePage = document.querySelector('.message-page');
 const messagePageBack = messagePage.querySelector('.message-page__back');
 const messagePageButton = messagePage.querySelector('.message-page__button');
+const hatPage = document.querySelector('.hat-page');
+const hatPageButton = hatPage.querySelector('.hat-page__button');
+const hatPageImages = hatPage.querySelectorAll('.hat-page__img-wrapper');
+const hatPageBack = hatPage.querySelector('.hat-page__back');
 
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
@@ -114,6 +118,25 @@ window.addEventListener('DOMContentLoaded', () => {
 
 firstPage.classList.remove('first-page_disabled');
 
+hatPageImages.forEach((img, index) => {
+  img.addEventListener('click', () => {
+    hatPageImages.forEach((img) => {
+      img.querySelector('.hat-page__border').classList.remove('hat-page__border_active')
+    });
+    if (index === 0) {
+      img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
+      hatImage.src = './images/overlay-cap.png';
+    }
+    else {
+      img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
+      hatImage.src = './images/overlay-cap-2.png';
+    }
+
+    hatPageButton.classList.add('hat-page__button_active');
+    hatPageButton.disabled = false;
+  })
+});
+
 
 firstPageButton.addEventListener('click', () => {
   startCamera();
@@ -134,8 +157,13 @@ loadingNeuroBack.addEventListener('click', () => {
 
 fourthPageBack.addEventListener('click', () => {
   fourthPage.classList.add('fourth-page_disabled');
-  secondPage.classList.remove('second-page_disabled');
+  hatPage.classList.remove('hat-page_disabled');
 });
+
+hatPageBack.addEventListener('click', () => {
+  secondPage.classList.remove('second-page_disabled');
+  hatPage.classList.add('hat-page_disabled');
+})
 
 mainPageBack.addEventListener('click', () => {
   stopCamera();
@@ -146,7 +174,6 @@ mainPageBack.addEventListener('click', () => {
 messagePageBack.addEventListener('click', () => {
   messagePage.classList.add('message-page_disabled');
   finalPage.classList.add('final-page_active');
-  finalButton.textContent = 'Отправить в бота';
 });
 
 photoPageBack.addEventListener('click', () => {
@@ -161,14 +188,13 @@ photoPageBack.addEventListener('click', () => {
 finalPageBack.addEventListener('click', () => {
   finalPage.classList.remove('final-page_active');
   mainPage.classList.remove('main-page_disabled');
-  finalButton.textContent = 'Отправить в бота';
 });
 
 secondPageButton.addEventListener('click', () => {
   secondPage.classList.add('second-page_disabled');
   if (wasLoading) {
     secondPage.classList.add('second-page_disabled');
-    fourthPage.classList.remove('fourth-page_disabled');
+    hatPage.classList.remove('hat-page_disabled');
   }
   else {
     loadModels();
@@ -180,13 +206,17 @@ secondPageButton.addEventListener('click', () => {
 
 loadingNeuroBtn.addEventListener('click', () => {
   loadingNeuro.classList.add('loading-neuro_disabled');
-  fourthPage.classList.remove('fourth-page_disabled');
+  hatPage.classList.remove('hat-page_disabled');
 });
+
+hatPageButton.addEventListener('click', () => {
+  hatPage.classList.add('hat-page_disabled');
+  fourthPage.classList.remove('fourth-page_disabled');
+})
 
 messagePageButton.addEventListener('click', () => {
   messagePage.classList.add('message-page_disabled');
   mainPage.classList.remove('main-page_disabled');
-  finalButton.textContent = 'Отправить в бота';
 });
 
 function updateVideoSize() {
@@ -346,9 +376,6 @@ async function sendPhoto(assetElement, place) {
   if (place === 'photo') {
     photoPageButton.textContent = 'Отправка...';
   }
-  else {
-    finalButton.textContent = 'Отправка...';
-  }
 
   // Отправка фотографии на сервер Telegram
   try {
@@ -363,24 +390,10 @@ async function sendPhoto(assetElement, place) {
           if (place === 'photo') {
             photoPageButton.textContent = 'Отправлено';
           }
-          else {
-            finalButton.textContent = 'Отправлено';
-            setTimeout(() => {
-              finalPage.classList.remove('final-page_active');
-              messagePage.classList.remove('message-page_disabled');
-            }, 1000);
-          }
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
           if (place === 'photo') {
             photoPageButton.textContent = 'Ошибка';
-          }
-          else {
-            finalButton.textContent = 'Ошибка';
-            setTimeout(() => {
-              finalPage.classList.remove('final-page_active');
-              messagePage.classList.remove('message-page_disabled');
-            }, 500);
           }
       }
   } catch (error) {
@@ -388,13 +401,14 @@ async function sendPhoto(assetElement, place) {
       if (place === 'photo') {
         photoPageButton.textContent = 'Ошибка';
       }
-      else {
-        finalButton.textContent = 'Ошибка';
-      }
   }
 }
 
-finalButton.addEventListener('click', () => sendPhoto(finalIMG, 'video'));
+finalButton.addEventListener('click', () => {
+  finalPage.classList.remove('final-page_active');
+  messagePage.classList.remove('message-page_disabled');
+  sendPhoto(finalIMG, 'video');
+});
 photoPageButton.addEventListener('click', () => sendPhoto(photoToSend, 'photo'));
 
 async function startFaceVideoDetection(assetElement, canvasElement) {

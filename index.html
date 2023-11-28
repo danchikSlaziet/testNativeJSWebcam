@@ -37,16 +37,30 @@
     </div>
     <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
     <img class="background-bottom" src="./images/bottom-help.svg" alt="">
-    <p class="first-page__text">
-      Краткая инструкция! Для принятия участия в розыгрыше и получения приза нужно выполнить следующие пункты:
+    <div class="first-page__text">
+      <span class="first-page__text_big">Краткая инструкция!</span><br><br>
+      Для принятия участия в розыгрыше и получения приза нужно выполнить следующие пункты:
       <br><br>
-      — разрешить доступ к камере телефона<br>
-      — сделать фото с маской нашей шапки, выбрав один из двух вариантов<br>
-      — поделиться с друзьями и поставить на аватарку в телеграме<br>
-      — ждать результатов конкурса<br>
-    </p>
+      <ul class="first-page__list">
+        <li class="first-page__list-item">
+          разрешить доступ к камере телефона
+        </li>
+        <li class="first-page__list-item">
+          сделать фото с маской нашей шапки, выбрав одно из двух ее положений
+        </li>
+        <li class="first-page__list-item">
+          поделиться с друзьями
+        </li>
+        <li class="first-page__list-item">
+          и поставить её на аватарку в телеграме
+        </li>
+        <li class="first-page__list-item">
+          ждать результатов конкурса
+        </li>
+      </ul>
+    </div>
     <button class="first-page__button" type="button">
-      Погнали?
+      Далее
     </button>
   </div>
   <div class="loading-neuro loading-neuro_disabled">
@@ -73,7 +87,7 @@
       <p class="loading-neuro__text">LOADING</p>
     </div>
     <button class="loading-neuro__button" disabled type="button">
-      Давай генерировать!
+      Загрузить фото
     </button>
   </div>
   <div id="sec-page" class="second-page second-page_disabled">
@@ -97,7 +111,35 @@
         в рамке так, чтобы голова была в центре композиции
       </p>
     </div>
-    <button class="second-page__button" type="button">Приступим!</button>
+    <button class="second-page__button" type="button">Загрузить фото</button>
+  </div>
+  <div class="hat-page hat-page_disabled">
+    <img class="logo" src="./images/logo.svg" alt="МТС логотип">
+    <img class="hat-page__back back-btn" src="./images/back.svg" alt="back left arrow">
+    <div class="background-first">
+      
+    </div>
+    <div class="background-second">
+      
+    </div>
+    <div class="background-help">
+      
+    </div>
+    <img class="background-rocks"  src="./images/rocks.svg" alt="rocks">
+    <img class="background-bottom" src="./images/bottom-help.svg" alt="">
+    <div class="hat-page__images">
+      <div class="hat-page__img-wrapper">
+        <img class="hat-page__img" src="./images/overlay-cap.png" width="149" height="220" alt="cap">
+        <div class="hat-page__border hat-page__border_first"></div>
+      </div>
+      <div class="hat-page__img-wrapper">
+        <img class="hat-page__img" width="228" height="230" src="./images/overlay-cap-2.png" alt="cap">
+        <div class="hat-page__border hat-page__border_second"></div>
+      </div>
+    </div>
+    <button class="hat-page__button" disabled type="button">
+      Добавить шапку
+    </button>
   </div>
   <div class="fourth-page fourth-page_disabled">
     <img class="fourth-page__back back-btn" src="./images/back.svg" alt="back left arrow">
@@ -208,7 +250,7 @@
     </p>
     <img class="final-page__result-image" src="" alt="photo">
     <button class="final-page__button" type="button">
-      отправить в бота
+      сохранить
     </button>
   </div>
   <div class="message-page message-page_disabled">
@@ -230,7 +272,7 @@
     </p>
     <p class="message-page__subtext">
       Бот пришлет ее тебе в личные сообщения. Сохрани ее себе, поставь сгенерированный результат на аватарку у себя в Telegram, а также отправь в комментарии к посту у наших друзей на канале Радуги.
-      Не забудь, что для участия в конкурсе необходимо иметь активную подписку МТС Premium
+      Не забудь, что для участия в конкурсе необходимо иметь активную подписку МТС Premium<br>
       Если все шаги выполнены - готово! Ты участник в розыгрыше, желаем удачи! 
     </p>
     <button class="message-page__button" type="button">

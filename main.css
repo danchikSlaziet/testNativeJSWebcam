@@ -486,11 +486,22 @@ button:hover {
   opacity: 0;
 }
 
+.first-page__list {
+  margin-top: 10px;
+  margin-bottom: 0;
+  padding-left: 30px;
+}
+
+.first-page__list-item:not(:last-child) {
+  margin-bottom: 15px;
+}
+
 .first-page__text {
-  font-size: 20px;
+  color: #FFF;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 22px;
+  line-height: normal;
   box-sizing: border-box;
   width: 100%;
   z-index: 1000;
@@ -502,6 +513,12 @@ button:hover {
   backdrop-filter: blur(15px);
   margin: 0;
   margin-top: 149px;
+}
+
+.first-page__text_big {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 100%;
 }
 
 @media screen and (max-height: 820px) {
@@ -999,4 +1016,105 @@ canvas {
   position: relative;
   z-index: 10;
   margin-bottom: 38px;
+}
+
+.hat-page {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: linear-gradient(347deg, #FFD4C9 -2.24%, #EDCCD3 16.66%, #BFB8ED 52.9%, #9FAAFF 76.53%, #A1A1FF 103.3%);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  align-items: center;
+  justify-content: space-between;
+  color: #FFF;
+  max-height: 100vh;
+  min-height: 100vh;
+  padding: 0 24px;
+  overflow-y: scroll;
+  gap: 15px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility .3s, opacity .3s linear;
+}
+
+.hat-page_disabled {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.hat-page__images {
+  width: 100%;
+  border-radius: 22px 22px 62px 22px;
+  border: 1px solid #AAB6FF;
+  background: rgba(144, 144, 144, 0.30);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 134px;
+}
+
+.hat-page__img-wrapper {
+  border-radius: 10px;
+  background: #FFF;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hat-page__img-wrapper:first-of-type {
+  margin-bottom: 10px;
+}
+
+.hat-page__img {
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hat-page__border {
+  display: none;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
+  border-radius: 8px;
+  border: 4px solid #AAB6FF;
+}
+
+.hat-page__border_active {
+  display: block;
+}
+
+.hat-page__button {
+  margin-top: 10px;
+  outline: none;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  color: #FF0032;
+  font-family: "MTS";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  border-radius: 40px;
+  background: #FFF;
+  padding: 23px 10px;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 38px;
+  opacity: .2;
+  transition: opacity .3s linear;
+}
+
+.hat-page__button_active {
+  opacity: 1;
 }
