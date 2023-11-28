@@ -51,6 +51,9 @@ const photoCap = photoPage.querySelector('.cap');
 const messagePage = document.querySelector('.message-page');
 const messagePageBack = messagePage.querySelector('.message-page__back');
 const messagePageButton = messagePage.querySelector('.message-page__button');
+const messagePage2 = document.querySelector('.message-page-2');
+const messagePage2Back = messagePage2.querySelector('.message-page-2__back');
+const messagePage2Button = messagePage2.querySelector('.message-page-2__button');
 const hatPage = document.querySelector('.hat-page');
 const hatPageButtons = hatPage.querySelectorAll('.hat-page__button');
 const hatPagePhotoBtn = hatPage.querySelector('.hat-page__photo-button');
@@ -137,10 +140,14 @@ hatPageImages.forEach((img, index) => {
     if (index === 0) {
       img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
       hatImage.src = './images/overlay-cap.png';
+      canvasElement.style = 'aspect-ratio: 200 / 295;';
+      canvasElement2.style = 'aspect-ratio: 200 / 295;';
     }
     else {
       img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
       hatImage.src = './images/overlay-cap-2.png';
+      canvasElement.style = 'aspect-ratio: 1 / 1;';
+      canvasElement2.style = 'aspect-ratio: 1 / 1;';
     }
 
     hatPageButtons.forEach((button) => {
@@ -190,12 +197,21 @@ messagePageBack.addEventListener('click', () => {
   finalPage.classList.add('final-page_active');
 });
 
+messagePage2Back.addEventListener('click', () => {
+  messagePage2.classList.add('message-page-2_disabled');
+  photoPage.classList.remove('photo-page_disabled');
+});
+
+messagePage2Button.addEventListener('click', () => {
+  messagePage2.classList.add('message-page-2_disabled');
+  hatPage.classList.remove('hat-page_disabled');
+});
+
 photoPageBack.addEventListener('click', () => {
   photoPage.classList.add('photo-page_disabled');
   hatPage.classList.remove('hat-page_disabled');
   setTimeout(() => {
     attachmentPhoto.src = '';
-    photoPageButton.textContent = 'Отправить в бота';
   }, 1000);
 });
 
@@ -249,33 +265,6 @@ hatPageVideoBtn.addEventListener('click', () => {
       document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
     }, 1000)
   }
-  // if (hatPageVideoBtn.textContent.trim().toLowerCase() === 'сделать фото') {
-  //   if (detect.os() === 'iOS') {
-  //     stopCamera();
-  //     hatPageVideoBtn.textContent = 'Продолжить';
-  //   }
-  //   else {
-  //     startCamera();
-  //     mainPage.classList.remove('main-page_disabled');
-  //     hatPage.classList.add('hat-page_disabled');
-  //     startFaceVideoDetection(videoElement, canvas);
-  //   }
-  // }
-  // else if (hatPageVideoBtn.textContent.trim() === 'Продолжить') {
-  //   if (detect.os() === 'iOS') {
-  //     startCamera();
-  //     mainPage.classList.remove('main-page_disabled');
-  //     hatPage.classList.add('hat-page_disabled');
-  //     setTimeout(() => {
-  //       videoElement.style.opacity = 1;
-  //       mainVideo.width = 640
-  //       mainVideo.height = 480;
-  //       mainVideo.style.width = "640px";
-  //       mainVideo.style.height = '480px';
-  //     }, 1000)
-  //     startFaceVideoDetection(videoElement, canvas);
-  //   }
-  // }
 })
 
 hatPagePhotoBtn.addEventListener('change', (event) => {
@@ -301,12 +290,9 @@ hatPagePhotoBtn.addEventListener('change', (event) => {
   }
 
   fileReader.readAsDataURL(target.files[0]);
+  hatPagePhotoBtn.value = '';
 });
 
-// hatPageButton.addEventListener('click', () => {
-//   hatPage.classList.add('hat-page_disabled');
-//   fourthPage.classList.remove('fourth-page_disabled');
-// })
 
 messagePageButton.addEventListener('click', () => {
   messagePage.classList.add('message-page_disabled');
@@ -318,77 +304,18 @@ function updateVideoSize() {
   videoElement.height = 480;
 }
 
-// fourthPageVideo.addEventListener('click', () => {
-//   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
-//     if (detect.os() === 'iOS') {
-//       stopCamera();
-//     }
-//     else {
-//       startCamera();
-//       mainPage.classList.remove('main-page_disabled');
-//       fourthPage.classList.add('fourth-page_disabled');
-//       startFaceVideoDetection(videoElement, canvas);
-//     }
-//   }
-//   else if (fourthPageVideo.textContent.trim() === 'Продолжить') {
-//     if (detect.os() === 'iOS') {
-//       startCamera();
-//       setTimeout(() => {
-//         videoElement.style.opacity = 1;
-//         mainVideo.width = 640
-//         mainVideo.height = 480;
-//         mainVideo.style.width = "640px";
-//         mainVideo.style.height = '480px';
-//       }, 1000)
-//       startFaceVideoDetection(videoElement, canvas);
-//     }
-//   }
-// });
+
 
 if (detect.os() === 'iOS') {
   videoElement.style.opacity = 0;
 }
 
 
-// fourthPagePhoto.addEventListener('change', (event) => {
-//   var target = event.target;
-
-//   if (!FileReader) {
-//       alert('FileReader не поддерживается — облом');
-//       return;
-//   }
-
-//   if (!target.files.length) {
-//       alert('Ничего не загружено');
-//       return;
-//   }
-
-//   var fileReader = new FileReader();
-//   fileReader.onload = function() {
-//     attachmentPhoto.src = fileReader.result;
-//     fourthPage.classList.add('fourth-page_disabled');
-//     photoPage.classList.remove('photo-page_disabled');
-    
-//     startFacePhotoDetection(attachmentPhoto, canvas2);
-//   }
-
-//   fileReader.readAsDataURL(target.files[0]);
-// })
-
 // Функция для получения доступа к камере
 async function startCamera() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
-    // if (!fourthPage.className.includes('disabled')) {
-    //   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
-    //     // fourthPageVideo.textContent = 'Продолжить'
-    //   }
-    //   else {
-    //     fourthPage.classList.add('fourth-page_disabled');
-    //     mainPage.classList.remove('main-page_disabled');
-    //   }
-    // }
     console.log('доступ к камере дан')
   } catch (error) {
     console.error('Ошибка при получении доступа к камере:', error);
@@ -402,9 +329,6 @@ function stopCamera() {
       const tracks = stream.getTracks();
       tracks.forEach(track => track.stop());
       videoElement.srcObject = null;
-      // if (detect.os() === 'iOS') {
-      //   fourthPageVideo.textContent = 'Продолжить';
-      // }
   }
 }
 
@@ -469,10 +393,6 @@ async function sendPhoto(assetElement, place) {
   // Формируем URL для отправки фотографии
   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
-  if (place === 'photo') {
-    photoPageButton.textContent = 'Отправка...';
-  }
-
   // Отправка фотографии на сервер Telegram
   try {
       const result = await fetch(apiUrl, {
@@ -483,20 +403,11 @@ async function sendPhoto(assetElement, place) {
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
-          if (place === 'photo') {
-            photoPageButton.textContent = 'Отправлено';
-          }
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
-          if (place === 'photo') {
-            photoPageButton.textContent = 'Ошибка';
-          }
       }
   } catch (error) {
       console.error('Ошибка:', error);
-      if (place === 'photo') {
-        photoPageButton.textContent = 'Ошибка';
-      }
   }
 }
 
@@ -505,7 +416,10 @@ finalButton.addEventListener('click', () => {
   messagePage.classList.remove('message-page_disabled');
   sendPhoto(finalIMG, 'video');
 });
-photoPageButton.addEventListener('click', () => sendPhoto(photoToSend, 'photo'));
+photoPageButton.addEventListener('click', () => {
+  sendPhoto(photoToSend, 'photo');
+  messagePage2.classList.remove('message-page-2_disabled');
+});
 
 async function startFaceVideoDetection(assetElement, canvasElement) {
   const context = canvasElement.getContext('2d');
@@ -528,34 +442,57 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
           const heightSmech = (videoElement.videoHeight - document.querySelector('.main__video').offsetHeight)/2;
 
           if (detect.os() === null) {
-            const width = (rightPoint.x - leftPoint.x) * 2.4;
+            let widthScale;
+
+            if (hatImage.src.includes('overlay-cap-2')) {
+              widthScale = 4;
+              canvasElement.style.left = (leftPoint.x - hatWidth/2.7) - leftSmech + 'px';
+              canvasElement.style.top = ((leftEyeBrow[0].y + 50*scaleHeight) - heightSmech) + 'px';
+              x = leftPoint.x - hatWidth/2.7;
+              y = leftEyeBrow[0].y + 50*scaleHeight;
+            }
+            else {
+              widthScale = 2.4;
+              canvasElement.style.left = (leftPoint.x - hatWidth/3.5) - leftSmech + 'px';
+              canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px';
+              x = leftPoint.x - hatWidth/3.5;
+              y = leftEyeBrow[0].y + 25*scaleHeight;
+            }
+
+            const width = (rightPoint.x - leftPoint.x) * widthScale;
             hatWidth = width;
 
             canvasElement.width = width;
             canvasElement.style.width = hatWidth*(1/scaleHeight) + 'px';
             canvasElement.height = hatImage.height * scaleWidth;
 
-            x = leftPoint.x - hatWidth/3.5;
-            y = leftEyeBrow[0].y + 25*scaleHeight;
-
-            canvasElement.style.left = (leftPoint.x - hatWidth/3.5) - leftSmech + 'px';
-            canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px';
             context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
           }
 
           else {
-            const width = (rightPoint.x - leftPoint.x) * 3;
-            hatWidth = width * 0.8;
+            let width;
+            if (hatImage.src.includes('overlay-cap-2')) {
+              width = (rightPoint.x - leftPoint.x) * 5.3
+              canvasElement.style.left = (leftPoint.x - width/3.55) - leftSmech + 'px';
+              canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px';
+              hatWidth = width * 0.78;
+              x = leftPoint.x - width/3.3;
+              y = leftEyeBrow[0].y + 25*scaleHeight;
+            }
+            else {
+              width = (rightPoint.x - leftPoint.x) * 3
+              canvasElement.style.left = (leftPoint.x - width/5) - leftSmech + 'px';
+              canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px';
+              hatWidth = width * 0.8;
+              x = leftPoint.x - hatWidth/3.5;
+              y = leftEyeBrow[0].y + 25*scaleHeight;
+            }
+            
 
             canvasElement.width = width;
             canvasElement.style.width = width*(1/scaleHeight) + 'px';
             canvasElement.height = hatImage.height * scaleWidth;
 
-            x = leftPoint.x - hatWidth/3.5;
-            y = leftEyeBrow[0].y + 25*scaleHeight;
-
-            canvasElement.style.left = (leftPoint.x - width/5) - leftSmech + 'px';
-            canvasElement.style.top = ((leftEyeBrow[0].y + 25*scaleHeight) - heightSmech) + 'px'
             context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
           }
       });
@@ -572,36 +509,48 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
   detections.forEach((detection) => {
     const landmarks = detection.landmarks;
 
-    // const jawline = landmarks.getJawOutline()
-    // const jawLeft = jawline[0]
-    // const jawRight = jawline.splice(-1)[0]
-    // const adjacent = jawRight.x - jawLeft.x
-    // const opposite = jawRight.y - jawLeft.y
-    // const angle = Math.atan2(opposite, adjacent) * (180 / Math.PI)
-
     const leftEye = landmarks.getLeftEye();
     const rightEye = landmarks.getRightEye();
 
     const leftPoint = leftEye[0];
     const rightPoint = rightEye[rightEye.length - 1];
-    const width = (rightPoint.x - leftPoint.x) * 4.5;
 
+    let widthScale;
+
+    
     const scaleWidth = (attachmentPhoto.width / attachmentPhoto.naturalWidth);
     const scaleHeight = (attachmentPhoto.height / attachmentPhoto.naturalHeight);
+    let width;
+    let hatAspectRatio;
+    let hatHeight;
 
-    const hatAspectRatio = hatImage.width / hatImage.height;
-    const hatHeight = width / hatAspectRatio;
+    if (hatImage.src.includes('overlay-cap-2')) {
+      widthScale = 7;
+      width = (rightPoint.x - leftPoint.x) * widthScale;
+      hatAspectRatio = hatImage.width / hatImage.height;
+      hatHeight = width / hatAspectRatio;
+      canvasElement.style.left = (leftPoint.x * scaleWidth - width * scaleWidth / 2.45) + 'px';
+      canvasElement.style.top = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (8.5 / 100)) + 'px';
+      staticX = (leftPoint.x * scaleWidth - width * scaleWidth / 2.45);
+      staticY = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (8.5 / 100));
+    } 
+    else {
+      widthScale = 4.5;
+      width = (rightPoint.x - leftPoint.x) * widthScale;
+      hatAspectRatio = hatImage.width / hatImage.height;
+      hatHeight = width / hatAspectRatio;
+      canvasElement.style.left = (leftPoint.x * scaleWidth - width * scaleWidth / 3) + 'px';
+      canvasElement.style.top = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (2.5 / 100)) + 'px';
+      staticX = (leftPoint.x * scaleWidth - width * scaleWidth / 3);
+      staticY = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (2.5 / 100));
+    }
 
     canvasElement.width = width;
     canvasElement.height = hatHeight;
     canvasElement.style.width = width * scaleWidth + 'px';
     console.log(canvasElement.height);
-    staticX = (leftPoint.x * scaleWidth - width * scaleWidth / 3);
-    staticY = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (2.5 / 100));
     staticHatWidth = width * scaleWidth; 
 
-    canvasElement.style.left = (leftPoint.x * scaleWidth - width * scaleWidth / 3) + 'px';
-    canvasElement.style.top = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (2.5 / 100)) + 'px';
 
     context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
 
