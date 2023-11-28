@@ -52,7 +52,9 @@ const messagePage = document.querySelector('.message-page');
 const messagePageBack = messagePage.querySelector('.message-page__back');
 const messagePageButton = messagePage.querySelector('.message-page__button');
 const hatPage = document.querySelector('.hat-page');
-const hatPageButton = hatPage.querySelector('.hat-page__button');
+const hatPageButtons = hatPage.querySelectorAll('.hat-page__button');
+const hatPagePhotoBtn = hatPage.querySelector('.hat-page__photo-button');
+const hatPageVideoBtn = hatPage.querySelector('.hat-page__video-button');
 const hatPageImages = hatPage.querySelectorAll('.hat-page__img-wrapper');
 const hatPageBack = hatPage.querySelector('.hat-page__back');
 
@@ -132,8 +134,11 @@ hatPageImages.forEach((img, index) => {
       hatImage.src = './images/overlay-cap-2.png';
     }
 
-    hatPageButton.classList.add('hat-page__button_active');
-    hatPageButton.disabled = false;
+    hatPageButtons.forEach((button) => {
+      button.classList.add('hat-page__button_active');
+      button.disabled = false;
+      document.querySelector('.custom-file-input').style.opacity = '1';
+    });
   })
 });
 
@@ -168,7 +173,7 @@ hatPageBack.addEventListener('click', () => {
 mainPageBack.addEventListener('click', () => {
   stopCamera();
   mainPage.classList.add('main-page_disabled');
-  fourthPage.classList.remove('fourth-page_disabled');
+  hatPage.classList.remove('hat-page_disabled');
 });
 
 messagePageBack.addEventListener('click', () => {
@@ -178,7 +183,7 @@ messagePageBack.addEventListener('click', () => {
 
 photoPageBack.addEventListener('click', () => {
   photoPage.classList.add('photo-page_disabled');
-  fourthPage.classList.remove('fourth-page_disabled');
+  hatPage.classList.remove('hat-page_disabled');
   setTimeout(() => {
     attachmentPhoto.src = '';
     photoPageButton.textContent = 'Отправить в бота';
@@ -209,36 +214,24 @@ loadingNeuroBtn.addEventListener('click', () => {
   hatPage.classList.remove('hat-page_disabled');
 });
 
-hatPageButton.addEventListener('click', () => {
-  hatPage.classList.add('hat-page_disabled');
-  fourthPage.classList.remove('fourth-page_disabled');
-})
-
-messagePageButton.addEventListener('click', () => {
-  messagePage.classList.add('message-page_disabled');
-  mainPage.classList.remove('main-page_disabled');
-});
-
-function updateVideoSize() {
-  videoElement.width = 640;
-  videoElement.height = 480;
-}
-
-fourthPageVideo.addEventListener('click', () => {
-  if (fourthPageVideo.textContent.trim() === 'сделать фото') {
+hatPageVideoBtn.addEventListener('click', () => {
+  if (hatPageVideoBtn.textContent.trim().toLowerCase() === 'сделать фото') {
     if (detect.os() === 'iOS') {
       stopCamera();
+      hatPageVideoBtn.textContent = 'Продолжить';
     }
     else {
       startCamera();
       mainPage.classList.remove('main-page_disabled');
-      fourthPage.classList.add('fourth-page_disabled');
+      hatPage.classList.add('hat-page_disabled');
       startFaceVideoDetection(videoElement, canvas);
     }
   }
-  else if (fourthPageVideo.textContent.trim() === 'Продолжить') {
+  else if (hatPageVideoBtn.textContent.trim() === 'Продолжить') {
     if (detect.os() === 'iOS') {
       startCamera();
+      mainPage.classList.remove('main-page_disabled');
+      hatPage.classList.add('hat-page_disabled');
       setTimeout(() => {
         videoElement.style.opacity = 1;
         mainVideo.width = 640
@@ -249,14 +242,9 @@ fourthPageVideo.addEventListener('click', () => {
       startFaceVideoDetection(videoElement, canvas);
     }
   }
-});
+})
 
-if (detect.os() === 'iOS') {
-  videoElement.style.opacity = 0;
-}
-
-
-fourthPagePhoto.addEventListener('change', (event) => {
+hatPagePhotoBtn.addEventListener('change', (event) => {
   var target = event.target;
 
   if (!FileReader) {
@@ -272,32 +260,105 @@ fourthPagePhoto.addEventListener('change', (event) => {
   var fileReader = new FileReader();
   fileReader.onload = function() {
     attachmentPhoto.src = fileReader.result;
-    fourthPage.classList.add('fourth-page_disabled');
+    hatPage.classList.add('hat-page_disabled');
     photoPage.classList.remove('photo-page_disabled');
     
     startFacePhotoDetection(attachmentPhoto, canvas2);
   }
 
   fileReader.readAsDataURL(target.files[0]);
-})
+});
+
+// hatPageButton.addEventListener('click', () => {
+//   hatPage.classList.add('hat-page_disabled');
+//   fourthPage.classList.remove('fourth-page_disabled');
+// })
+
+messagePageButton.addEventListener('click', () => {
+  messagePage.classList.add('message-page_disabled');
+  mainPage.classList.remove('main-page_disabled');
+});
+
+function updateVideoSize() {
+  videoElement.width = 640;
+  videoElement.height = 480;
+}
+
+// fourthPageVideo.addEventListener('click', () => {
+//   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
+//     if (detect.os() === 'iOS') {
+//       stopCamera();
+//     }
+//     else {
+//       startCamera();
+//       mainPage.classList.remove('main-page_disabled');
+//       fourthPage.classList.add('fourth-page_disabled');
+//       startFaceVideoDetection(videoElement, canvas);
+//     }
+//   }
+//   else if (fourthPageVideo.textContent.trim() === 'Продолжить') {
+//     if (detect.os() === 'iOS') {
+//       startCamera();
+//       setTimeout(() => {
+//         videoElement.style.opacity = 1;
+//         mainVideo.width = 640
+//         mainVideo.height = 480;
+//         mainVideo.style.width = "640px";
+//         mainVideo.style.height = '480px';
+//       }, 1000)
+//       startFaceVideoDetection(videoElement, canvas);
+//     }
+//   }
+// });
+
+if (detect.os() === 'iOS') {
+  videoElement.style.opacity = 0;
+}
+
+
+// fourthPagePhoto.addEventListener('change', (event) => {
+//   var target = event.target;
+
+//   if (!FileReader) {
+//       alert('FileReader не поддерживается — облом');
+//       return;
+//   }
+
+//   if (!target.files.length) {
+//       alert('Ничего не загружено');
+//       return;
+//   }
+
+//   var fileReader = new FileReader();
+//   fileReader.onload = function() {
+//     attachmentPhoto.src = fileReader.result;
+//     fourthPage.classList.add('fourth-page_disabled');
+//     photoPage.classList.remove('photo-page_disabled');
+    
+//     startFacePhotoDetection(attachmentPhoto, canvas2);
+//   }
+
+//   fileReader.readAsDataURL(target.files[0]);
+// })
 
 // Функция для получения доступа к камере
 async function startCamera() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
-    if (!fourthPage.className.includes('disabled')) {
-      if (fourthPageVideo.textContent.trim() === 'сделать фото') {
-        // fourthPageVideo.textContent = 'Продолжить'
-      }
-      else {
-        fourthPage.classList.add('fourth-page_disabled');
-        mainPage.classList.remove('main-page_disabled');
-      }
-    }
+    // if (!fourthPage.className.includes('disabled')) {
+    //   if (fourthPageVideo.textContent.trim() === 'сделать фото') {
+    //     // fourthPageVideo.textContent = 'Продолжить'
+    //   }
+    //   else {
+    //     fourthPage.classList.add('fourth-page_disabled');
+    //     mainPage.classList.remove('main-page_disabled');
+    //   }
+    // }
     console.log('доступ к камере дан')
   } catch (error) {
     console.error('Ошибка при получении доступа к камере:', error);
+
   }
 }
 
@@ -306,9 +367,9 @@ function stopCamera() {
       const tracks = stream.getTracks();
       tracks.forEach(track => track.stop());
       videoElement.srcObject = null;
-      if (detect.os() === 'iOS') {
-        fourthPageVideo.textContent = 'Продолжить';
-      }
+      // if (detect.os() === 'iOS') {
+      //   fourthPageVideo.textContent = 'Продолжить';
+      // }
   }
 }
 
