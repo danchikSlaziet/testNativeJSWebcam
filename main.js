@@ -244,6 +244,10 @@ hatPageVideoBtn.addEventListener('click', () => {
     mainPage.classList.remove('main-page_disabled');
     hatPage.classList.add('hat-page_disabled');
     startFaceVideoDetection(videoElement, canvas);
+    setTimeout(() => {
+      console.log('setTimeOut')
+      document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
+    }, 1000)
   }
   // if (hatPageVideoBtn.textContent.trim().toLowerCase() === 'сделать фото') {
   //   if (detect.os() === 'iOS') {
