@@ -63,8 +63,8 @@ const hatPageBack = hatPage.querySelector('.hat-page__back');
 const infoPage = document.querySelector('.info-page');
 const infoPageButton = infoPage.querySelector('.info-page__button');
 
-// const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
-const botToken = '6744947112:AAHDEu8mSb8tIWPw_WcGZ0LWuYcc7VeyEwM';
+const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
+// const botToken = '6744947112:AAHDEu8mSb8tIWPw_WcGZ0LWuYcc7VeyEwM';
 let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
