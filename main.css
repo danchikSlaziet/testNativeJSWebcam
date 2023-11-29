@@ -736,6 +736,7 @@ button:hover {
 .main__video {
   width: 640px;
   height: 480px;
+  z-index: 97;
   object-fit: none;
   position: relative;
 }
