@@ -63,6 +63,47 @@ const hatPageBack = hatPage.querySelector('.hat-page__back');
 const infoPage = document.querySelector('.info-page');
 const infoPageButton = infoPage.querySelector('.info-page__button');
 
+
+// ================ FETCH ==================
+
+class Api {
+  constructor({baseUrl}) {
+    this._baseUrl = baseUrl;
+  }
+
+  _getFetch(url, options) {
+    return fetch(url, options)
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      });
+  }
+
+  sendStatistics(data) {
+    const url = this._baseUrl;
+    const options = {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data)
+    }
+    return this._getFetch(url, options);
+  }
+}
+
+const api = new Api({
+  baseUrl: 'https://hats.ilovebot.ru/api/statistics',
+});
+
+
 const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 // const botToken = '6744947112:AAHDEu8mSb8tIWPw_WcGZ0LWuYcc7VeyEwM';
 let userChatId = '';
@@ -118,10 +159,13 @@ window.addEventListener('DOMContentLoaded', () => {
   let app = window.Telegram.WebApp;
   let query = app.initData;
   let user_data_str = parseQuery(query).user;
-  let user_data = JSON.parse(user_data_str)
+  console.log(user_data_str);
+  let user_data = JSON.parse(user_data_str);
   app.expand();
   app.ready();
   userChatId = user_data["id"];
+
+  // api.sendStatistics();
 });
 
 infoPageButton.addEventListener('click', () => {
@@ -339,7 +383,7 @@ const step = 1;
 function outNum(num, elem) {
   loadingNeuroBack.style = 'pointer-events: none';
   loadingNeuroBack.style.opacity = '.2'
-  n = 0;
+  let n = 0;
   let t = Math.round(time/(num/step));
   let interval = setInterval(() => {
       n = n + step;
