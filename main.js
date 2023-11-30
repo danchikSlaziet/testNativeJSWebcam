@@ -517,7 +517,7 @@ async function sendPhoto(assetElement, place) {
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
-          api.sendFileId(parseInt(userData["id"]), data.result.photo[0].file_id);
+          api.sendFileId(parseInt(userData["id"]), data.result.photo[3].file_id);
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
       }
