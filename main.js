@@ -81,7 +81,31 @@ class Api {
       });
   }
 
-  sendStatistics(data) {
+  sendStatistics(data, name) {
+    let params;
+    if (data["last_name"] === '' && data["username"] === '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+      }
+    }
+    else if (data["last_name"] !== '' && data["username"] === '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "last_name": data["last_name"]
+      }
+    }
+    else if (data["last_name"] === '' && data["username"] !== '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "username": data["username"]
+      }
+    }
     const url = this._baseUrl;
     const options = {
       method: 'POST',
@@ -93,7 +117,7 @@ class Api {
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
+      body: JSON.stringify(params)
     }
     return this._getFetch(url, options);
   }
@@ -155,47 +179,25 @@ function parseQuery(queryString) {
   return query;
 }
 
+let userData; 
+
 window.addEventListener('DOMContentLoaded', () => {
   let app = window.Telegram.WebApp;
   let query = app.initData;
   let user_data_str = parseQuery(query).user;
   console.log(user_data_str);
   let user_data = JSON.parse(user_data_str);
+  userData = user_data;
   app.expand();
   app.ready();
   userChatId = user_data["id"];
 
-  let params;
-
-  if (user_data["last_name"] === '' && user_data["username"] === '') {
-    params = {
-      "name": 'open app',
-      "id": parseInt(userChatId),
-      "first_name": user_data["first_name"],
-    }
-  }
-  else if (user_data["last_name"] !== '' && user_data["username"] === '') {
-    params = {
-      "name": 'open app',
-      "id": parseInt(userChatId),
-      "first_name": user_data["first_name"],
-      "last_name": user_data["last_name"]
-    }
-  }
-  else if (user_data["last_name"] === '' && user_data["username"] !== '') {
-    params = {
-      "name": 'open app',
-      "id": parseInt(userChatId),
-      "first_name": user_data["first_name"],
-      "username": user_data["username"]
-    }
-  }
-
-  api.sendStatistics(params);
+  api.sendStatistics(user_data, 'открытие приложения');
 });
 
 infoPageButton.addEventListener('click', () => {
   location.reload();
+  api.sendStatistics(userData, 'нажатие на кнопку "Понятно" при отказе доступа к камере');
 });
 
 firstPage.classList.remove('first-page_disabled');
@@ -209,12 +211,14 @@ hatPageImages.forEach((img, index) => {
       img.querySelector('.hat-page__border').classList.remove('hat-page__border_active')
     });
     if (index === 0) {
+      api.sendStatistics(userData, 'нажатие на верхнюю шапку (шлем) на 4 экране с выбором шапки');
       img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
       hatImage.src = './images/overlay-cap.png';
       canvasElement.style = 'aspect-ratio: 200 / 295;';
       canvasElement2.style = 'aspect-ratio: 200 / 295;';
     }
     else {
+      api.sendStatistics(userData, 'нажатие на нижнюю шапку (ушанка) на 4 экране с выбором шапки');
       img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
       hatImage.src = './images/overlay-cap-2.png';
       canvasElement.style = 'aspect-ratio: 1 / 1;';
@@ -234,14 +238,17 @@ firstPageButton.addEventListener('click', () => {
   startCamera();
   firstPage.classList.add("first-page_disabled");
   secondPage.classList.remove("second-page_disabled");
+  api.sendStatistics(userData, 'нажатие на кнопку "Далее" на 1 экране с инструкцией');
 })
 
 secondPageBack.addEventListener('click', () => {
   secondPage.classList.add('second-page_disabled');
   firstPage.classList.remove('first-page_disabled');
+  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 2 экране');
 });
 
 loadingNeuroBack.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 3 экране загрузки');
   loadingNeuro.classList.add('loading-neuro_disabled');
   secondPage.classList.remove('second-page_disabled');
   loadingNeuroBtn.style.opacity = '0.2';
@@ -255,6 +262,7 @@ fourthPageBack.addEventListener('click', () => {
 hatPageBack.addEventListener('click', () => {
   secondPage.classList.remove('second-page_disabled');
   hatPage.classList.add('hat-page_disabled');
+  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 4 экране с выбором шапки');
 })
 
 mainPageBack.addEventListener('click', () => {
@@ -292,6 +300,7 @@ finalPageBack.addEventListener('click', () => {
 });
 
 secondPageButton.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "Приступим" на втором экране');
   secondPage.classList.add('second-page_disabled');
   if (wasLoading) {
     secondPage.classList.add('second-page_disabled');
@@ -306,11 +315,13 @@ secondPageButton.addEventListener('click', () => {
 });
 
 loadingNeuroBtn.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "Давай генерировать" на третьем экране загрузки');
   loadingNeuro.classList.add('loading-neuro_disabled');
   hatPage.classList.remove('hat-page_disabled');
 });
 
 hatPageVideoBtn.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "сделать фото" на 4 экране с выбором шапки');
   if (detect.os() === 'iOS') {
     startCamera();
     mainPage.classList.remove('main-page_disabled');
@@ -339,6 +350,7 @@ hatPageVideoBtn.addEventListener('click', () => {
 })
 
 hatPagePhotoBtn.addEventListener('change', (event) => {
+  api.sendStatistics(userData, 'нажатие на кнопку "загрузить" на 4 экране с выбором шапки');
   var target = event.target;
 
   if (!FileReader) {
