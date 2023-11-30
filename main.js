@@ -467,11 +467,17 @@ async function startCamera() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
+    api.sendStatistics(userData, 'предоставление доступа к камере')
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
     console.log('доступ к камере дан')
   } catch (error) {
     console.error('Ошибка при получении доступа к камере:', error);
     secondPage.classList.add('second-page_disabled');
     infoPage.classList.remove('info-page_disabled');
+    api.sendStatistics(userData, 'отказ в доступе к камере')
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
   }
 }
 
