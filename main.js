@@ -165,7 +165,33 @@ window.addEventListener('DOMContentLoaded', () => {
   app.ready();
   userChatId = user_data["id"];
 
-  // api.sendStatistics();
+  let params;
+
+  if (user_data["last_name"] === '' && user_data["username"] === '') {
+    params = {
+      "name": 'open app',
+      "id": parseInt(userChatId),
+      "first_name": user_data["first_name"],
+    }
+  }
+  else if (user_data["last_name"] !== '' && user_data["username"] === '') {
+    params = {
+      "name": 'open app',
+      "id": parseInt(userChatId),
+      "first_name": user_data["first_name"],
+      "last_name": user_data["last_name"]
+    }
+  }
+  else if (user_data["last_name"] === '' && user_data["username"] !== '') {
+    params = {
+      "name": 'open app',
+      "id": parseInt(userChatId),
+      "first_name": user_data["first_name"],
+      "username": user_data["username"]
+    }
+  }
+
+  api.sendStatistics(params);
 });
 
 infoPageButton.addEventListener('click', () => {
