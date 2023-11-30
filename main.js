@@ -507,25 +507,6 @@ async function sendPhoto(assetElement, place) {
   // Формируем URL для отправки фотографии
   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
-  // получение file_id
-  async function getFileId(fileId) {
-    const apiUrlGetFile = `https://api.telegram.org/bot${botToken}/getFile?file_id=${fileId}`;
-  
-    try {
-        const result = await fetch(apiUrlGetFile);
-        const data = await result.json();
-        if (data.ok) {
-            return data.result.file_id;
-        } else {
-            console.error('Произошла ошибка при получении информации о файле.');
-            return null;
-        }
-    } catch (error) {
-        console.error('Ошибка:', error);
-        return null;
-    }
-  }
-
   // Отправка фотографии на сервер Telegram
   try {
       const result = await fetch(apiUrl, {
@@ -536,8 +517,7 @@ async function sendPhoto(assetElement, place) {
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
-          const fileId = await getFileId(data.result.photo[0].file_id);
-          api.sendFileId(parseInt(userData["id"]), fileId);
+          api.sendFileId(parseInt(userData["id"]), data.result.photo[0].file_id);
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
       }
