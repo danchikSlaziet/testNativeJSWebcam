@@ -67,8 +67,9 @@ const infoPageButton = infoPage.querySelector('.info-page__button');
 // ================ FETCH ==================
 
 class Api {
-  constructor({baseUrl}) {
+  constructor({baseUrl, secondUrl}) {
     this._baseUrl = baseUrl;
+    this._secondUrl = secondUrl;
   }
 
   _getFetch(url, options) {
@@ -121,10 +122,32 @@ class Api {
     }
     return this._getFetch(url, options);
   }
+
+  sendFileId(id, fileId) {
+    const params = {
+      "id": id,
+      "file_id": fileId
+    }
+    const url = this._secondUrl;
+    const options = {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(params)
+    }
+    return this._getFetch(url, options);
+  } 
 }
 
 const api = new Api({
   baseUrl: 'https://hats.ilovebot.ru/api/statistics',
+  secondUrl: 'https://hats.ilovebot.ru/api/save_file',
 });
 
 
@@ -266,27 +289,32 @@ hatPageBack.addEventListener('click', () => {
 })
 
 mainPageBack.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране с отображением видеопотока с камеры');
   stopCamera();
   mainPage.classList.add('main-page_disabled');
   hatPage.classList.remove('hat-page_disabled');
 });
 
 messagePageBack.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
   messagePage.classList.add('message-page_disabled');
   finalPage.classList.add('final-page_active');
 });
 
 messagePage2Back.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
   messagePage2.classList.add('message-page-2_disabled');
   photoPage.classList.remove('photo-page_disabled');
 });
 
 messagePage2Button.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "создать ещё" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
   messagePage2.classList.add('message-page-2_disabled');
   hatPage.classList.remove('hat-page_disabled');
 });
 
 photoPageBack.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране с уже загруженным с устройства фото');
   photoPage.classList.add('photo-page_disabled');
   hatPage.classList.remove('hat-page_disabled');
   setTimeout(() => {
@@ -295,6 +323,7 @@ photoPageBack.addEventListener('click', () => {
 });
 
 finalPageBack.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране со скрином с веб-камеры');
   finalPage.classList.remove('final-page_active');
   mainPage.classList.remove('main-page_disabled');
 });
@@ -378,6 +407,7 @@ hatPagePhotoBtn.addEventListener('change', (event) => {
 
 
 messagePageButton.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "создать ещё" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
   messagePage.classList.add('message-page_disabled');
   mainPage.classList.remove('main-page_disabled');
 });
@@ -438,6 +468,7 @@ t);
 };
 
 mainPageButton.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "сохранить" на экране с отображением видеопотока с камеры');
   mainPage.classList.add('main-page_disabled');
 
   const scaleFactor = 2;
@@ -476,6 +507,25 @@ async function sendPhoto(assetElement, place) {
   // Формируем URL для отправки фотографии
   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
+  // получение file_id
+  async function getFileId(fileId) {
+    const apiUrlGetFile = `https://api.telegram.org/bot${botToken}/getFile?file_id=${fileId}`;
+  
+    try {
+        const result = await fetch(apiUrlGetFile);
+        const data = await result.json();
+        if (data.ok) {
+            return data.result.file_id;
+        } else {
+            console.error('Произошла ошибка при получении информации о файле.');
+            return null;
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        return null;
+    }
+  }
+
   // Отправка фотографии на сервер Telegram
   try {
       const result = await fetch(apiUrl, {
@@ -486,6 +536,8 @@ async function sendPhoto(assetElement, place) {
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
+          const fileId = await getFileId(data.result.photo[0].file_id);
+          sendFileId(parseInt(userData["id"]), fileId);
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
       }
@@ -495,11 +547,13 @@ async function sendPhoto(assetElement, place) {
 }
 
 finalButton.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "отправить бота" на экране со скрином с веб-камеры');
   finalPage.classList.remove('final-page_active');
   messagePage.classList.remove('message-page_disabled');
   sendPhoto(finalIMG, 'video');
 });
 photoPageButton.addEventListener('click', () => {
+  api.sendStatistics(userData, 'нажатие на кнопку "отправить в бота" на экране с уже загруженным с устройства фото');
   sendPhoto(photoToSend, 'photo');
   messagePage2.classList.remove('message-page-2_disabled');
 });
