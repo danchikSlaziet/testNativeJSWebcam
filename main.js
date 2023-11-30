@@ -215,12 +215,16 @@ window.addEventListener('DOMContentLoaded', () => {
   app.ready();
   userChatId = user_data["id"];
 
-  api.sendStatistics(user_data, 'открытие приложения');
+  api.sendStatistics(user_data, 'открытие приложения')
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
 });
 
 infoPageButton.addEventListener('click', () => {
   location.reload();
-  api.sendStatistics(userData, 'нажатие на кнопку "Понятно" при отказе доступа к камере');
+  api.sendStatistics(userData, 'нажатие на кнопку "Понятно" при отказе доступа к камере')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 });
 
 firstPage.classList.remove('first-page_disabled');
@@ -234,14 +238,18 @@ hatPageImages.forEach((img, index) => {
       img.querySelector('.hat-page__border').classList.remove('hat-page__border_active')
     });
     if (index === 0) {
-      api.sendStatistics(userData, 'нажатие на верхнюю шапку (шлем) на 4 экране с выбором шапки');
+      api.sendStatistics(userData, 'нажатие на верхнюю шапку (шлем) на 4 экране с выбором шапки')
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
       img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
       hatImage.src = './images/overlay-cap.png';
       canvasElement.style = 'aspect-ratio: 200 / 295;';
       canvasElement2.style = 'aspect-ratio: 200 / 295;';
     }
     else {
-      api.sendStatistics(userData, 'нажатие на нижнюю шапку (ушанка) на 4 экране с выбором шапки');
+      api.sendStatistics(userData, 'нажатие на нижнюю шапку (ушанка) на 4 экране с выбором шапки')
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
       img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
       hatImage.src = './images/overlay-cap-2.png';
       canvasElement.style = 'aspect-ratio: 1 / 1;';
@@ -261,17 +269,23 @@ firstPageButton.addEventListener('click', () => {
   startCamera();
   firstPage.classList.add("first-page_disabled");
   secondPage.classList.remove("second-page_disabled");
-  api.sendStatistics(userData, 'нажатие на кнопку "Далее" на 1 экране с инструкцией');
+  api.sendStatistics(userData, 'нажатие на кнопку "Далее" на 1 экране с инструкцией')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 })
 
 secondPageBack.addEventListener('click', () => {
   secondPage.classList.add('second-page_disabled');
   firstPage.classList.remove('first-page_disabled');
-  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 2 экране');
+  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 2 экране')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 });
 
 loadingNeuroBack.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 3 экране загрузки');
+  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 3 экране загрузки')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   loadingNeuro.classList.add('loading-neuro_disabled');
   secondPage.classList.remove('second-page_disabled');
   loadingNeuroBtn.style.opacity = '0.2';
@@ -285,36 +299,48 @@ fourthPageBack.addEventListener('click', () => {
 hatPageBack.addEventListener('click', () => {
   secondPage.classList.remove('second-page_disabled');
   hatPage.classList.add('hat-page_disabled');
-  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 4 экране с выбором шапки');
+  api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 4 экране с выбором шапки')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
 })
 
 mainPageBack.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране с отображением видеопотока с камеры');
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране с отображением видеопотока с камеры')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   stopCamera();
   mainPage.classList.add('main-page_disabled');
   hatPage.classList.remove('hat-page_disabled');
 });
 
 messagePageBack.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "назад" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   messagePage.classList.add('message-page_disabled');
   finalPage.classList.add('final-page_active');
 });
 
 messagePage2Back.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "назад" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   messagePage2.classList.add('message-page-2_disabled');
   photoPage.classList.remove('photo-page_disabled');
 });
 
 messagePage2Button.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "создать ещё" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
+  api.sendStatistics(userData, 'нажатие на кнопку "создать ещё" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   messagePage2.classList.add('message-page-2_disabled');
   hatPage.classList.remove('hat-page_disabled');
 });
 
 photoPageBack.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране с уже загруженным с устройства фото');
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране с уже загруженным с устройства фото')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   photoPage.classList.add('photo-page_disabled');
   hatPage.classList.remove('hat-page_disabled');
   setTimeout(() => {
@@ -323,13 +349,17 @@ photoPageBack.addEventListener('click', () => {
 });
 
 finalPageBack.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране со скрином с веб-камеры');
+  api.sendStatistics(userData, 'нажатие на кнопку "назад" на экране со скрином с веб-камеры')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   finalPage.classList.remove('final-page_active');
   mainPage.classList.remove('main-page_disabled');
 });
 
 secondPageButton.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "Приступим" на втором экране');
+  api.sendStatistics(userData, 'нажатие на кнопку "Приступим" на втором экране')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   secondPage.classList.add('second-page_disabled');
   if (wasLoading) {
     secondPage.classList.add('second-page_disabled');
@@ -344,13 +374,17 @@ secondPageButton.addEventListener('click', () => {
 });
 
 loadingNeuroBtn.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "Давай генерировать" на третьем экране загрузки');
+  api.sendStatistics(userData, 'нажатие на кнопку "Давай генерировать" на третьем экране загрузки')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   loadingNeuro.classList.add('loading-neuro_disabled');
   hatPage.classList.remove('hat-page_disabled');
 });
 
 hatPageVideoBtn.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "сделать фото" на 4 экране с выбором шапки');
+  api.sendStatistics(userData, 'нажатие на кнопку "сделать фото" на 4 экране с выбором шапки')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   if (detect.os() === 'iOS') {
     startCamera();
     mainPage.classList.remove('main-page_disabled');
@@ -379,7 +413,9 @@ hatPageVideoBtn.addEventListener('click', () => {
 })
 
 hatPagePhotoBtn.addEventListener('change', (event) => {
-  api.sendStatistics(userData, 'нажатие на кнопку "загрузить" на 4 экране с выбором шапки');
+  api.sendStatistics(userData, 'нажатие на кнопку "загрузить" на 4 экране с выбором шапки')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   var target = event.target;
 
   if (!FileReader) {
@@ -407,7 +443,9 @@ hatPagePhotoBtn.addEventListener('change', (event) => {
 
 
 messagePageButton.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "создать ещё" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")');
+  api.sendStatistics(userData, 'нажатие на кнопку "создать ещё" на конечном экране (экран с текстом "УРА, ТВОЯ ФОТКА В НАШЕЙ ШАПКЕ УЖЕ ГОТОВА!")')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   messagePage.classList.add('message-page_disabled');
   mainPage.classList.remove('main-page_disabled');
 });
@@ -468,7 +506,9 @@ t);
 };
 
 mainPageButton.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "сохранить" на экране с отображением видеопотока с камеры');
+  api.sendStatistics(userData, 'нажатие на кнопку "сохранить" на экране с отображением видеопотока с камеры')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   mainPage.classList.add('main-page_disabled');
 
   const scaleFactor = 2;
@@ -517,7 +557,9 @@ async function sendPhoto(assetElement, place) {
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
-          api.sendFileId(parseInt(userData["id"]), data.result.photo[3].file_id);
+          api.sendFileId(parseInt(userData["id"]), data.result.photo[3].file_id)
+          .then(data => console.log(data))
+          .catch(err => console.log(err));
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
       }
@@ -527,13 +569,17 @@ async function sendPhoto(assetElement, place) {
 }
 
 finalButton.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "отправить бота" на экране со скрином с веб-камеры');
+  api.sendStatistics(userData, 'нажатие на кнопку "отправить бота" на экране со скрином с веб-камеры')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   finalPage.classList.remove('final-page_active');
   messagePage.classList.remove('message-page_disabled');
   sendPhoto(finalIMG, 'video');
 });
 photoPageButton.addEventListener('click', () => {
-  api.sendStatistics(userData, 'нажатие на кнопку "отправить в бота" на экране с уже загруженным с устройства фото');
+  api.sendStatistics(userData, 'нажатие на кнопку "отправить в бота" на экране с уже загруженным с устройства фото')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
   sendPhoto(photoToSend, 'photo');
   messagePage2.classList.remove('message-page-2_disabled');
 });
