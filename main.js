@@ -151,7 +151,7 @@ const api = new Api({
 });
 
 
-const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
+const botToken = '6898845714:AAFfuvCwOuFb2F7RaMmz0hZO_xkjh5eS5mo';
 // const botToken = '6744947112:AAHDEu8mSb8tIWPw_WcGZ0LWuYcc7VeyEwM';
 let userChatId = '';
 const photoPath = './images/logo.png';
