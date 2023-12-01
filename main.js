@@ -553,6 +553,13 @@ async function sendPhoto(assetElement, place) {
   // Формируем URL для отправки фотографии
   const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
+  if (place === 'photo') {
+    photoPageButton.textContent = 'Отправка...';
+  }
+  else {
+    finalButton.textContent = 'Отправка...';
+  }
+
   // Отправка фотографии на сервер Telegram
   try {
       const result = await fetch(apiUrl, {
@@ -563,11 +570,37 @@ async function sendPhoto(assetElement, place) {
       console.log(data);
       if (data.ok) {
           console.log('Фотография успешно отправлена в Telegram.');
+          if (place === 'photo') {
+            photoPageButton.textContent = 'Отправлено';
+            setTimeout(() => {
+              photoPage.classList.add('photo-page_disabled');
+              messagePage2.classList.remove('message-page-2_disabled');
+              setTimeout(() => {
+                photoPageButton.textContent = 'Отправить в бота';
+              }, 10)
+            }, 1000)
+          }
+          else {
+            finalButton.textContent = 'Отправлено';
+            setTimeout(() => {
+              finalPage.classList.remove('final-page_active');
+              messagePage.classList.remove('message-page_disabled');
+              setTimeout(() => {
+                finalButton.textContent = 'Отправить в бота';
+              }, 10)
+            }, 1000)
+          }
           api.sendFileId(parseInt(userData["id"]), data.result.photo[3].file_id)
           .then(data => console.log(data))
           .catch(err => console.log(err));
       } else {
           console.error('Произошла ошибка при отправке фотографии.');
+          if (place === 'photo') {
+            photoPageButton.textContent = 'Ошибка';
+          }
+          else {
+            finalButton.textContent = 'Ошибка';
+          }
       }
   } catch (error) {
       console.error('Ошибка:', error);
@@ -578,8 +611,6 @@ finalButton.addEventListener('click', () => {
   api.sendStatistics(userData, 'нажатие на кнопку "отправить бота" на экране со скрином с веб-камеры')
   .then(data => console.log(data))
   .catch(err => console.log(err));
-  finalPage.classList.remove('final-page_active');
-  messagePage.classList.remove('message-page_disabled');
   sendPhoto(finalIMG, 'video');
 });
 photoPageButton.addEventListener('click', () => {
@@ -587,7 +618,6 @@ photoPageButton.addEventListener('click', () => {
   .then(data => console.log(data))
   .catch(err => console.log(err));
   sendPhoto(photoToSend, 'photo');
-  messagePage2.classList.remove('message-page-2_disabled');
 });
 
 async function startFaceVideoDetection(assetElement, canvasElement) {
