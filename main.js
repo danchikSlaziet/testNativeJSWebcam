@@ -598,7 +598,7 @@ async function sendPhoto(assetElement, place) {
           .then(data => console.log(data))
           .catch(err => console.log(err));
       } else {
-          console.error('Произошла ошибка при отправке фотографии.');
+          console.log('Произошла ошибка при отправке фотографии.');
           if (place === 'photo') {
             photoPageButton.textContent = 'Ошибка';
             photoPageButton.disabled = false;
