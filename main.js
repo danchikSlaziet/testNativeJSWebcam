@@ -555,9 +555,11 @@ async function sendPhoto(assetElement, place) {
 
   if (place === 'photo') {
     photoPageButton.textContent = 'Отправка...';
+    photoPageButton.disabled = true;
   }
   else {
     finalButton.textContent = 'Отправка...';
+    finalButton.disabled = true;
   }
 
   // Отправка фотографии на сервер Telegram
@@ -573,22 +575,24 @@ async function sendPhoto(assetElement, place) {
           if (place === 'photo') {
             photoPageButton.textContent = 'Отправлено';
             setTimeout(() => {
+              photoPageButton.disabled = false;
               photoPage.classList.add('photo-page_disabled');
               messagePage2.classList.remove('message-page-2_disabled');
               setTimeout(() => {
                 photoPageButton.textContent = 'Отправить в бота';
               }, 10)
-            }, 1000)
+            }, 750)
           }
           else {
             finalButton.textContent = 'Отправлено';
             setTimeout(() => {
+              finalButton.disabled = false;
               finalPage.classList.remove('final-page_active');
               messagePage.classList.remove('message-page_disabled');
               setTimeout(() => {
                 finalButton.textContent = 'Отправить в бота';
               }, 10)
-            }, 1000)
+            }, 750)
           }
           api.sendFileId(parseInt(userData["id"]), data.result.photo[3].file_id)
           .then(data => console.log(data))
@@ -597,9 +601,11 @@ async function sendPhoto(assetElement, place) {
           console.error('Произошла ошибка при отправке фотографии.');
           if (place === 'photo') {
             photoPageButton.textContent = 'Ошибка';
+            photoPageButton.disabled = false;
           }
           else {
             finalButton.textContent = 'Ошибка';
+            finalButton.disabled = false;
           }
       }
   } catch (error) {
