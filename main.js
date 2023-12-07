@@ -64,6 +64,18 @@ const infoPage = document.querySelector('.info-page');
 const infoPageButton = infoPage.querySelector('.info-page__button');
 
 
+const instruct1 = document.querySelector('.instruct-page-1');
+const instruct1Btn = instruct1.querySelector('.instruct-page-1__button');
+const instruct2 = document.querySelector('.instruct-page-2');
+const instruct2Btn = instruct2.querySelector('.instruct-page-2__button');
+const instruct3 = document.querySelector('.instruct-page-3');
+const instruct3Btn = instruct3.querySelector('.instruct-page-3__button');
+const instruct4 = document.querySelector('.instruct-page-4');
+const instruct4Btn = instruct4.querySelector('.instruct-page-4__button');
+
+const time = 2000;
+const step = 1;
+
 // ================ FETCH ==================
 
 class Api {
@@ -84,29 +96,38 @@ class Api {
 
   sendStatistics(data, name) {
     let params;
-    if (data["last_name"] === '' && data["username"] === '') {
-      params = {
-        "name": name,
-        "id": parseInt(data["id"]),
-        "first_name": data["first_name"],
-      }
-    }
-    else if (data["last_name"] !== '' && data["username"] === '') {
-      params = {
-        "name": name,
-        "id": parseInt(data["id"]),
-        "first_name": data["first_name"],
-        "last_name": data["last_name"]
-      }
-    }
-    else if (data["last_name"] === '' && data["username"] !== '') {
-      params = {
-        "name": name,
-        "id": parseInt(data["id"]),
-        "first_name": data["first_name"],
-        "username": data["username"]
-      }
-    }
+    // if (data["last_name"] === '' && data["username"] === '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //   }
+    // }
+    // else if (data["last_name"] !== '' && data["username"] === '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //     "last_name": data["last_name"]
+    //   }
+    // }
+    // else if (data["last_name"] === '' && data["username"] !== '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //     "username": data["username"]
+    //   }
+    // }
+    // else if (data["last_name"] !== '' && data["username"] !== '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //     "username": data["username"],
+    //     "last_name": data["last_name"]
+    //   }
+    // }
     const url = this._baseUrl;
     const options = {
       method: 'POST',
@@ -151,8 +172,8 @@ const api = new Api({
 });
 
 
-const botToken = '6898845714:AAFfuvCwOuFb2F7RaMmz0hZO_xkjh5eS5mo';
-// const botToken = '6744947112:AAHDEu8mSb8tIWPw_WcGZ0LWuYcc7VeyEwM';
+// const botToken = '6898845714:AAFfuvCwOuFb2F7RaMmz0hZO_xkjh5eS5mo';
+const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
@@ -234,14 +255,14 @@ hatPageImages.forEach((img, index) => {
     if (detect.os() === 'iOS') {
       stopCamera();
     }
-    hatPageImages.forEach((img) => {
-      img.querySelector('.hat-page__border').classList.remove('hat-page__border_active')
+    document.querySelectorAll('.hat-page__img-text').forEach((elem) => {
+      elem.classList.remove('hat-page__img-text_active');
     });
     if (index === 0) {
       api.sendStatistics(userData, 'нажатие на верхнюю шапку (шлем) на 4 экране с выбором шапки')
       .then(data => console.log(data))
       .catch(err => console.log(err));
-      img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
+      document.querySelectorAll('.hat-page__img-text')[index].classList.add('hat-page__img-text_active');
       hatImage.src = './images/overlay-cap.png';
       canvasElement.style = 'aspect-ratio: 200 / 295;';
       canvasElement2.style = 'aspect-ratio: 200 / 295;';
@@ -250,7 +271,7 @@ hatPageImages.forEach((img, index) => {
       api.sendStatistics(userData, 'нажатие на нижнюю шапку (ушанка) на 4 экране с выбором шапки')
       .then(data => console.log(data))
       .catch(err => console.log(err));
-      img.querySelector('.hat-page__border').classList.add('hat-page__border_active');
+      document.querySelectorAll('.hat-page__img-text')[index].classList.add('hat-page__img-text_active');
       hatImage.src = './images/overlay-cap-2.png';
       canvasElement.style = 'aspect-ratio: 1 / 1;';
       canvasElement2.style = 'aspect-ratio: 1 / 1;';
@@ -266,12 +287,41 @@ hatPageImages.forEach((img, index) => {
 
 
 firstPageButton.addEventListener('click', () => {
-  startCamera();
   firstPage.classList.add("first-page_disabled");
-  secondPage.classList.remove("second-page_disabled");
+  // secondPage.classList.remove("second-page_disabled");
+  instruct1.classList.remove('instruct-page-1_disabled');
   api.sendStatistics(userData, 'нажатие на кнопку "Далее" на 1 экране с инструкцией')
   .then(data => console.log(data))
   .catch(err => console.log(err));
+});
+
+instruct1Btn.addEventListener('click', () => {
+  startCamera();
+  instruct1.classList.add('instruct-page-1_disabled');
+  instruct2.classList.remove('instruct-page-2_disabled');
+})
+instruct2Btn.addEventListener('click', () => {
+  instruct2.classList.add('instruct-page-2_disabled');
+  instruct3.classList.remove('instruct-page-3_disabled');
+})
+instruct3Btn.addEventListener('click', () => {
+  instruct3.classList.add('instruct-page-3_disabled');
+  instruct4.classList.remove('instruct-page-4_disabled');
+})
+instruct4Btn.addEventListener('click', () => {
+  instruct4.classList.add('instruct-page-4_disabled');
+  api.sendStatistics(userData, 'нажатие на кнопку "Приступим" на втором экране')
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+  if (wasLoading) {
+    hatPage.classList.remove('hat-page_disabled');
+  }
+  else {
+    loadModels();
+    wasLoading = true;
+    outNum(100,document.querySelector('.loading-neuro__round'));
+    loadingNeuro.classList.remove('loading-neuro_disabled');
+  }
 })
 
 secondPageBack.addEventListener('click', () => {
@@ -287,7 +337,7 @@ loadingNeuroBack.addEventListener('click', () => {
   .then(data => console.log(data))
   .catch(err => console.log(err));
   loadingNeuro.classList.add('loading-neuro_disabled');
-  secondPage.classList.remove('second-page_disabled');
+  firstPage.classList.remove('first-page_disabled');
   loadingNeuroBtn.style.opacity = '0.2';
 });
 
@@ -297,7 +347,7 @@ fourthPageBack.addEventListener('click', () => {
 });
 
 hatPageBack.addEventListener('click', () => {
-  secondPage.classList.remove('second-page_disabled');
+  firstPage.classList.remove('first-page_disabled');
   hatPage.classList.add('hat-page_disabled');
   api.sendStatistics(userData, 'нажатие на кнопку "Назад" на 4 экране с выбором шапки')
   .then(data => console.log(data))
@@ -488,9 +538,6 @@ function stopCamera() {
       videoElement.srcObject = null;
   }
 }
-
-const time = 2000;
-const step = 1;
 
 function outNum(num, elem) {
   loadingNeuroBack.style = 'pointer-events: none';
