@@ -787,7 +787,7 @@ async function startFacePhotoDetection(assetElement, canvasElement) {
       staticY = (leftEye[0].y * scaleHeight + hatHeight * scaleHeight * (8.5 / 100));
     } 
     else {
-      widthScale = 4.5;
+      widthScale = 3.7;
       width = (rightPoint.x - leftPoint.x) * widthScale;
       hatAspectRatio = hatImage.width / hatImage.height;
       hatHeight = width / hatAspectRatio;
