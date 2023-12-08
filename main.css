@@ -520,6 +520,13 @@ button:hover {
   transform: translate(-50%, -50%);
 }
 
+@media screen and (max-height: 700px) {
+  .first-page__hat-img {
+    width: 80%;
+    top: -57%;
+  }
+}
+
 .first-page__button {
   color: #FFF;
   font-family: "MTS";
