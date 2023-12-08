@@ -504,7 +504,7 @@ button:hover {
   text-align: center;
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: "MTSUltra";
-  margin: auto 0 28px 0;
+  margin: 360px 0 auto 0;
   font-size: 52px;
   font-style: normal;
   font-weight: 900;
@@ -518,13 +518,6 @@ button:hover {
   top: -77%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-@media screen and (max-height: 700px) {
-  .first-page__hat-img {
-    width: 80%;
-    top: -57%;
-  }
 }
 
 .first-page__button {
@@ -545,6 +538,7 @@ button:hover {
   z-index: 10;
   text-align: center;
   margin-bottom: 24px;
+  margin-top: 10px;
 }
 
 .instruct-page-1 {
