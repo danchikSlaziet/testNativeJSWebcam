@@ -557,7 +557,7 @@ button:hover {
   background-image: url(./images/main-bg.png);
   background-size: cover;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   z-index: 100;
   align-items: center;
@@ -752,7 +752,7 @@ button:hover {
   background-image: url(./images/main-bg.png);
   background-size: cover;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   z-index: 100;
   align-items: center;
@@ -849,7 +849,7 @@ button:hover {
   background-image: url(./images/main-bg.png);
   background-size: cover;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   z-index: 100;
   align-items: center;
