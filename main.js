@@ -78,6 +78,8 @@ const step = 1;
 
 // ================ FETCH ==================
 
+let firstVideoClick = true;
+
 class Api {
   constructor({baseUrl, secondUrl}) {
     this._baseUrl = baseUrl;
@@ -96,38 +98,38 @@ class Api {
 
   sendStatistics(data, name) {
     let params;
-    // if (data["last_name"] === '' && data["username"] === '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //   }
-    // }
-    // else if (data["last_name"] !== '' && data["username"] === '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //     "last_name": data["last_name"]
-    //   }
-    // }
-    // else if (data["last_name"] === '' && data["username"] !== '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //     "username": data["username"]
-    //   }
-    // }
-    // else if (data["last_name"] !== '' && data["username"] !== '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //     "username": data["username"],
-    //     "last_name": data["last_name"]
-    //   }
-    // }
+    if (data["last_name"] === '' && data["username"] === '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+      }
+    }
+    else if (data["last_name"] !== '' && data["username"] === '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "last_name": data["last_name"]
+      }
+    }
+    else if (data["last_name"] === '' && data["username"] !== '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "username": data["username"]
+      }
+    }
+    else if (data["last_name"] !== '' && data["username"] !== '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "username": data["username"],
+        "last_name": data["last_name"]
+      }
+    }
     const url = this._baseUrl;
     const options = {
       method: 'POST',
@@ -225,21 +227,21 @@ function parseQuery(queryString) {
 
 let userData; 
 
-window.addEventListener('DOMContentLoaded', () => {
-  let app = window.Telegram.WebApp;
-  let query = app.initData;
-  let user_data_str = parseQuery(query).user;
-  console.log(user_data_str);
-  let user_data = JSON.parse(user_data_str);
-  userData = user_data;
-  app.expand();
-  app.ready();
-  userChatId = user_data["id"];
+// window.addEventListener('DOMContentLoaded', () => {
+//   let app = window.Telegram.WebApp;
+//   let query = app.initData;
+//   let user_data_str = parseQuery(query).user;
+//   console.log(user_data_str);
+//   let user_data = JSON.parse(user_data_str);
+//   userData = user_data;
+//   app.expand();
+//   app.ready();
+//   userChatId = user_data["id"];
 
-  api.sendStatistics(user_data, 'открытие приложения')
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-});
+//   api.sendStatistics(user_data, 'открытие приложения')
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err));
+// });
 
 infoPageButton.addEventListener('click', () => {
   location.reload();
@@ -431,7 +433,10 @@ loadingNeuroBtn.addEventListener('click', () => {
   hatPage.classList.remove('hat-page_disabled');
 });
 
+
+
 hatPageVideoBtn.addEventListener('click', () => {
+  document.querySelector('.lds-hourglass').classList.remove('lds-hourglass_disabled')
   api.sendStatistics(userData, 'нажатие на кнопку "сделать фото" на 4 экране с выбором шапки')
   .then(data => console.log(data))
   .catch(err => console.log(err));
@@ -446,19 +451,27 @@ hatPageVideoBtn.addEventListener('click', () => {
       mainVideo.height = 480;
       mainVideo.style.width = "640px";
       mainVideo.style.height = '480px';
-      document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
+      // document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
     }, 1000)
     startFaceVideoDetection(videoElement, canvas);
   }
   else {
-    startCamera();
-    mainPage.classList.remove('main-page_disabled');
-    hatPage.classList.add('hat-page_disabled');
-    startFaceVideoDetection(videoElement, canvas);
-    setTimeout(() => {
-      console.log('setTimeOut')
-      document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
-    }, 1000)
+    if (firstVideoClick) {
+      mainPage.classList.remove('main-page_disabled');
+      hatPage.classList.add('hat-page_disabled');
+      startFaceVideoDetection(videoElement, canvas);
+    }
+    else {
+      startCamera();
+      mainPage.classList.remove('main-page_disabled');
+      hatPage.classList.add('hat-page_disabled');
+      startFaceVideoDetection(videoElement, canvas);
+    }
+    firstVideoClick = false;
+    // setTimeout(() => {
+    //   console.log('setTimeOut')
+    //   document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
+    // }, 1000)
   }
 })
 
@@ -514,6 +527,7 @@ if (detect.os() === 'iOS') {
 
 // Функция для получения доступа к камере
 async function startCamera() {
+  console.log('startCamera')
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     videoElement.srcObject = stream;
@@ -719,6 +733,9 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
             canvasElement.height = hatImage.height * scaleWidth;
 
             context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+            
+
+            document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
           }
 
           else {
@@ -746,6 +763,8 @@ async function startFaceVideoDetection(assetElement, canvasElement) {
             canvasElement.height = hatImage.height * scaleWidth;
 
             context.drawImage(hatImage, 0, 0, canvasElement.width, canvasElement.height);
+
+            document.querySelector('.lds-hourglass').classList.add('lds-hourglass_disabled');
           }
       });
   }, 100);
