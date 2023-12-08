@@ -227,21 +227,21 @@ function parseQuery(queryString) {
 
 let userData; 
 
-// window.addEventListener('DOMContentLoaded', () => {
-//   let app = window.Telegram.WebApp;
-//   let query = app.initData;
-//   let user_data_str = parseQuery(query).user;
-//   console.log(user_data_str);
-//   let user_data = JSON.parse(user_data_str);
-//   userData = user_data;
-//   app.expand();
-//   app.ready();
-//   userChatId = user_data["id"];
+window.addEventListener('DOMContentLoaded', () => {
+  let app = window.Telegram.WebApp;
+  let query = app.initData;
+  let user_data_str = parseQuery(query).user;
+  console.log(user_data_str);
+  let user_data = JSON.parse(user_data_str);
+  userData = user_data;
+  app.expand();
+  app.ready();
+  userChatId = user_data["id"];
 
-//   api.sendStatistics(user_data, 'открытие приложения')
-//     .then(data => console.log(data))
-//     .catch(err => console.log(err));
-// });
+  api.sendStatistics(user_data, 'открытие приложения')
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+});
 
 infoPageButton.addEventListener('click', () => {
   location.reload();
