@@ -504,7 +504,7 @@ button:hover {
   text-align: center;
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: "MTSUltra";
-  margin: 360px 0 auto 0;
+  margin: 385px 0 auto 0;
   font-size: 52px;
   font-style: normal;
   font-weight: 900;
@@ -515,7 +515,7 @@ button:hover {
 
 .first-page__hat-img {
   position: absolute;
-  top: -77%;
+  top: -87%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
