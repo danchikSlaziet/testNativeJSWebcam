@@ -96,38 +96,38 @@ class Api {
 
   sendStatistics(data, name) {
     let params;
-    // if (data["last_name"] === '' && data["username"] === '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //   }
-    // }
-    // else if (data["last_name"] !== '' && data["username"] === '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //     "last_name": data["last_name"]
-    //   }
-    // }
-    // else if (data["last_name"] === '' && data["username"] !== '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //     "username": data["username"]
-    //   }
-    // }
-    // else if (data["last_name"] !== '' && data["username"] !== '') {
-    //   params = {
-    //     "name": name,
-    //     "id": parseInt(data["id"]),
-    //     "first_name": data["first_name"],
-    //     "username": data["username"],
-    //     "last_name": data["last_name"]
-    //   }
-    // }
+    if (data["last_name"] === '' && data["username"] === '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+      }
+    }
+    else if (data["last_name"] !== '' && data["username"] === '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "last_name": data["last_name"]
+      }
+    }
+    else if (data["last_name"] === '' && data["username"] !== '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "username": data["username"]
+      }
+    }
+    else if (data["last_name"] !== '' && data["username"] !== '') {
+      params = {
+        "name": name,
+        "id": parseInt(data["id"]),
+        "first_name": data["first_name"],
+        "username": data["username"],
+        "last_name": data["last_name"]
+      }
+    }
     const url = this._baseUrl;
     const options = {
       method: 'POST',
@@ -172,8 +172,8 @@ const api = new Api({
 });
 
 
-// const botToken = '6898845714:AAFfuvCwOuFb2F7RaMmz0hZO_xkjh5eS5mo';
-const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
+const botToken = '6898845714:AAFfuvCwOuFb2F7RaMmz0hZO_xkjh5eS5mo';
+// const botToken = '6899155059:AAEaXDEvMiL7qstq_9BFQ59fEXGo-mcF1hU';
 let userChatId = '';
 const photoPath = './images/logo.png';
 const apiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;

@@ -76,7 +76,9 @@ button:hover {
 
 .second-page {
   position: fixed;
+  display: none;
   overflow-y: scroll;
+  overflow-x: hidden;
   left: 0;
   right: 0;
   top: 0;
@@ -387,7 +389,6 @@ button:hover {
   right: 0;
   top: 0;
   background: linear-gradient(347deg, #FFD4C9 -2.24%, #EDCCD3 16.66%, #BFB8ED 52.9%, #9FAAFF 76.53%, #A1A1FF 103.3%);
-  display: flex;
   flex-direction: column;
   z-index: 100;
   align-items: center;
@@ -457,6 +458,8 @@ button:hover {
   left: 0;
   right: 0;
   top: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
   background-image: url(./images/main-bg.png);
   background-size: cover;
   display: flex;
@@ -539,6 +542,8 @@ button:hover {
 
 .instruct-page-1 {
   position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
   left: 0;
   right: 0;
   top: 0;
@@ -633,6 +638,8 @@ button:hover {
 }
 
 .instruct-page-2 {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -727,6 +734,8 @@ button:hover {
   margin-bottom: 24px;
 }
 .instruct-page-3 {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -821,6 +830,8 @@ button:hover {
   margin-bottom: 24px;
 }
 .instruct-page-4 {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -915,6 +926,8 @@ button:hover {
   margin-bottom: 24px;
 }
 .photo-page {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -993,6 +1006,8 @@ button:hover {
 }
 
 .main-page {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -1179,6 +1194,8 @@ canvas {
 }
 
 .final-page {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -1277,6 +1294,8 @@ canvas {
 }
 
 .message-page {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -1339,6 +1358,7 @@ canvas {
   font-style: normal;
   font-weight: 500;
   line-height: 22px; /* 110% */
+  margin-bottom: 20px;
 }
 
 .message-page__button {
@@ -1363,6 +1383,8 @@ canvas {
 }
 
 .message-page-2 {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -1449,6 +1471,8 @@ canvas {
 }
 
 .hat-page {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
@@ -1594,6 +1618,8 @@ canvas {
 
 
 .info-page {
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: fixed;
   left: 0;
   right: 0;
