@@ -66,8 +66,8 @@ const infoPageButton = infoPage.querySelector('.info-page__button');
 
 const instruct1 = document.querySelector('.instruct-page-1');
 const instruct1Btn = instruct1.querySelector('.instruct-page-1__button');
-const instruct2 = document.querySelector('.instruct-page-2');
-const instruct2Btn = instruct2.querySelector('.instruct-page-2__button');
+// const instruct2 = document.querySelector('.instruct-page-2');
+// const instruct2Btn = instruct2.querySelector('.instruct-page-2__button');
 const instruct3 = document.querySelector('.instruct-page-3');
 const instruct3Btn = instruct3.querySelector('.instruct-page-3__button');
 const instruct4 = document.querySelector('.instruct-page-4');
@@ -96,38 +96,38 @@ class Api {
 
   sendStatistics(data, name) {
     let params;
-    if (data["last_name"] === '' && data["username"] === '') {
-      params = {
-        "name": name,
-        "id": parseInt(data["id"]),
-        "first_name": data["first_name"],
-      }
-    }
-    else if (data["last_name"] !== '' && data["username"] === '') {
-      params = {
-        "name": name,
-        "id": parseInt(data["id"]),
-        "first_name": data["first_name"],
-        "last_name": data["last_name"]
-      }
-    }
-    else if (data["last_name"] === '' && data["username"] !== '') {
-      params = {
-        "name": name,
-        "id": parseInt(data["id"]),
-        "first_name": data["first_name"],
-        "username": data["username"]
-      }
-    }
-    else if (data["last_name"] !== '' && data["username"] !== '') {
-      params = {
-        "name": name,
-        "id": parseInt(data["id"]),
-        "first_name": data["first_name"],
-        "username": data["username"],
-        "last_name": data["last_name"]
-      }
-    }
+    // if (data["last_name"] === '' && data["username"] === '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //   }
+    // }
+    // else if (data["last_name"] !== '' && data["username"] === '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //     "last_name": data["last_name"]
+    //   }
+    // }
+    // else if (data["last_name"] === '' && data["username"] !== '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //     "username": data["username"]
+    //   }
+    // }
+    // else if (data["last_name"] !== '' && data["username"] !== '') {
+    //   params = {
+    //     "name": name,
+    //     "id": parseInt(data["id"]),
+    //     "first_name": data["first_name"],
+    //     "username": data["username"],
+    //     "last_name": data["last_name"]
+    //   }
+    // }
     const url = this._baseUrl;
     const options = {
       method: 'POST',
@@ -298,12 +298,12 @@ firstPageButton.addEventListener('click', () => {
 instruct1Btn.addEventListener('click', () => {
   startCamera();
   instruct1.classList.add('instruct-page-1_disabled');
-  instruct2.classList.remove('instruct-page-2_disabled');
-})
-instruct2Btn.addEventListener('click', () => {
-  instruct2.classList.add('instruct-page-2_disabled');
   instruct3.classList.remove('instruct-page-3_disabled');
 })
+// instruct2Btn.addEventListener('click', () => {
+//   instruct2.classList.add('instruct-page-2_disabled');
+//   instruct3.classList.remove('instruct-page-3_disabled');
+// })
 instruct3Btn.addEventListener('click', () => {
   instruct3.classList.add('instruct-page-3_disabled');
   instruct4.classList.remove('instruct-page-4_disabled');

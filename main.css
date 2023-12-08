@@ -600,7 +600,7 @@ button:hover {
 .instruct-page-1__hat-img {
   width: 250px;
   margin-bottom: 15px;
-  margin-top: auto;
+  margin-top: 110px;
 }
 .instruct-page-1__svg {
   display: block;
@@ -635,6 +635,7 @@ button:hover {
   z-index: 10;
   text-align: center;
   margin-bottom: 24px;
+  margin-top: 10px;
 }
 
 .instruct-page-2 {
@@ -732,6 +733,7 @@ button:hover {
   z-index: 10;
   text-align: center;
   margin-bottom: 24px;
+  margin-top: 10px;
 }
 .instruct-page-3 {
   overflow-y: scroll;
@@ -793,7 +795,7 @@ button:hover {
 .instruct-page-3__hat-img {
   width: 250px;
   margin-bottom: 15px;
-  margin-top: auto;
+  margin-top: 110px;
 }
 .instruct-page-3__svg {
   display: block;
@@ -828,6 +830,7 @@ button:hover {
   z-index: 10;
   text-align: center;
   margin-bottom: 24px;
+  margin-top: 10px;
 }
 .instruct-page-4 {
   overflow-y: scroll;
@@ -889,7 +892,7 @@ button:hover {
 .instruct-page-4__hat-img {
   width: 250px;
   margin-bottom: 15px;
-  margin-top: auto;
+  margin-top: 110px;
 }
 .instruct-page-4__svg {
   display: block;
@@ -924,6 +927,7 @@ button:hover {
   z-index: 10;
   text-align: center;
   margin-bottom: 24px;
+  margin-top: 10px;
 }
 .photo-page {
   overflow-y: scroll;
@@ -1447,6 +1451,7 @@ canvas {
   font-style: normal;
   font-weight: 500;
   line-height: 22px; /* 110% */
+  margin-bottom: 20px;
 }
 
 .message-page-2__button {
@@ -1720,4 +1725,8 @@ canvas {
   100% {
     transform: rotate(1800deg);
   }
+}
+
+.raduga-link {
+  color: inherit;
 }
